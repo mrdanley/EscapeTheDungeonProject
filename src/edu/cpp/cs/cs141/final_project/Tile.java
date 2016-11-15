@@ -61,5 +61,8 @@ public class Tile{
 		else
 			return false;
 	}
+	public GamePiece getGamePiece(){
+		return g;
+	}
 }
 
