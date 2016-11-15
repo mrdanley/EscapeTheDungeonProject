@@ -25,6 +25,9 @@ public class Room implements GamePiece{
 	public char image(){
 		return 'X';
   	}
+	public char showBriefcase(){
+		return 'C';
+	}
 	private boolean briefcase = false;
 	public void setBriefcase(){
 		briefcase = true;
