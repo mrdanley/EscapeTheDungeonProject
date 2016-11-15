@@ -24,5 +24,5 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public abstract class PowerUp implements GamePiece{
-	public abstract bool pickedUp();
+	public abstract boolean pickedUp();
 }
