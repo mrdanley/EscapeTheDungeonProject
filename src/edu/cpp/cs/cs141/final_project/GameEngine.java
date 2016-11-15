@@ -124,9 +124,11 @@ public class GameEngine{
 		System.out.println("-Debug Ver.-");
 		for(int i=0;i<9;i++)
 		{
-			
+			//need to fix debug mode briefcase show
 			for(int j=0;j<9;j++)
+			{
 				System.out.print("[" + map.image(i,j) + "]");
+			}
 			if(i>0 && i<5)
 			{
 				if(i==3)
