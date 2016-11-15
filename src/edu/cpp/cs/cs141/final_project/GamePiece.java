@@ -17,7 +17,8 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
+ * This interface represents a GamePiece in the dungeon which can be a {@link Spy}, {@link Ninja}, or {@link Room}.
+ *   GamePiece's cannot occupy the same space.
  * @author
  */
 
