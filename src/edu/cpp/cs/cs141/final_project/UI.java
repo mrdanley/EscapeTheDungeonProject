@@ -46,6 +46,9 @@ public class UI{
 	public void displaySpyControls(){
 		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot\n");
 	}
+	public void displayGameLegend(){
+		System.out.println("S = Spy\nN = Ninja\nX = Room\n 
+	}
 	public void displayEndGameMessage()
 	{
 		System.out.println("Goodbye.");
