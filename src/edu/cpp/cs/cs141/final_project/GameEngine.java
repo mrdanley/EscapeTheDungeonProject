@@ -134,6 +134,7 @@ public class GameEngine{
 			}
 			System.out.println();
 		}
+		ui.displaySpyControls();
 	}
 	/**
 	 * still working on this function. only shows spy and rooms atm
@@ -154,5 +155,6 @@ public class GameEngine{
 				ui.displayIngameMenu(i-1);
 			System.out.println();
 		}
+		ui.displaySpyControls();
 	}
 }
