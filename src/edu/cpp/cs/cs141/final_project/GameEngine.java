@@ -29,6 +29,7 @@ public class GameEngine{
 	private Spy spy = new Spy();
 	private Room[] rooms = new Room[9];
 	private UI ui = new UI();
+	
 	private Scanner kb = new Scanner(System.in);
 	private Random rand = new Random();
 	private int rowSpawn, colSpawn;
@@ -56,6 +57,7 @@ public class GameEngine{
 	{
 		for(int i=0;i<9;i++)
 			rooms[i] = new Room();
+		rooms[rand.nextInt(9)].setBriefcase();
 		  
 		map.set(1,1,rooms[0]);
 		map.set(1,4,rooms[1]);
