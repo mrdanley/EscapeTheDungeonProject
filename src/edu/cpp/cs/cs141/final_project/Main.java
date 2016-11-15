@@ -17,7 +17,7 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
+ * This class is teh Main class which creates a {@link GameEngine} object to start the dungeon game.
  * @author
  */
 
