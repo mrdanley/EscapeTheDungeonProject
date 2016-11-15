@@ -43,6 +43,9 @@ public class UI{
 	public void displayEnterDungeonMessage(){
 		System.out.println("You have entered the dungeon!!!\n");
 	}
+	public void displaySpyControls(){
+		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot\n");
+	}
 	public void displayEndGameMessage()
 	{
 		System.out.println("Goodbye.");
