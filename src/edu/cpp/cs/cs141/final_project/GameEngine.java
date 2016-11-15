@@ -17,7 +17,8 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
+ * This class represents the GameEngine for the dungeon game that runs the game and interacts with the {@link UI}
+ *   as well as all the objects in the game. It also keeps track of the states of all the objects.
  * @author
  */
 
