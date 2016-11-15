@@ -22,7 +22,7 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Bullet extends PowerUp{
-  public char image(){
-	  return 'B';
-  }
+	public char image(){
+		return 'B';
+	}
 }
