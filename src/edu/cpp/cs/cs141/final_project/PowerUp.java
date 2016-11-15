@@ -17,10 +17,12 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
+ * This class represents a PowerUp that can be spawned in the dungeon. PowerUps can occupy the same space as
+ *   {@link Ninja}'s but not {@link Room}'s. If the {@link Spy} moves into the space of a PowerUp, the PowerUp
+ *   is "picked up" by the {@link Spy}.
  * @author
  */
 
 public abstract class PowerUp implements GamePiece{
-	public abstract char image();
+	public abstract bool pickedUp();
 }
