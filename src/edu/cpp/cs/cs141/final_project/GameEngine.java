@@ -124,8 +124,9 @@ public class GameEngine{
 		System.out.println("-Debug Ver.-");
 		for(int i=0;i<9;i++)
 		{
+			
 			for(int j=0;j<9;j++)
-				System.out.print(map.image(i,j));
+				System.out.print("[" + map.image(i,j) + "]");
 			if(i>0 && i<5)
 			{
 				if(i==3)
@@ -148,7 +149,7 @@ public class GameEngine{
 			for(int j=0;j<9;j++)
 			{
 				if(map.isRoom(i,j) || map.isSpy(i,j))
-					System.out.print(map.image(i,j));
+					System.out.print("[" + map.image(i,j) + "]");
 				else
 					System.out.print(' ');
 			}
