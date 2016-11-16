@@ -21,7 +21,20 @@ package edu.cpp.cs.cs141.final_project;
  * @author
  */
 
-public interface ActiveAgent extends GamePiece{
-	void move();
-	boolean look();
+public abstract class ActiveAgent implements GamePiece{
+	private int rowCoord, colCoord;
+	
+	public abstract void move();
+	public void setLocation(int x, int y)
+	{
+		rowCoord = x;
+		colCoord = y;
+	}
+	public int getRowCoord(){
+		return rowCoord;
+	}
+	public int getColCoord(){
+		return colCoord;
+	}
+	
 }

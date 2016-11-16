@@ -21,7 +21,8 @@ package edu.cpp.cs.cs141.final_project;
  * @author
  */
 
-public class Spy implements ActiveAgent{
+public class Spy extends ActiveAgent{
+
 	public void move(){
 		
 	}

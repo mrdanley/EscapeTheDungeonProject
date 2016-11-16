@@ -22,12 +22,19 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Room implements GamePiece{
+	private boolean debugMode = true;
+	
+	public void setLocation(int x, int y){
+		
+	}
 	public char image(){
+		if(debugMode)
+		{
+			if(hasBriefcase())
+				return 'C';
+		}
 		return 'X';
   	}
-	public char showBriefcase(){
-		return 'C';
-	}
 	private boolean briefcase = false;
 	public void setBriefcase(){
 		briefcase = true;
@@ -37,5 +44,11 @@ public class Room implements GamePiece{
 			return true;
 		else
 			return false;
+	}
+	public void toggleMode(){
+		if(debugMode)
+			debugMode = false;
+		else
+			debugMode = true;
 	}
 }

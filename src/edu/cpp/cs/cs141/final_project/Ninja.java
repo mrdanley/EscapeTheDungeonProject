@@ -21,14 +21,20 @@ package edu.cpp.cs.cs141.final_project;
  * @author
  */
 
-public class Ninja implements ActiveAgent{
+public class Ninja extends ActiveAgent{
+	private boolean debugMode = true;
+	
+	
 	public void move(){
 		
 	}
-	public boolean look(){
-		return true;
-	}
 	public char image(){
 		return 'N'; 
+	}
+	public void toggleMode(){
+		if(debugMode)
+			debugMode = false;
+		else
+			debugMode = true;
 	}
 }

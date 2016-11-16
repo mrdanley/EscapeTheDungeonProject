@@ -25,4 +25,7 @@ public class EmptyPU extends PowerUp{
 	public char image(){
 		return ' ';
 	}
+	public boolean pickedUp(){
+		return true;
+	}
 }

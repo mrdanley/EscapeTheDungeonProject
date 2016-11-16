@@ -24,5 +24,19 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public abstract class PowerUp implements GamePiece{
+	private boolean debugMode = true;
+	private int rowCoord,colCoord;
+	
 	public abstract boolean pickedUp();
+	public void setLocation(int x, int y)
+	{
+		rowCoord = x;
+		colCoord = y;
+	}
+	public void toggleMode(){
+		if(debugMode)
+			debugMode = false;
+		else
+			debugMode = true;
+	}
 }

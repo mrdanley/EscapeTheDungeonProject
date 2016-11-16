@@ -24,4 +24,5 @@ package edu.cpp.cs.cs141.final_project;
 
 public interface GamePiece{
 	char image();
+	void setLocation(int x, int y);
 }

@@ -24,27 +24,78 @@ package edu.cpp.cs.cs141.final_project;
 
 import java.util.*;
 public class GameEngine{
-	private Map map = new Map();
+	private Map map;
 	private Ninja[] ninjas = new Ninja[6];
 	private PowerUp[] powerups = new PowerUp[3];
 	private Spy spy = new Spy();
 	private Room[] rooms = new Room[9];
 	private UI ui = new UI();
 	
-	private Scanner kb = new Scanner(System.in);
 	private Random rand = new Random();
 	private int rowSpawn, colSpawn;
 	
 	public void gameStart(){
 		gameSet();
 		ui.displayMenu();
-		int startInput = kb.nextInt();
+		int startInput;
 		do{
+			startInput = ui.getIntInput();
 			switch(startInput){
 				case 1:
 				{
-					displayDungeonDebug();//change to dark version once game finished
-					break;
+					int charInput;
+					boolean showDungeon = true;
+					do{
+						if(showDungeon)
+							ui.displayDungeon(map);
+						showDungeon = true;
+						charInput = ui.getCharInput();
+						switch(charInput){
+							case 'W':
+							case 'w':
+								break;
+							case 'S':
+							case 's':
+								break;
+							case 'A':
+							case 'a':
+								break;
+							case 'D':
+							case 'd':
+								break;
+							case 'Q':
+							case 'q':
+								spyShoot();
+								break;
+							case 'U':
+							case 'u':
+								ui.displayGameLegend();									
+								break;
+							case 'M':
+							case 'm':
+							{
+								for(int i=0; i<6; i++)
+									ninjas[i].toggleMode();
+								for(int i=0; i<9; i++)
+									rooms[i].toggleMode();
+								for(int i=0; i<3; i++)
+									powerups[i].toggleMode();
+								map.toggleMode();
+								break;
+							}
+							//REMOVE BEFORE SUBMIT
+							case 'R':
+							case 'r':
+							{
+								gameSet();
+								break;
+							}
+							default:
+								showDungeon = ui.invalidInput();
+								break;
+						}
+					}while(!(charInput=='x' || charInput=='X'));
+					startInput = 2;
 				}
 				case 2:
 					ui.displayEndGameMessage();
@@ -52,7 +103,10 @@ public class GameEngine{
 				default:
 					break;
 			}
-		}while(startInput<1 || startInput>2);
+		}while(startInput!=2);
+	}
+	private void spyShoot(){
+		
 	}
 	private void setRooms()
 	{
@@ -70,6 +124,13 @@ public class GameEngine{
 		map.set(7,4,rooms[7]);
 		map.set(7,7,rooms[8]);
 	}
+	private boolean notNearSpyStart(int x, int y){
+		if(!((x==6 && (y==0 || y==1)) || ((x==7 ||
+				x==8)&& y==2) || (x==7 && y==0) || (x==8 && y==1)))
+			return true;
+		else
+			return false;
+	}
 	private void setNinjas()
 	{
 		rowSpawn = rand.nextInt(9);
@@ -80,7 +141,7 @@ public class GameEngine{
 			spawnNinja = false;
 			ninjas[i] = new Ninja();
 			do{
-				if(map.noActiveAgent(rowSpawn,colSpawn))
+				if(notNearSpyStart(rowSpawn,colSpawn) && map.noActiveAgent(rowSpawn,colSpawn))
 				{
 					map.set(rowSpawn, colSpawn, ninjas[i]);
 					spawnNinja = true;
@@ -114,51 +175,10 @@ public class GameEngine{
 		map.set(8,0,spy);
 	}
 	private void gameSet(){
+		map = new Map();
 		setRooms();
 		setNinjas();
 		setPowerUps();
 		setSpy();
-	}
-	private void displayDungeonDebug(){
-		System.out.println("-DUNGEON-");
-		System.out.println("-Debug Ver.-");
-		for(int i=0;i<9;i++)
-		{
-			//need to fix debug mode briefcase show
-			for(int j=0;j<9;j++)
-			{
-				System.out.print("[" + map.image(i,j) + "]");
-			}
-			if(i>0 && i<5)
-			{
-				if(i==3)
-					ui.displayIngameMenu(i+1);
-				else
-					ui.displayIngameMenu(i-1);
-			}
-			System.out.println();
-		}
-		ui.displaySpyControls();
-	}
-	/**
-	 * still working on this function. only shows spy and rooms atm
-	 */
-	private void displayDungeonDark(){
-		System.out.println("-DUNGEON-");
-		System.out.println("-Night Goggles Ver.-");
-		for(int i=0;i<9;i++)
-		{
-			for(int j=0;j<9;j++)
-			{
-				if(map.isRoom(i,j) || map.isSpy(i,j))
-					System.out.print("[" + map.image(i,j) + "]");
-				else
-					System.out.print(' ');
-			}
-			if(i>0 && i<5)
-				ui.displayIngameMenu(i-1);
-			System.out.println();
-		}
-		ui.displaySpyControls();
 	}
 }

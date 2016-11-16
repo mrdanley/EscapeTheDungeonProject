@@ -22,47 +22,66 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Tile{
-	private GamePiece g = new EmptyAA();
-	private PowerUp p = new EmptyPU();
+	private GamePiece gamepiece = new EmptyAA();
+	private PowerUp powerup = new EmptyPU();
+	private int rowCoord, colCoord;
 	
+	public Tile(int x, int y){
+		rowCoord = x;
+		colCoord = y;
+	}
 	public char image(){
-		if(g instanceof EmptyAA)
-			return p.image();
+		if(gamepiece instanceof EmptyAA)
+			return powerup.image();
 		else
-			return g.image();
+			return gamepiece.image();
 	}
 	public void set(GamePiece g){
-		this.g = g;
+		this.gamepiece = g;
+		gamepiece.setLocation(rowCoord,colCoord);
 	}
 	public void set(PowerUp p){
-		this.p = p;
+		this.powerup = p;
+		powerup.setLocation(rowCoord,colCoord);
 	}
 	public boolean noActiveAgent(){
-		if(g instanceof EmptyAA)
+		if(gamepiece instanceof EmptyAA)
 			return true;
 		else
 			return false;
 	}
 	public boolean noPowerUp(){
-		if(p instanceof EmptyPU)
+		if(powerup instanceof EmptyPU)
 			return true;
 		else
 			return false;
 	}
 	public boolean isRoom(){
-		if(g instanceof Room)
+		if(gamepiece instanceof Room)
 			return true;
 		else
 			return false;
 	}
 	public boolean isSpy(){
-		if(g instanceof Spy)
+		if(gamepiece instanceof Spy)
+			return true;
+		else
+			return false;
+	}
+	public boolean isNinja(){
+		if(gamepiece instanceof Ninja)
+			return true;
+		else
+			return false;
+	}
+	public boolean isPowerUp(){
+		if(!(powerup instanceof EmptyPU))
 			return true;
 		else
 			return false;
 	}
 	public GamePiece getGamePiece(){
-		return g;
+		return gamepiece;
 	}
 }
 

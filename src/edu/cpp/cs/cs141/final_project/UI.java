@@ -16,38 +16,79 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.util.Scanner;
+
 /**
  * This class
  * @author
  */
 
 public class UI{
-	private String[] IngameMenu = new String[5];
+	private String[] IngameMenu = new String[4];
+	private Scanner kb = new Scanner(System.in);
 	
 	public UI(){
 		IngameMenu[0] = "\tD[u]ngeon Legend";
-		IngameMenu[1] = "\t[C]ontrols";
-		IngameMenu[2] = "\tD[e]bug Mode";
-		IngameMenu[3] = "\tE[x]it Game";
-		IngameMenu[4] = "\t[N]ormal mode";
+		IngameMenu[1] = "\tDebug [M]ode";
+		IngameMenu[2] = "\tE[x]it Game";
+		IngameMenu[3] = "\tNormal [M]ode";
 	}
-	
-	public void displayIngameMenu(int i){
-		System.out.print(IngameMenu[i]);
+	public int getIntInput(){
+		System.out.print("Input: ");
+		int input = kb.nextInt();
+		return input;
+	}
+	public int getCharInput(){
+		System.out.print("Input: ");
+		char input = kb.next().charAt(0);
+		return input;
+	}
+	public void displayDungeon(Map map)
+	{
+		System.out.println("-DUNGEON-");
+		for(int i=0;i<9;i++)
+		{
+			//need to fix debug mode briefcase show
+			for(int j=0;j<9;j++)
+			{
+				System.out.print("[" + map.image(i,j) + "]");
+			}
+			if(i>0 && i<4)
+			{
+				if(i==2)
+				{
+					if(map.isDebug())
+						System.out.print(IngameMenu[i+1]);
+					else
+						System.out.print(IngameMenu[i-1]);
+				}
+				else
+					System.out.print(IngameMenu[i-1]);
+			}
+			//REMOVE BEFORE SUBMIT
+			if(i==5)
+				System.out.print("\tEnter [R] to respawn dungeon (Will Remove before submit)");
+			System.out.println();
+		}
+		displaySpyControls();
 	}
 	public void displayMenu(){
 		System.out.print("1. Start Game\n"+
-						 "2. Exit Game\n"+
-						 "Input: ");
+						 "2. Exit Game\n");
 	}
 	public void displayEnterDungeonMessage(){
 		System.out.println("You have entered the dungeon!!!\n");
 	}
-	public void displaySpyControls(){
+	private void displaySpyControls(){
 		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot\n");
 	}
 	public void displayGameLegend(){
-		System.out.println("S = Spy\nN = Ninja\nX = Room\n 
+		System.out.println("S = Spy\nN = Ninja\nX = Room\nI = Invincibility\n"
+							+"R = Radar\nB = Bullet\nC = Briefcase\n");
+	}
+	public boolean invalidInput(){
+		System.out.println("Invalid input. Enter again: ");
+		return false;
 	}
 	public void displayEndGameMessage()
 	{
