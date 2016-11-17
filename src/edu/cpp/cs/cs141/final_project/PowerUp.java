@@ -24,7 +24,6 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public abstract class PowerUp implements GamePiece{
-	private boolean debugMode = true;
 	private int rowCoord,colCoord;
 	
 	public abstract boolean pickedUp();
@@ -33,10 +32,7 @@ public abstract class PowerUp implements GamePiece{
 		rowCoord = x;
 		colCoord = y;
 	}
-	public void toggleMode(){
-		if(debugMode)
-			debugMode = false;
-		else
-			debugMode = true;
-	}
+		// How to toggle:
+		//debugMode = !debugMode;
+		// Don't complicate things
 }

@@ -16,13 +16,13 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.util.Random;
+
 /**
  * This class represents the GameEngine for the dungeon game that runs the game and interacts with the {@link UI}
  *   as well as all the objects in the game. It also keeps track of the states of all the objects.
  * @author
  */
-
-import java.util.*;
 public class GameEngine{
 	private Map map;
 	private Ninja[] ninjas = new Ninja[6];
@@ -74,12 +74,6 @@ public class GameEngine{
 							case 'M':
 							case 'm':
 							{
-								for(int i=0; i<6; i++)
-									ninjas[i].toggleMode();
-								for(int i=0; i<9; i++)
-									rooms[i].toggleMode();
-								for(int i=0; i<3; i++)
-									powerups[i].toggleMode();
 								map.toggleMode();
 								break;
 							}
@@ -90,6 +84,9 @@ public class GameEngine{
 								gameSet();
 								break;
 							}
+							case 'X':
+							case 'x':
+								break;
 							default:
 								showDungeon = ui.invalidInput();
 								break;
@@ -125,6 +122,7 @@ public class GameEngine{
 		map.set(7,7,rooms[8]);
 	}
 	private boolean notNearSpyStart(int x, int y){
+		//TODO cleanup
 		if(!((x==6 && (y==0 || y==1)) || ((x==7 ||
 				x==8)&& y==2) || (x==7 && y==0) || (x==8 && y==1)))
 			return true;

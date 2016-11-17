@@ -23,8 +23,8 @@ package edu.cpp.cs.cs141.final_project;
 
 import java.lang.Math;
 public class Map{
+	public static boolean debugMode = false;
 	private Tile[][] tiles;
-	private boolean debugMode = true;
 	private int spyX, spyY;
 	
 	public Map(){
@@ -35,17 +35,8 @@ public class Map{
 				tiles[i][j] = new Tile(i,j);
 		}
 	}
-	public boolean isDebug(){
-		if(debugMode)
-			return true;
-		else
-			return false;
-	}
-	public void toggleMode(){
-		if(debugMode)
-			debugMode = false;
-		else
-			debugMode = true;
+	public static boolean isDebug(){
+		return debugMode;
 	}
   	public void set(int x, int y, GamePiece g){
   		if(g instanceof Spy)
@@ -72,36 +63,24 @@ public class Map{
   		return tiles[x][y].image();
   	}
   	public boolean noActiveAgent(int x, int y){
-  		if(tiles[x][y].noActiveAgent())
-  			return true;
-  		else
-  			return false;
+  		return tiles[x][y].noActiveAgent();
   	}
   	public boolean noPowerUp(int x, int y){
-  		if(tiles[x][y].noPowerUp())
-  			return true;
-  		else
-  			return false;
+  		return tiles[x][y].noPowerUp();
   	}
   	public boolean isRoom(int x, int y){
-  		if(tiles[x][y].isRoom())
-  			return true;
-  		else
-  			return false;
+  		return tiles[x][y].isRoom();
   	}
   	public boolean isSpy(int x, int y){
-  		if(tiles[x][y].isSpy())
-  			return true;
-  		else
-  			return false;
+  		return tiles[x][y].isSpy();
   	}
   	public boolean isNinja(int x, int y){
-  		if(tiles[x][y].isNinja())
-  			return true;
-  		else
-  			return false;
+  		return tiles[x][y].isNinja();
   	}
   	public void clear(){
   		tiles = new Tile[9][9];
   	}
+	public void toggleMode() {
+		debugMode = !debugMode;
+	}
 }
