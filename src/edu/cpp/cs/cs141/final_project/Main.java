@@ -17,14 +17,13 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class is teh Main class which creates a {@link GameEngine} object to start the dungeon game.
+ * This class is the Main class which creates a {@link GameEngine} object to start the dungeon game.
  * @author
  */
 
 public class Main{
 	public static void main(String[]args)
 	{
-		GameEngine GE = new GameEngine();
-		GE.gameStart();
+		new GameEngine().gameStart();
 	}
 }

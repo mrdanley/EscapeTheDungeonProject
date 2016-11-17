@@ -31,6 +31,7 @@ public class Tile{
 		colCoord = y;
 	}
 	public char image(){
+		//possibly change to: {return (gamepiece instanceof EmptyAA) ? powerup.image() : gamepiece.image();}
 		if(gamepiece instanceof EmptyAA)
 			return powerup.image();
 		else
@@ -45,40 +46,22 @@ public class Tile{
 		powerup.setLocation(rowCoord,colCoord);
 	}
 	public boolean noActiveAgent(){
-		if(gamepiece instanceof EmptyAA)
-			return true;
-		else
-			return false;
+		return gamepiece instanceof EmptyAA;
 	}
 	public boolean noPowerUp(){
-		if(powerup instanceof EmptyPU)
-			return true;
-		else
-			return false;
+		return powerup instanceof EmptyPU;
 	}
 	public boolean isRoom(){
-		if(gamepiece instanceof Room)
-			return true;
-		else
-			return false;
+		return gamepiece instanceof Room;
 	}
 	public boolean isSpy(){
-		if(gamepiece instanceof Spy)
-			return true;
-		else
-			return false;
+		return gamepiece instanceof Spy;
 	}
 	public boolean isNinja(){
-		if(gamepiece instanceof Ninja)
-			return true;
-		else
-			return false;
+		return gamepiece instanceof Ninja;
 	}
 	public boolean isPowerUp(){
-		if(!(powerup instanceof EmptyPU))
-			return true;
-		else
-			return false;
+		return !(powerup instanceof EmptyPU);
 	}
 	public GamePiece getGamePiece(){
 		return gamepiece;
