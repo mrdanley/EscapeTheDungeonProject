@@ -84,6 +84,9 @@ public class GameEngine{
 								gameSet();
 								break;
 							}
+							case 'X':
+							case 'x':
+								break;
 							default:
 								showDungeon = ui.invalidInput();
 								break;
