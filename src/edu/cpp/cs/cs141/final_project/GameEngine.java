@@ -53,15 +53,13 @@ public class GameEngine{
 						switch(charInput){
 							case 'W':
 							case 'w':
-								break;
 							case 'S':
 							case 's':
-								break;
 							case 'A':
 							case 'a':
-								break;
 							case 'D':
 							case 'd':
+								spyMove((char) charInput);
 								break;
 							case 'Q':
 							case 'q':
@@ -101,6 +99,13 @@ public class GameEngine{
 					break;
 			}
 		}while(startInput!=2);
+	}
+	private void spyMove(char charInput) {
+		try {
+			map.moveSpy(Character.toLowerCase(charInput));
+		} catch (Exception e) {
+			//TODO print invalid move; possibly skip turn
+		}
 	}
 	private void spyShoot(){
 		

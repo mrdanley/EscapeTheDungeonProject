@@ -49,6 +49,11 @@ public class Map{
   	public void set(int x, int y, PowerUp p){
   		tiles[x][y].set(p);
   	}
+  	
+  	public GamePiece getAtLocation(int x, int y) {
+  		return tiles[x][y].getGamePiece();
+  	}
+  	
   	public char image(int x, int y){
   		if(!debugMode)
   		{
@@ -83,4 +88,67 @@ public class Map{
 	public void toggleMode() {
 		debugMode = !debugMode;
 	}
+	
+	/**
+	 * @param direction Single character gamer directions (wasd)
+	 */
+	public void moveSpy(char direction) {
+		movePiece(spyX, spyY, direction);
+	}
+	
+	
+	/**
+	 * Will move an {@link ActiveAgent} in a valid direction by swapping
+	 * the two {@link Tile}'s agents
+	 * 
+	 * @param x Current location x
+	 * @param y Current location y
+	 * @param direction target destination in gamer directions (wasd)
+	 */
+	public void movePiece(int x, int y, char direction) {
+		GamePiece piece1 = getAtLocation(x, y);
+		int targetX = x;
+		int targetY = y;
+
+		switch (direction) {
+		case 'w':
+			targetX--; //right
+			break;
+		case 'a':
+			targetY--; //up
+			break;
+		case 's':
+			targetX++; //down
+			break;
+		case 'd':
+			targetY++; //left
+			break;
+		default:
+			new Exception("Invalid directional input").printStackTrace();
+			return;
+		}
+		
+		if (checkValidLocation(targetX, targetY)) {
+			return;
+		}
+		
+		GamePiece piece2 = getAtLocation(targetX, targetY);
+		set(targetX, targetY, piece1);
+		set(x, y, piece2);
+	}
+	
+	private boolean checkValidLocation(int x, int y) {
+		boolean isValid = true;
+		
+		if (x > tiles.length-1 || x < 0 || y > tiles.length-1 || y < 0) {
+			isValid = false;
+		}
+		
+		if (noActiveAgent(x, y)) {
+			isValid = false;
+		}
+		
+		return isValid;
+	}
+	
 }
