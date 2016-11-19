@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -17,22 +17,45 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
+ * This class contains Active Agent attributes.
  * @author
  */
 
 public abstract class ActiveAgent implements GamePiece{
+	/**
+	 * This field holds the number where {@link ActiveAgent} is currently set position in a grid as an multiarray.
+	 */
 	private int rowCoord, colCoord;
 	
-	public abstract void move();
+	/**
+	 * This method changes the Active Agent's location to another spot on the {@link Map}
+	 * @param grid takes Map as an argument to change it with the updated version where the {@link ActiveAgent} now stands.
+	 */
+	public abstract void move(Map grid);
+	
+	/**
+	 * This method sets the location of the {@link ActiveAgent}
+	 * @param x represents the row of the grid.
+	 * @param y represents the column of the grid.
+	 */
 	public void setLocation(int x, int y)
 	{
 		rowCoord = x;
 		colCoord = y;
 	}
+	
+	/**
+	 * This method returns the row coordinates of {@link ActiveAgent}
+	 * @return row coordinates of the {@link ActiveAgent}
+	 */
 	public int getRowCoord(){
 		return rowCoord;
 	}
+	
+	/**
+	 * This method returns the column coordinates of {@link ActiveAgent}
+	 * @return column coordinates of the {@link ActiveAgent}
+	 */
 	public int getColCoord(){
 		return colCoord;
 	}
