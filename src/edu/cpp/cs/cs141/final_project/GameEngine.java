@@ -104,7 +104,7 @@ public class GameEngine{
 		try {
 			map.moveSpy(Character.toLowerCase(charInput));
 		} catch (Exception e) {
-			//TODO print invalid move; possibly skip turn
+			//TODO print invalid move
 		}
 	}
 	private void spyShoot(){

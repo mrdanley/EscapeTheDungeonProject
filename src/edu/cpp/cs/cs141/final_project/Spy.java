@@ -22,10 +22,6 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Spy extends ActiveAgent{
-
-	public void move(){
-		
-	}
 	public boolean look(){
 		return true;
 	}

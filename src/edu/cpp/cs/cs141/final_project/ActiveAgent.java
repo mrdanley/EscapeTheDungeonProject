@@ -28,12 +28,6 @@ public abstract class ActiveAgent implements GamePiece{
 	private int rowCoord, colCoord;
 	
 	/**
-	 * This method changes the Active Agent's location to another spot on the {@link Map}
-	 * @param grid takes Map as an argument to change it with the updated version where the {@link ActiveAgent} now stands.
-	 */
-	public abstract void move(Map grid);
-	
-	/**
 	 * This method sets the location of the {@link ActiveAgent}
 	 * @param x represents the row of the grid.
 	 * @param y represents the column of the grid.

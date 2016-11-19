@@ -43,16 +43,14 @@ public class UI{
 		char input = kb.next().charAt(0);
 		return input;
 	}
+	@SuppressWarnings("static-access")
 	public void displayDungeon(Map map)
 	{
 		System.out.println("-DUNGEON-");
 		for(int i=0;i<9;i++)
 		{
-			//need to fix debug mode briefcase show
 			for(int j=0;j<9;j++)
-			{
 				System.out.print("[" + map.image(i,j) + "]");
-			}
 			if(i>0 && i<4)
 			{
 				if(i==2)
