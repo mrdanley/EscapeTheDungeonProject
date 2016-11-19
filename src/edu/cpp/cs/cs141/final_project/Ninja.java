@@ -48,8 +48,11 @@ public class Ninja extends ActiveAgent{
 		boolean isWallHere = true;
 		boolean isNinjaHere = true;
 		boolean isSpyHere = true;
-		int count = 0;
-		
+		boolean triedUp = false;
+		boolean triedDown = false;
+		boolean triedLeft = false;
+		boolean triedRight = false;
+
 		while ((isWallHere == true) || (isNinjaHere == true) || (isSpyHere == true))
 		{
 			int row = getRowCoord();
@@ -57,22 +60,31 @@ public class Ninja extends ActiveAgent{
 			int RandomRoll = 1 + roll.nextInt(4);
 			
 			if (RandomRoll == 1)
+			{
+				triedLeft = true;
 				column--;		
+			}
 			if (RandomRoll == 2)
+			{
+				triedUp = true;
 				row--;
+			}
 			if (RandomRoll == 3)
+			{
+				triedRight = true;
 				column++;
+			}
 			if (RandomRoll == 4)
+			{
+				triedDown = true;
 				row++;
+			}
 			
 			isWallHere = isOutOfBound(RandomRoll);
 			if (isWallHere == false) {	
 				isSpyHere = Grid.isSpy(row, column);
 				isNinjaHere = Grid.isNinja(row, column);
 			}	
-			count++;
-			if (count == 10000)
-				break;
 			if ((isSpyHere == false) && (isNinjaHere == false) && (isWallHere == false))
 			{
 				GamePiece emptyIt = new EmptyAA();
@@ -80,6 +92,9 @@ public class Ninja extends ActiveAgent{
 				Grid.set(row, column, this);
 				break;
 			}
+			
+			if ((triedLeft == true) && (triedRight == true) && (triedUp == true) && (triedDown == true))
+				break;
 		}
 		
 	}
