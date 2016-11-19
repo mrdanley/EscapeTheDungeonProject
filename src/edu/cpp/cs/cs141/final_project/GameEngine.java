@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -32,7 +32,7 @@ public class GameEngine{
 	private UI ui = new UI();
 	
 	private Random rand = new Random();
-	private int rowSpawn, colSpawn, invincibleTurns=5;
+	private int rowSpawn, colSpawn, invincibleTurns=0;
 	
 	public void gameStart(){
 		gameSet();
@@ -64,8 +64,11 @@ public class GameEngine{
 								checkForPowerUp(spy);
 								if(spy.getInvincibility())
 									invincibleTurns--;
+								//probably have ninja attack method here
 								for (int i = 0; i < 6; i++) 
 									ninjas[i].move(map);
+								if(invincibleTurns == 0)
+									spy.disableInvincibility();
 								break;
 							}
 							case 'Q':
@@ -116,7 +119,10 @@ public class GameEngine{
 			if(map.getPowerUp() instanceof Bullet)
 				spy.addBullet();
 			else if(map.getPowerUp() instanceof Invincibility)
+			{
+				invincibleTurns = 5;
 				spy.activateInvincibility();
+			}
 			else//radar
 			{
 				for(int i=0;i<rooms.length;i++)
