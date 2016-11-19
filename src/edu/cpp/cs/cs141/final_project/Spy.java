@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -33,6 +33,10 @@ public class Spy extends ActiveAgent{
 	public void activateInvincibility()
 	{
 		invincibility = true;
+	}
+	public void disableInvincibility()
+	{
+		invincibility = false;
 	}
 	public boolean getInvincibility()
 	{
