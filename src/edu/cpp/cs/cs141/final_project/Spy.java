@@ -22,10 +22,20 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Spy extends ActiveAgent{
+	private int bullet = 1;
+	
 	public boolean look(){
 		return true;
 	}
 	public char image(){
 		 return 'S'; 
+	}
+	public int getBullet()
+	{
+		return bullet;
+	}
+	public void addBullet()
+	{
+		bullet++;
 	}
 }

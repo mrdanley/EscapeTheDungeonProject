@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -59,10 +59,13 @@ public class GameEngine{
 							case 'a':
 							case 'D':
 							case 'd':
+							{
 								spyMove((char) charInput);
-								for (int i = 0; i < ninjas.length; i++) 
+								checkForPowerUp(spy);
+								for (int i = 0; i < 6; i++) 
 									ninjas[i].move(map);
 								break;
+							}
 							case 'Q':
 							case 'q':
 								spyShoot();
@@ -104,11 +107,33 @@ public class GameEngine{
 			}
 		}while(startInput!=2);
 	}
-	private void spyMove(char charInput) {
+	private void checkForPowerUp(Spy spy)
+	{
+		if(map.powerUpCheck())
+		{
+			if(map.getPowerUp() instanceof Bullet)
+			{
+				spy.addBullet();
+			}
+			else if(map.getPowerUp() instanceof Invincibility)
+				;
+			else//radar
+			{
+				for(int i=0;i<rooms.length;i++)
+				{
+					if(rooms[i].hasBriefcase())
+						rooms[i].radarActivate();
+				}
+			}
+			map.removePowerUp();
+		}
+	}
+	private void spyMove(char charInput)
+	{
 		try {
 			map.moveSpy(Character.toLowerCase(charInput));
 		} catch (Exception e) {
-			//TODO print invalid move
+			ui.displayInvalidMove();
 		}
 	}
 	private void spyShoot(){
@@ -116,7 +141,7 @@ public class GameEngine{
 	}
 	private void setRooms()
 	{
-		for(int i=0;i<rooms.length;i++)
+		for(int i=0;i<9;i++)
 			rooms[i] = new Room();
 		rooms[rand.nextInt(9)].setBriefcase();
 		  
@@ -143,7 +168,7 @@ public class GameEngine{
 		rowSpawn = rand.nextInt(9);
 		colSpawn = rand.nextInt(9);
 		boolean spawnNinja;
-		for(int i=0;i<ninjas.length;i++)
+		for(int i=0;i<6;i++)
 		{
 			spawnNinja = false;
 			ninjas[i] = new Ninja();
@@ -170,12 +195,12 @@ public class GameEngine{
 		do{
 			rowSpawn = rand.nextInt(9);
 			colSpawn = rand.nextInt(9);
-			if(map.noPowerUp(rowSpawn,colSpawn) && !map.isRoom(rowSpawn,colSpawn))
+			if(map.noPowerUp(rowSpawn,colSpawn) && !map.isRoom(rowSpawn,colSpawn) && !(rowSpawn==8 && colSpawn==0))
 			{
 				map.set(rowSpawn, colSpawn, powerups[powerup_num]);
 				powerup_num++;
 			}
-		}while(powerup_num<3);
+		}while(powerup_num<powerups.length);
 	}
 	private void setSpy()
 	{

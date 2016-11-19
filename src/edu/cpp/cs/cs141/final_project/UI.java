@@ -43,19 +43,18 @@ public class UI{
 		char input = kb.next().charAt(0);
 		return input;
 	}
-	@SuppressWarnings("static-access")
 	public void displayDungeon(Map map)
 	{
 		System.out.println("-DUNGEON-");
-		for(int i=0;i<map.getWidth();i++)
+		for(int i=0;i<9;i++)
 		{
-			for(int j=0;j<map.getLength();j++)
+			for(int j=0;j<9;j++)
 				System.out.print("[" + map.image(i,j) + "]");
 			if(i>0 && i<4)
 			{
 				if(i==2)
 				{
-					if(map.isDebug())
+					if(Map.isDebug())
 						System.out.print(IngameMenu[i+1]);
 					else
 						System.out.print(IngameMenu[i-1]);
@@ -91,5 +90,9 @@ public class UI{
 	public void displayEndGameMessage()
 	{
 		System.out.println("Goodbye.");
+	}
+	public void displayInvalidMove()
+	{
+		System.out.println("Invalid move. Try Again.\n");
 	}
 }

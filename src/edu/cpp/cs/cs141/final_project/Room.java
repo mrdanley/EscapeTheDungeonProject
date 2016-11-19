@@ -22,19 +22,28 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Room implements GamePiece{
-	private boolean briefcase = false;
+	private boolean briefcase = false, radarBriefcase = false;
 	
 	public void setLocation(int x, int y){
 		
 	}
+	
 	public char image(){
 		// possibly change to: { return (Map.debugMode && hasBriefcase()) ? 'C' : 'X'; }
-		if(Map.debugMode && hasBriefcase()) {
+		if(Map.debugMode && hasBriefcase())
 			return 'C';
-		} else {
-			return 'X';
+		else if(radarBriefcase)
+		{
+			radarBriefcase = false;
+			return 'C';
 		}
+		else
+			return 'X';
   	}
+	public void radarActivate()
+	{
+		radarBriefcase = true;
+	}
 	public void setBriefcase(){
 		briefcase = true;
 	}

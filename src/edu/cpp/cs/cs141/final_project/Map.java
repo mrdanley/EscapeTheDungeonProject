@@ -29,9 +29,9 @@ public class Map{
 	
 	public Map(){
 		tiles = new Tile[9][9];
-		for(int i=0;i<tiles.length;i++)
+		for(int i=0;i<9;i++)
 		{
-			for(int j=0;j<tiles[0].length;j++)
+			for(int j=0;j<9;j++)
 				tiles[i][j] = new Tile(i,j);
 		}
 	}
@@ -136,7 +136,17 @@ public class Map{
 		set(targetX, targetY, piece1);
 		set(x, y, piece2);
 	}
-	
+	public boolean powerUpCheck()
+	{
+		if(!tiles[spyX][spyY].noPowerUp())
+			return true;
+		else
+			return false;
+	}
+	public PowerUp getPowerUp()
+	{
+		return tiles[spyX][spyY].getPowerUp();
+	}
 	private boolean checkValidLocation(int x, int y) {
 		boolean isValid = true;
 		
@@ -150,13 +160,8 @@ public class Map{
 		
 		return isValid;
 	}
-	
-	public int getLength() {
-		return tiles.length;
+	public void removePowerUp()
+	{
+		tiles[spyX][spyY].set(new EmptyPU());
 	}
-	
-	public int getWidth() {
-		return tiles[0].length;
-	}
-	
 }

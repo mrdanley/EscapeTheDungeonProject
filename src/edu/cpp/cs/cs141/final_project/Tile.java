@@ -38,11 +38,11 @@ public class Tile{
 			return gamepiece.image();
 	}
 	public void set(GamePiece g){
-		this.gamepiece = g;
+		gamepiece = g;
 		gamepiece.setLocation(rowCoord,colCoord);
 	}
 	public void set(PowerUp p){
-		this.powerup = p;
+		powerup = p;
 		powerup.setLocation(rowCoord,colCoord);
 	}
 	public boolean noActiveAgent(){
@@ -65,6 +65,9 @@ public class Tile{
 	}
 	public GamePiece getGamePiece(){
 		return gamepiece;
+	}
+	public PowerUp getPowerUp(){
+		return powerup;
 	}
 }
 
