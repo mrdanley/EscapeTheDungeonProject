@@ -66,8 +66,6 @@ public class GameEngine{
 							case 'Q':
 							case 'q':
 								spyShoot();
-								for (int i = 0; i < 6; i++) 
-									ninjas[i].move(map);
 								break;
 							case 'U':
 							case 'u':
