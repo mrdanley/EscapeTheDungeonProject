@@ -60,7 +60,7 @@ public class GameEngine{
 							case 'D':
 							case 'd':
 								spyMove((char) charInput);
-								for (int i = 0; i < 6; i++) 
+								for (int i = 0; i < ninjas.length; i++) 
 									ninjas[i].move(map);
 								break;
 							case 'Q':
@@ -116,7 +116,7 @@ public class GameEngine{
 	}
 	private void setRooms()
 	{
-		for(int i=0;i<9;i++)
+		for(int i=0;i<rooms.length;i++)
 			rooms[i] = new Room();
 		rooms[rand.nextInt(9)].setBriefcase();
 		  
@@ -143,7 +143,7 @@ public class GameEngine{
 		rowSpawn = rand.nextInt(9);
 		colSpawn = rand.nextInt(9);
 		boolean spawnNinja;
-		for(int i=0;i<6;i++)
+		for(int i=0;i<ninjas.length;i++)
 		{
 			spawnNinja = false;
 			ninjas[i] = new Ninja();

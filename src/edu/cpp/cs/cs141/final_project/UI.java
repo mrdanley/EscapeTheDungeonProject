@@ -47,9 +47,9 @@ public class UI{
 	public void displayDungeon(Map map)
 	{
 		System.out.println("-DUNGEON-");
-		for(int i=0;i<9;i++)
+		for(int i=0;i<map.getWidth();i++)
 		{
-			for(int j=0;j<9;j++)
+			for(int j=0;j<map.getLength();j++)
 				System.out.print("[" + map.image(i,j) + "]");
 			if(i>0 && i<4)
 			{

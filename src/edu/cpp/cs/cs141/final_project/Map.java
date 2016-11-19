@@ -29,9 +29,9 @@ public class Map{
 	
 	public Map(){
 		tiles = new Tile[9][9];
-		for(int i=0;i<9;i++)
+		for(int i=0;i<tiles.length;i++)
 		{
-			for(int j=0;j<9;j++)
+			for(int j=0;j<tiles[0].length;j++)
 				tiles[i][j] = new Tile(i,j);
 		}
 	}
@@ -149,6 +149,14 @@ public class Map{
 		}
 		
 		return isValid;
+	}
+	
+	public int getLength() {
+		return tiles.length;
+	}
+	
+	public int getWidth() {
+		return tiles[0].length;
 	}
 	
 }
