@@ -32,7 +32,7 @@ public class GameEngine{
 	private UI ui = new UI();
 	
 	private Random rand = new Random();
-	private int rowSpawn, colSpawn;
+	private int rowSpawn, colSpawn, invincibleTurns=5;
 	
 	public void gameStart(){
 		gameSet();
@@ -62,6 +62,8 @@ public class GameEngine{
 							{
 								spyMove((char) charInput);
 								checkForPowerUp(spy);
+								if(spy.getInvincibility())
+									invincibleTurns--;
 								for (int i = 0; i < 6; i++) 
 									ninjas[i].move(map);
 								break;
@@ -112,11 +114,9 @@ public class GameEngine{
 		if(map.powerUpCheck())
 		{
 			if(map.getPowerUp() instanceof Bullet)
-			{
 				spy.addBullet();
-			}
 			else if(map.getPowerUp() instanceof Invincibility)
-				;
+				spy.activateInvincibility();
 			else//radar
 			{
 				for(int i=0;i<rooms.length;i++)
