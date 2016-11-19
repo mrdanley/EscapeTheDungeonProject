@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -61,7 +61,6 @@ public class GameEngine{
 							case 'd':
 							{
 								spyMove((char) charInput);
-								checkForPowerUp(spy);
 								if(spy.getInvincibility())
 									invincibleTurns--;
 								//probably have ninja attack method here
@@ -141,6 +140,7 @@ public class GameEngine{
 		} catch (Exception e) {
 			ui.displayInvalidMove();
 		}
+		checkForPowerUp(spy);
 	}
 	private void spyShoot(){
 		
