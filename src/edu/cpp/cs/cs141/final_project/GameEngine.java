@@ -60,10 +60,14 @@ public class GameEngine{
 							case 'D':
 							case 'd':
 								spyMove((char) charInput);
+								for (int i = 0; i < 6; i++) 
+									ninjas[i].move(map);
 								break;
 							case 'Q':
 							case 'q':
 								spyShoot();
+								for (int i = 0; i < 6; i++) 
+									ninjas[i].move(map);
 								break;
 							case 'U':
 							case 'u':
@@ -89,6 +93,8 @@ public class GameEngine{
 								showDungeon = ui.invalidInput();
 								break;
 						}
+	
+						
 					}while(!(charInput=='x' || charInput=='X'));
 					startInput = 2;
 				}
