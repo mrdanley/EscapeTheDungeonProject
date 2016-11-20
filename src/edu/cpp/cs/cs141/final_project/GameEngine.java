@@ -32,19 +32,20 @@ public class GameEngine{
 	private UI ui = new UI();
 	
 	private Random rand = new Random();
-	private int rowSpawn, colSpawn;
+	private int rowSpawn, colSpawn, invincibleTurns=0;
 	
 	public void gameStart(){
 		gameSet();
-		ui.displayMenu();
-		int startInput;
+		int startInput, endGameType = 0;
+		boolean exitProgram = false;
 		do{
+			ui.displayMenu();
 			startInput = ui.getIntInput();
 			switch(startInput){
 				case 1:
 				{
 					int charInput;
-					boolean showDungeon = true;
+					boolean showDungeon = true, endGame = false;;
 					do{
 						if(showDungeon)
 							ui.displayDungeon(map);
@@ -59,8 +60,30 @@ public class GameEngine{
 							case 'a':
 							case 'D':
 							case 'd':
-								spyMove((char) charInput);
+							{
+								if(spyMove((char) charInput))
+								{
+									endGameType = 2;
+									endGame = true;
+								}
+								else
+								{
+									checkForPowerUp(spy);
+									if(spy.getInvincibility())
+										invincibleTurns--;
+									for (int i = 0; i < ninjas.length; i++) 
+										// if (ninja is right next to spy)
+										//     stab his ass here.
+										// else
+										if (ninjas[i].IseeTheSpy(map) == true)
+											ninjas[i].moveTowardsSpy(map);
+										else
+											ninjas[i].move(map);
+									if(invincibleTurns == 0)
+										spy.disableInvincibility();
+								}
 								break;
+							}
 							case 'Q':
 							case 'q':
 								spyShoot();
@@ -84,28 +107,76 @@ public class GameEngine{
 							}
 							case 'X':
 							case 'x':
+							{
+								endGameType = 1;
+								endGame = true;
+								break;
+							}
+							case 'V':
+							case 'v':
 								break;
 							default:
 								showDungeon = ui.invalidInput();
 								break;
 						}
-					}while(!(charInput=='x' || charInput=='X'));
-					startInput = 2;
-				}
-				case 2:
-					ui.displayEndGameMessage();
+					}while(!endGame);
+					if(endGameType == 2)
+						ui.displayEndGameMessage(endGameType);
 					break;
+				}
+				case 2://load game
+					break;
+				case 3:
+				{
+					endGameType = 1;
+					exitProgram = true;
+					break;
+				}
 				default:
 					break;
 			}
-		}while(startInput!=2);
+		}while(!exitProgram);
+		ui.displayEndGameMessage(endGameType);
 	}
-	private void spyMove(char charInput) {
-		try {
-			map.moveSpy(Character.toLowerCase(charInput));
-		} catch (Exception e) {
-			//TODO print invalid move; possibly skip turn
+	private void checkForPowerUp(Spy spy)
+	{
+		if(map.powerUpCheck())
+		{
+			if(map.getPowerUp() instanceof Bullet)
+				spy.addBullet();
+			else if(map.getPowerUp() instanceof Invincibility)
+			{
+				invincibleTurns = 5;
+				spy.activateInvincibility();
+			}
+			else//radar
+			{
+				for(int i=0;i<rooms.length;i++)
+				{
+					if(rooms[i].hasBriefcase())
+						rooms[i].radarActivate();
+				}
+			}
+			map.removePowerUp();
 		}
+	}
+	private boolean spyMove(char charInput)
+	{
+		try {
+			for(int i=0;i<rooms.length;i++)
+			{
+				if(rooms[i].hasBriefcase())
+				{
+					if(map.moveSpy(Character.toLowerCase(charInput),rooms[i]))
+						return true;
+					else
+						return false;
+				}
+			}
+		} catch (Exception e) {
+			ui.displayInvalidMove();
+		}
+		return false;
 	}
 	private void spyShoot(){
 		
@@ -166,12 +237,12 @@ public class GameEngine{
 		do{
 			rowSpawn = rand.nextInt(9);
 			colSpawn = rand.nextInt(9);
-			if(map.noPowerUp(rowSpawn,colSpawn) && !map.isRoom(rowSpawn,colSpawn))
+			if(map.noPowerUp(rowSpawn,colSpawn) && !map.isRoom(rowSpawn,colSpawn) && !(rowSpawn==8 && colSpawn==0))
 			{
 				map.set(rowSpawn, colSpawn, powerups[powerup_num]);
 				powerup_num++;
 			}
-		}while(powerup_num<3);
+		}while(powerup_num<powerups.length);
 	}
 	private void setSpy()
 	{
