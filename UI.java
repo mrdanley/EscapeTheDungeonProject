@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -35,9 +35,20 @@ public class UI{
 		IngameMenu[4] = "\tNormal [M]ode";
 	}
 	public int getIntInput(){
-		System.out.print("Input: ");
-		int input = kb.nextInt();
-		return input;
+		String input;
+		boolean correctInput;
+		do{
+			System.out.print("Input: ");
+			input = kb.next();
+			if(input.equals("1") || input.equals("2") || input.equals("3"))
+				correctInput = true;
+			else
+			{
+				System.out.println("Invalid input. Try again.\n");
+				correctInput = false;
+			}
+		}while(!correctInput);
+		return Integer.parseInt(input);
 	}
 	public int getCharInput(){
 		System.out.print("Input: ");
