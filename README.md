@@ -8,11 +8,11 @@ Origin is top-left, x and y are switched
 y- o y+
    x+
    
-WORKING ON - anna - spy look__
-WORKING ON - austin - ninja kill spy, spy lose a life, restart point__
-WORKING ON - shiyin - spy shooting, subtract bullet__
-DONE - brandon - spy move__
-WORKING ON - johnson - ninja move__
-DONE - daniel - spy pick up powerup, powerup dissapear, apply powerup__
-DONE - daniel - spy go into room and find briefcase, end game__
+WORKING ON - anna - spy look <br />
+WORKING ON - austin - ninja kill spy, spy lose a life, restart point <br />
+WORKING ON - shiyin - spy shooting, subtract bullet <br />
+DONE - brandon - spy move <br />
+WORKING ON - johnson - ninja move <br />
+DONE - daniel - spy pick up powerup, powerup dissapear, apply powerup <br />
+DONE - daniel - spy go into room and find briefcase, end game <br />
 TO DO - display Messages
