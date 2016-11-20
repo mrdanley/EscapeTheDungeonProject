@@ -25,7 +25,4 @@ public class Radar extends PowerUp{
 	public char image(){
 	  	return 'R';
   	}
-	public boolean pickedUp(){
-		return true;
-	}
 }

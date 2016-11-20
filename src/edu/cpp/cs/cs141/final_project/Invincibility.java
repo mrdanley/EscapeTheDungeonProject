@@ -25,7 +25,4 @@ public class Invincibility extends PowerUp{
 	public char image(){
 		  return 'I';
 	}
-	public boolean pickedUp(){
-		return true;
-	}
 }

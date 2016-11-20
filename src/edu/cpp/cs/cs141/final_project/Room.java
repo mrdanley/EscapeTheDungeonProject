@@ -23,9 +23,17 @@ package edu.cpp.cs.cs141.final_project;
 
 public class Room implements GamePiece{
 	private boolean briefcase = false, radarBriefcase = false;
+	private int rowCoord,colCoord;
 	
 	public void setLocation(int x, int y){
-		
+		rowCoord = x;
+		colCoord = y;
+	}
+	public int getColCoord(){
+		return colCoord;
+	}
+	public int getRowCoord(){
+		return rowCoord;
 	}
 	
 	public char image(){

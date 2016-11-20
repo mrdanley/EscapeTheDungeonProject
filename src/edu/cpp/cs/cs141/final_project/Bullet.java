@@ -25,7 +25,4 @@ public class Bullet extends PowerUp{
 	public char image(){
 		return 'B';
 	}
-	public boolean pickedUp(){
-		return true;
-	}
 }

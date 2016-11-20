@@ -24,19 +24,31 @@ import java.util.Scanner;
  */
 
 public class UI{
-	private String[] IngameMenu = new String[4];
+	private String[] IngameMenu = new String[5];
 	private Scanner kb = new Scanner(System.in);
 	
 	public UI(){
 		IngameMenu[0] = "\tD[u]ngeon Legend";
-		IngameMenu[1] = "\tDebug [M]ode";
-		IngameMenu[2] = "\tE[x]it Game";
-		IngameMenu[3] = "\tNormal [M]ode";
+		IngameMenu[1] = "\tSa[v]e Game";
+		IngameMenu[2] = "\tDebug [M]ode";
+		IngameMenu[3] = "\tE[x]it Game";
+		IngameMenu[4] = "\tNormal [M]ode";
 	}
 	public int getIntInput(){
-		System.out.print("Input: ");
-		int input = kb.nextInt();
-		return input;
+		String input;
+		boolean correctInput;
+		do{
+			System.out.print("Input: ");
+			input = kb.next();
+			if(input.equals("1") || input.equals("2") || input.equals("3"))
+				correctInput = true;
+			else
+			{
+				System.out.println("Invalid input. Try again.\n");
+				correctInput = false;
+			}
+		}while(!correctInput);
+		return Integer.parseInt(input);
 	}
 	public int getCharInput(){
 		System.out.print("Input: ");
@@ -50,7 +62,7 @@ public class UI{
 		{
 			for(int j=0;j<9;j++)
 				System.out.print("[" + map.image(i,j) + "]");
-			if(i>0 && i<4)
+			if(i>0 && i<IngameMenu.length)
 			{
 				if(i==2)
 				{
@@ -70,8 +82,9 @@ public class UI{
 		displaySpyControls();
 	}
 	public void displayMenu(){
-		System.out.print("1. Start Game\n"+
-						 "2. Exit Game\n");
+		System.out.print("1. New Game\n"+
+						"2. Load Game\n"+
+						"3. Exit Game\n");
 	}
 	public void displayEnterDungeonMessage(){
 		System.out.println("You have entered the dungeon!!!\n");
@@ -87,9 +100,21 @@ public class UI{
 		System.out.println("Invalid input. Enter again: ");
 		return false;
 	}
-	public void displayEndGameMessage()
+	public void displayEndGameMessage(int endGameType)
 	{
-		System.out.println("Goodbye.");
+		switch(endGameType)
+		{
+			case 1:
+				System.out.println("You have exited the game...Goodbye!\n");
+				break;
+			case 2:
+				System.out.println("You found the briefcase and escaped! Congratulations!!!\n");
+				break;
+			case 3:
+				System.out.println("You were destroyed by a Ninja...GAME OVER.\n");
+			default:
+				break;
+		}
 	}
 	public void displayInvalidMove()
 	{

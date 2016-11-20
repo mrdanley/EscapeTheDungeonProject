@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -36,15 +36,16 @@ public class GameEngine{
 	
 	public void gameStart(){
 		gameSet();
-		ui.displayMenu();
-		int startInput;
+		int startInput, endGameType = 0;
+		boolean exitProgram = false;
 		do{
+			ui.displayMenu();
 			startInput = ui.getIntInput();
 			switch(startInput){
 				case 1:
 				{
 					int charInput;
-					boolean showDungeon = true;
+					boolean showDungeon = true, endGame = false;;
 					do{
 						if(showDungeon)
 							ui.displayDungeon(map);
@@ -60,15 +61,22 @@ public class GameEngine{
 							case 'D':
 							case 'd':
 							{
-								spyMove((char) charInput);
-								checkForPowerUp(spy);
-								if(spy.getInvincibility())
-									invincibleTurns--;
-								//probably have ninja attack method here
-								for (int i = 0; i < 6; i++) 
-									ninjas[i].move(map);
-								if(invincibleTurns == 0)
-									spy.disableInvincibility();
+								if(spyMove((char) charInput))
+								{
+									endGameType = 2;
+									endGame = true;
+								}
+								else
+								{
+									checkForPowerUp(spy);
+									if(spy.getInvincibility())
+										invincibleTurns--;
+									//probably have ninja attack method here
+									for (int i = 0; i < ninjas.length; i++) 
+										ninjas[i].move(map);
+									if(invincibleTurns == 0)
+										spy.disableInvincibility();
+								}
 								break;
 							}
 							case 'Q':
@@ -94,23 +102,36 @@ public class GameEngine{
 							}
 							case 'X':
 							case 'x':
+							{
+								endGameType = 1;
+								endGame = true;
+								break;
+							}
+							case 'V':
+							case 'v':
 								break;
 							default:
 								showDungeon = ui.invalidInput();
 								break;
 						}
-	
-						
-					}while(!(charInput=='x' || charInput=='X'));
-					startInput = 2;
-				}
-				case 2:
-					ui.displayEndGameMessage();
+					}while(!endGame);
+					if(endGameType == 2)
+						ui.displayEndGameMessage(endGameType);
 					break;
+				}
+				case 2://load game
+					break;
+				case 3:
+				{
+					endGameType = 1;
+					exitProgram = true;
+					break;
+				}
 				default:
 					break;
 			}
-		}while(startInput!=2);
+		}while(!exitProgram);
+		ui.displayEndGameMessage(endGameType);
 	}
 	private void checkForPowerUp(Spy spy)
 	{
@@ -134,13 +155,23 @@ public class GameEngine{
 			map.removePowerUp();
 		}
 	}
-	private void spyMove(char charInput)
+	private boolean spyMove(char charInput)
 	{
 		try {
-			map.moveSpy(Character.toLowerCase(charInput));
+			for(int i=0;i<rooms.length;i++)
+			{
+				if(rooms[i].hasBriefcase())
+				{
+					if(map.moveSpy(Character.toLowerCase(charInput),rooms[i]))
+						return true;
+					else
+						return false;
+				}
+			}
 		} catch (Exception e) {
 			ui.displayInvalidMove();
 		}
+		return false;
 	}
 	private void spyShoot(){
 		
