@@ -30,6 +30,17 @@ public class Spy extends ActiveAgent{
 	{
 		return lives;
 	}
+	public int loseLife()
+	{
+		return lives -= 1;
+	}
+	public void reset()
+	{
+		bullet = 1;
+		lives = 3;
+		invincibility = false;
+		setLocation(0,0);
+	}
 	public void activateInvincibility()
 	{
 		invincibility = true;

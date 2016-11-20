@@ -80,7 +80,13 @@ public class Map{
   		return tiles[x][y].isSpy();
   	}
   	public boolean isNinja(int x, int y){
-  		return tiles[x][y].isNinja();
+  		//Make sure the location is in the grid
+  		if(x < 0 || x >= tiles.length || y < 0 || y >= tiles[0].length){
+  			return false;
+  		}
+  		else{
+  			return tiles[x][y].isNinja();
+  		}
   	}
   	public void clear(){
   		tiles = new Tile[9][9];

@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodrï¿½guez
  *
  * Final Project
  *
@@ -71,7 +71,17 @@ public class GameEngine{
 									checkForPowerUp(spy);
 									if(spy.getInvincibility())
 										invincibleTurns--;
-									//probably have ninja attack method here
+									//ninja attack!
+									if(!spy.getInvincibility() && isNinjaAdjacent()){
+										killSpy();
+										if(spy.getLives() <= 0){
+											endGameType = 3;
+											endGame = true;
+											resetSpy();
+								
+										}
+									}
+									//ninja move!
 									for (int i = 0; i < ninjas.length; i++) 
 										ninjas[i].move(map);
 									if(invincibleTurns == 0)
@@ -133,6 +143,39 @@ public class GameEngine{
 		}while(!exitProgram);
 		ui.displayEndGameMessage(endGameType);
 	}
+	
+	/**
+	 * Removes one life from the spy and moves it back to the starting position.
+	 */
+	private void killSpy() {
+
+		int lives = spy.loseLife();
+		if(lives > 0){
+			//store spy's location in temp variables
+			int tempx = spy.getRowCoord();
+			int tempy = spy.getColCoord();
+			//reset spy's position
+			setSpy();
+			if(spy.getBullet() == 0){
+				spy.addBullet();
+			}
+			//delete the old spy (replace with EmptyAA)
+			EmptyAA empty = new EmptyAA();
+			map.set(tempx, tempy, empty);
+		}
+	}
+
+	/**
+	 * Checks if there is a ninja next to the spy.
+	 * @return {@code true} if a ninja is adjacent to the spy (one square up, down, left, or right); {@code false} otherwise
+	 */
+	private boolean isNinjaAdjacent() {
+		return map.isNinja(spy.getRowCoord() + 1, spy.getColCoord()) || 
+			   map.isNinja(spy.getRowCoord() - 1, spy.getColCoord()) || 
+			   map.isNinja(spy.getRowCoord(), spy.getColCoord() + 1) || 
+			   map.isNinja(spy.getRowCoord(), spy.getColCoord() - 1);
+	}
+	
 	private void checkForPowerUp(Spy spy)
 	{
 		if(map.powerUpCheck())
@@ -249,5 +292,12 @@ public class GameEngine{
 		setNinjas();
 		setPowerUps();
 		setSpy();
+	}
+	
+	private void resetSpy(){
+		EmptyAA empty = new EmptyAA();
+		map.set(spy.getRowCoord(), spy.getColCoord(), empty);
+		spy = new Spy();
+		map.set(8, 0, spy);
 	}
 }
