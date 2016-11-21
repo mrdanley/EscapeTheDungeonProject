@@ -59,25 +59,32 @@ public class Ninja extends ActiveAgent{
 			int column = getColCoord();
 			int RandomRoll = 1 + roll.nextInt(4);
 			
-			if (RandomRoll == 1)
+			switch(RandomRoll)
 			{
-				triedLeft = true;
-				column--;		
-			}
-			if (RandomRoll == 2)
-			{
-				triedUp = true;
-				row--;
-			}
-			if (RandomRoll == 3)
-			{
-				triedRight = true;
-				column++;
-			}
-			if (RandomRoll == 4)
-			{
-				triedDown = true;
-				row++;
+				case 1:
+				{
+					triedLeft = true;
+					column--;
+					break;
+				}
+				case 2:
+				{
+					triedUp = true;
+					row--;
+					break;
+				}
+				case 3:
+				{
+					triedRight = true;
+					column++;
+					break;
+				}
+				case 4:
+				{
+					triedDown = true;
+					row++;
+					break;
+				}
 			}
 			
 			isWallHere = isOutOfBound(RandomRoll);

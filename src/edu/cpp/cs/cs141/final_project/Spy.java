@@ -26,7 +26,23 @@ public class Spy extends ActiveAgent{
 	private int lives = 3;
 	private int invincibleTurns = 5;
 	private boolean invincibility = false;
+	boolean moved = false;
 	
+	public void setMove(boolean m)
+	{
+		moved = m;
+	}
+	public boolean getMove()
+	{
+		return moved;
+	}
+	public void toggleMove()
+	{
+		if(moved)
+			moved = false;
+		else
+			moved = true;
+	}
 	public int getInvincibleTurns()
 	{
 		return invincibleTurns;

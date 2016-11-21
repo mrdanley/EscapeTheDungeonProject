@@ -132,7 +132,7 @@ public class UI{
 	public void displaySpyDieMessage()
 	{
 		System.out.println("You were stabbed and lost a life!");
-		System.out.print("Press any key to continue: ");
+		System.out.print("Enter any key to continue: ");
 		String input = kb.next();
 	}
 	public void displayExitProgramMessage()
@@ -142,5 +142,11 @@ public class UI{
 	public void displayInvalidMove()
 	{
 		System.out.println("Invalid move. Try Again.\n");
+	}
+	public void displayEmptyRoomMessage()
+	{
+		System.out.println("Empty room...look elsewhere...");
+		System.out.print("Enter any key to continue: ");
+		String input = kb.next();
 	}
 }

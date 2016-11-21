@@ -98,19 +98,9 @@ public class Map{
 	/**
 	 * @param direction Single character gamer directions (wasd)
 	 */
-	public boolean moveSpy(char direction, Room room) {
-		if(spyX+1==room.getRowCoord() && spyY==room.getColCoord() && direction=='s')
-		{
-			return true;
-		}
-		else
-		{
-			movePiece(spyX, spyY, direction);
-			return false;
-		}
-		
-	}
-	
+	public void moveSpy(char direction) {
+		movePiece(spyX, spyY, direction);
+	}	
 	
 	/**
 	 * Will move an {@link ActiveAgent} in a valid direction by swapping
