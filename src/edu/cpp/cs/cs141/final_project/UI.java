@@ -55,16 +55,16 @@ public class UI{
 		char input = kb.next().charAt(0);
 		return input;
 	}
-	public void displayDungeon(Map map)
+	public void displayDungeon(Map map, Spy spy)
 	{
-		System.out.println("-DUNGEON-");
+		System.out.println("\n-DUNGEON-");
 		for(int i=0;i<9;i++)
 		{
 			for(int j=0;j<9;j++)
 				System.out.print("[" + map.image(i,j) + "]");
 			if(i>0 && i<IngameMenu.length)
 			{
-				if(i==2)
+				if(i==3)
 				{
 					if(Map.isDebug())
 						System.out.print(IngameMenu[i+1]);
@@ -77,6 +77,19 @@ public class UI{
 			//REMOVE BEFORE SUBMIT
 			if(i==5)
 				System.out.print("\tEnter [R] to respawn dungeon (Will Remove before submit)");
+			if(i==6)
+			{
+				System.out.print("\tLives: ");
+				for(int k=0;k<spy.getLives();k++)
+					System.out.print("<3 ");
+			}
+			if(i==7)
+				System.out.print("\tAmmo: "+spy.getBullet());
+			if(spy.getInvincibility())
+			{
+				if(i==8)
+					System.out.print("\tInvincible for "+spy.getInvincibleTurns()+" turns");
+			}
 			System.out.println();
 		}
 		displaySpyControls();
@@ -90,7 +103,7 @@ public class UI{
 		System.out.println("You have entered the dungeon!!!\n");
 	}
 	private void displaySpyControls(){
-		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot\n");
+		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot [E]Look\n");
 	}
 	public void displayGameLegend(){
 		System.out.println("S = Spy\nN = Ninja\nX = Room\nI = Invincibility\n"
@@ -105,7 +118,7 @@ public class UI{
 		switch(endGameType)
 		{
 			case 1:
-				System.out.println("You have exited the game...Goodbye!\n");
+				System.out.println("You have exited the game.\n");
 				break;
 			case 2:
 				System.out.println("You found the briefcase and escaped! Congratulations!!!\n");
@@ -115,6 +128,16 @@ public class UI{
 			default:
 				break;
 		}
+	}
+	public void displaySpyDieMessage()
+	{
+		System.out.println("You were stabbed and lost a life!");
+		System.out.print("Press any key to continue: ");
+		String input = kb.next();
+	}
+	public void displayExitProgramMessage()
+	{
+		System.out.println("You have exited the program...Goodbye!\n");
 	}
 	public void displayInvalidMove()
 	{
