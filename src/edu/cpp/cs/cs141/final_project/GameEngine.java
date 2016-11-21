@@ -45,7 +45,7 @@ public class GameEngine{
 				case 1:
 				{
 					int charInput;
-					boolean showDungeon = true, endGame = false;;
+					boolean showDungeon = true, endGame = false;
 					do{
 						if(showDungeon)
 							ui.displayDungeon(map,spy);
@@ -61,8 +61,11 @@ public class GameEngine{
 							case 'D':
 							case 'd':
 							{
+								spy.setMove(false);
 								if(spyMove((char) charInput))
 								{
+									showBriefcase();
+									ui.displayDungeon(map,spy);
 									endGameType = 2;
 									endGame = true;
 									if(Map.isDebug())
@@ -70,23 +73,23 @@ public class GameEngine{
 								}
 								else
 								{
-									if(spy.getInvincibility())
-										spy.invincibleLoss();
+									if(spy.getMove())
+									{
+										if(spy.getInvincibility())
+											spy.invincibleLoss();
+										for (int i = 0; i < ninjas.length; i++) 
+											ninjas[i].move(map);
+									}
 									checkForPowerUp(spy);
-									//ninja attack!
 									if(!spy.getInvincibility() && isNinjaAdjacent()){
 										killSpy();
-										if(spy.getLives() <= 0){
+										if(spy.getLives() == 0){
 											endGameType = 3;
 											endGame = true;
-											ui.displayDungeon(map,spy);
 											if(Map.isDebug())
 												map.toggleMode();
 										}
 									}
-									//ninja move!
-									for (int i = 0; i < ninjas.length; i++) 
-										ninjas[i].move(map);
 									if(spy.getInvincibleTurns() == 0)
 										spy.disableInvincibility();
 								}
@@ -166,9 +169,6 @@ public class GameEngine{
 			int tempy = spy.getColCoord();
 			//reset spy's position
 			setSpy();
-			if(spy.getBullet() == 0){
-				spy.addBullet();
-			}
 			//delete the old spy (replace with EmptyAA)
 			map.set(tempx, tempy, new EmptyAA());
 		}
@@ -194,14 +194,16 @@ public class GameEngine{
 			else if(map.getPowerUp() instanceof Invincibility)
 				spy.activateInvincibility();
 			else//radar
-			{
-				for(int i=0;i<rooms.length;i++)
-				{
-					if(rooms[i].hasBriefcase())
-						rooms[i].radarActivate();
-				}
-			}
+				showBriefcase();
 			map.removePowerUp();
+		}
+	}
+	private void showBriefcase()
+	{
+		for(int i=0;i<rooms.length;i++)
+		{
+			if(rooms[i].hasBriefcase())
+				rooms[i].radarActivate();
 		}
 	}
 	private boolean spyMove(char charInput)
@@ -209,14 +211,21 @@ public class GameEngine{
 		try {
 			for(int i=0;i<rooms.length;i++)
 			{
-				if(rooms[i].hasBriefcase())
+				if(rooms[i].getRowCoord()==spy.getRowCoord()+1 &&
+					rooms[i].getColCoord()==spy.getColCoord() && (charInput=='s' || charInput=='S'))
 				{
-					if(map.moveSpy(Character.toLowerCase(charInput),rooms[i]))
+					if(rooms[i].hasBriefcase())
 						return true;
 					else
-						return false;
+					{
+						spy.toggleMove();
+						ui.displayEmptyRoomMessage();
+					}
 				}
 			}
+			map.moveSpy(Character.toLowerCase(charInput));
+			spy.toggleMove();
+			return false;
 		} catch (Exception e) {
 			ui.displayInvalidMove();
 		}

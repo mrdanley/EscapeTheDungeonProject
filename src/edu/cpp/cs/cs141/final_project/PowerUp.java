@@ -31,7 +31,4 @@ public abstract class PowerUp implements GamePiece{
 		rowCoord = x;
 		colCoord = y;
 	}
-		// How to toggle:
-		//debugMode = !debugMode;
-		// Don't complicate things
 }
