@@ -27,18 +27,18 @@ public class GameEngine{
 	private Map map;
 	private Ninja[] ninjas = new Ninja[6];
 	private PowerUp[] powerups = new PowerUp[3];
-	private Spy spy = new Spy();
+	private Spy spy;
 	private Room[] rooms = new Room[9];
 	private UI ui = new UI();
 	
 	private Random rand = new Random();
-	private int rowSpawn, colSpawn, invincibleTurns=0;
+	private int rowSpawn, colSpawn;
 	
 	public void gameStart(){
-		gameSet();
 		int startInput, endGameType = 0;
 		boolean exitProgram = false;
 		do{
+			gameSet();
 			ui.displayMenu();
 			startInput = ui.getIntInput();
 			switch(startInput){
@@ -48,7 +48,7 @@ public class GameEngine{
 					boolean showDungeon = true, endGame = false;;
 					do{
 						if(showDungeon)
-							ui.displayDungeon(map);
+							ui.displayDungeon(map,spy);
 						showDungeon = true;
 						charInput = ui.getCharInput();
 						switch(charInput){
@@ -65,30 +65,37 @@ public class GameEngine{
 								{
 									endGameType = 2;
 									endGame = true;
+									if(Map.isDebug())
+										map.toggleMode();
 								}
 								else
 								{
-									checkForPowerUp(spy);
 									if(spy.getInvincibility())
-										invincibleTurns--;
+										spy.invincibleLoss();
+									checkForPowerUp(spy);
 									//ninja attack!
 									if(!spy.getInvincibility() && isNinjaAdjacent()){
 										killSpy();
 										if(spy.getLives() <= 0){
 											endGameType = 3;
 											endGame = true;
-											resetSpy();
-								
+											ui.displayDungeon(map,spy);
+											if(Map.isDebug())
+												map.toggleMode();
 										}
 									}
 									//ninja move!
 									for (int i = 0; i < ninjas.length; i++) 
 										ninjas[i].move(map);
-									if(invincibleTurns == 0)
+									if(spy.getInvincibleTurns() == 0)
 										spy.disableInvincibility();
 								}
 								break;
 							}
+							case 'E':
+							case 'e':
+								spyLook();
+								break;
 							case 'Q':
 							case 'q':
 								spyShoot();
@@ -115,6 +122,8 @@ public class GameEngine{
 							{
 								endGameType = 1;
 								endGame = true;
+								if(Map.isDebug())
+									map.toggleMode();
 								break;
 							}
 							case 'V':
@@ -125,7 +134,7 @@ public class GameEngine{
 								break;
 						}
 					}while(!endGame);
-					if(endGameType == 2)
+					if(endGameType>0 && endGameType<4)
 						ui.displayEndGameMessage(endGameType);
 					break;
 				}
@@ -133,7 +142,6 @@ public class GameEngine{
 					break;
 				case 3:
 				{
-					endGameType = 1;
 					exitProgram = true;
 					break;
 				}
@@ -141,7 +149,7 @@ public class GameEngine{
 					break;
 			}
 		}while(!exitProgram);
-		ui.displayEndGameMessage(endGameType);
+		ui.displayExitProgramMessage();
 	}
 	
 	/**
@@ -150,6 +158,8 @@ public class GameEngine{
 	private void killSpy() {
 
 		int lives = spy.loseLife();
+		ui.displayDungeon(map,spy);
+		ui.displaySpyDieMessage();
 		if(lives > 0){
 			//store spy's location in temp variables
 			int tempx = spy.getRowCoord();
@@ -160,8 +170,7 @@ public class GameEngine{
 				spy.addBullet();
 			}
 			//delete the old spy (replace with EmptyAA)
-			EmptyAA empty = new EmptyAA();
-			map.set(tempx, tempy, empty);
+			map.set(tempx, tempy, new EmptyAA());
 		}
 	}
 
@@ -183,10 +192,7 @@ public class GameEngine{
 			if(map.getPowerUp() instanceof Bullet)
 				spy.addBullet();
 			else if(map.getPowerUp() instanceof Invincibility)
-			{
-				invincibleTurns = 5;
 				spy.activateInvincibility();
-			}
 			else//radar
 			{
 				for(int i=0;i<rooms.length;i++)
@@ -217,6 +223,9 @@ public class GameEngine{
 		return false;
 	}
 	private void spyShoot(){
+		
+	}
+	private void spyLook(){
 		
 	}
 	private void setRooms()
@@ -291,13 +300,7 @@ public class GameEngine{
 		setRooms();
 		setNinjas();
 		setPowerUps();
-		setSpy();
-	}
-	
-	private void resetSpy(){
-		EmptyAA empty = new EmptyAA();
-		map.set(spy.getRowCoord(), spy.getColCoord(), empty);
 		spy = new Spy();
-		map.set(8, 0, spy);
+		setSpy();
 	}
 }

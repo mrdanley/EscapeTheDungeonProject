@@ -24,8 +24,17 @@ package edu.cpp.cs.cs141.final_project;
 public class Spy extends ActiveAgent{
 	private int bullet = 1;
 	private int lives = 3;
+	private int invincibleTurns = 5;
 	private boolean invincibility = false;
 	
+	public int getInvincibleTurns()
+	{
+		return invincibleTurns;
+	}
+	public void invincibleLoss()
+	{
+		invincibleTurns--;
+	}
 	public int getLives()
 	{
 		return lives;
