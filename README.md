@@ -9,7 +9,7 @@ y- o y+
    x+
    
 WORKING ON - anna - spy look <br />
-WORKING ON - austin - ninja kill spy, spy lose a life, restart point <br />
+DONE - austin - ninja kill spy, spy lose a life, restart point <br />
 WORKING ON - shiyin - spy shooting, subtract bullet <br />
 DONE - brandon - spy move <br />
 WORKING ON - johnson - ninja move <br />
