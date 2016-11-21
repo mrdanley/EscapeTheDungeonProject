@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -27,19 +27,19 @@ public class Ninja extends ActiveAgent{
 	/**
 	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
 	 */
-	private boolean iSeeSpyUp;
+	private boolean ISeeSpyUp;
 	/**
 	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
 	 */
-	private boolean iSeeSpyDown;
+	private boolean ISeeSpyDown;
 	/**
 	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
 	 */
-	private boolean iSeeSpyLeft;
+	private boolean ISeeSpyLeft;
 	/**
 	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
 	 */
-	private boolean iSeeSpyRight;
+	private boolean ISeeSpyRight;
 	
 	Random roll = new Random();
 	
@@ -117,57 +117,57 @@ public class Ninja extends ActiveAgent{
 	}
 	
 	/**
-	 * This move method will make the {@link Ninja} move towards {@link Spy} if he is in range.
-	 * This uses the ISeeTheSpy method to decide if {@link Spy} is in range and {@link Ninja} act accordingly depending on the results.
-	 * 
-	 * HOW TO IMPLEMENT IN GAME ENGINE EXAMPLE :
-	 * for (int i = 0; i < 6; i++) {
-	 * 		if (ninjas[i].iSeeASpy(map) == true)
-	 * 			ninjas[i].moveTowardsSpy(map);
-	 * 		else
-	 * 			ninjas[i].move(map);
-	 * }
-	 * 
-	 * @param Grid takes {@link Map} parameter to set {@link Ninja} position in another spot of the {@link Map}
-	 * 
-	 */
+ 	 * This move method will make the {@link Ninja} move towards {@link Spy} if he is in line of sight
+ 	 * This uses the ISeeTheSpy method to decide if {@link Spy} is in LoS and {@link Ninja} act accordingly depending on the results.
+ 	 * 
+ 	 * HOW TO IMPLEMENT IN GAME ENGINE EXAMPLE :
+ 	 * for (int i = 0; i < 6; i++) {
+ 	 * 		if (ninjas[i].iSeeASpy(map) == true)
+ 	 * 			ninjas[i].moveTowardsSpy(map);
+ 	 * 		else
+ 	 * 			ninjas[i].move(map);
+ 	 * }
+ 	 * 
+ 	 * @param Grid takes {@link Map} parameter to set {@link Ninja} position in another spot of the {@link Map}
+ 	 * 
+ 	 */
 	public void moveTowardsSpy (Map Grid)
 	{
 		GamePiece emptyIt = new EmptyAA();
-		if (iSeeSpyUp == true)
+		if (ISeeSpyUp == true)
 		{
 			if (Grid.isSpy(getRowCoord() - 1, getColCoord()) == true)
-				System.out.print("");
+				return;
 			else
 			{
 				Grid.set(getRowCoord(), getColCoord(), emptyIt);
 				Grid.set(getRowCoord() - 1, getColCoord(), this);
 			}
 		}
-		if (iSeeSpyDown == true)
+		if (ISeeSpyDown == true)
 		{
 			if (Grid.isSpy(getRowCoord() + 1, getColCoord()) == true)
-				System.out.print("");
+				return;
 			else
 			{
 				Grid.set(getRowCoord(), getColCoord(), emptyIt);
 				Grid.set(getRowCoord() + 1, getColCoord(), this);
 			}
 		}
-		if (iSeeSpyLeft == true)
+		if (ISeeSpyLeft == true)
 		{
 			if (Grid.isSpy(getRowCoord(), getColCoord() - 1) == true)
-				System.out.print("");
+				return;
 			else
 			{
 				Grid.set(getRowCoord(), getColCoord(), emptyIt);
 				Grid.set(getRowCoord(), getColCoord() - 1, this);
 			}
 		}
-		if (iSeeSpyRight == true)
+		if (ISeeSpyRight == true)
 		{
 			if (Grid.isSpy(getRowCoord(), getColCoord() + 1) == true)
-				System.out.print("");
+				return;
 			else
 			{
 				Grid.set(getRowCoord(), getColCoord(), emptyIt);
@@ -177,92 +177,98 @@ public class Ninja extends ActiveAgent{
 	}
 	
 	/**
-	 * This method checks if the {@link Ninja} sees the {@link Spy} in his range on his turn (2 squares up/down/left/right).
-	 * If {@link Spy} is in range, boolean will return true. 
-	 * @param Grid takes {@link Map} as parameter to check where the {@link Spy} is located on the map.
-	 * @return true if {@link Spy} 2 squares (up/down/left/right) in range of {@link Ninja}. Otherwise return false.
+	 * This method checks if the {@link Spy} is in the {@link Ninja} line of sight.
+	 * @param Grid is to check the map if there are any objects (rooms, other ninjas) blocking {@link Ninja} line of sight from spy.
+	 * @param spy to track where {@link Spy} current coordinates.
+	 * @return true if {@link Ninja} sees Spy in his line of sight. Otherwise return false.
 	 */
-	public boolean IseeTheSpy (Map Grid)
+	public boolean ISeeTheSpy (Map Grid, Spy spy)
 	{
-		int row = getRowCoord();
-		int column = getColCoord();
-		int rowS1 = row - 1, rowS2 = row - 2, rowA1 = row + 1, rowA2 = row + 2;
-		int colS1 = column - 1, colS2 = column - 2, colA1 = column + 1, colA2 = column + 2;
-		iSeeSpyUp = false;
-		iSeeSpyDown = false;
-		iSeeSpyLeft = false;
-		iSeeSpyRight = false;
+		int Spyrow = spy.getRowCoord();
+		int Spycol = spy.getColCoord();
+		int Ninjarow = getRowCoord();
+		int Ninjacol = getColCoord();
+		ISeeSpyUp = false;
+		ISeeSpyDown = false;
+		ISeeSpyLeft = false;
+		ISeeSpyRight = false;
 		
-		if (colS1 < 0)
-			iSeeSpyLeft = false;
-		else if (colS2 < 0)
+		if (Ninjarow == Spyrow)
 		{
-			if (Grid.isSpy(row, colS1) == true)
-				iSeeSpyLeft = true;
-			else
-				iSeeSpyLeft = false;
-		}
-		else
-		{
-			if ((Grid.isSpy(row, colS2) == true) && (Grid.isRoom(row, colS1) == false) && (Grid.isNinja(row, colS1) == false))
-				iSeeSpyLeft = true;
-			else
-				iSeeSpyLeft = false;
-		}
-		
-		if (rowS1 < 0)
-			iSeeSpyUp = false;
-		else if (rowS2 < 0)
-		{
-			if (Grid.isSpy(rowS1, column) == true)
-				iSeeSpyUp = true;
-			else
-				iSeeSpyUp = false;
-		}
-		else
-		{
-			if ((Grid.isSpy(rowS2, column) == true) && (Grid.isRoom(rowS1, column) == false) && (Grid.isNinja(rowS1, column) == false))
-				iSeeSpyUp = true;
-			else
-				iSeeSpyUp = false;
-		}
-		
-		if (colA1 > 8)
-			iSeeSpyRight = false;
-		else if (colA2 > 8)
-		{
-			if (Grid.isSpy(row, colA1) == true)
-				iSeeSpyRight = true;
-			else
-				iSeeSpyRight = false;
-
-		}
-		else
-		{
-			if ((Grid.isSpy(row, colA2) == true) && (Grid.isRoom(row, colA1) == false) && (Grid.isNinja(row, colA1) == false))
-				iSeeSpyRight = true;
-			else
-				iSeeSpyRight = false;
+			if (Ninjacol == 9)
+				ISeeSpyRight = false;
+			else if (Ninjacol < Spycol)
+			{
+				for (int i = Ninjacol + 1; i <= Spycol - 1; i++) 
+				{
+					if ((Grid.isNinja(Ninjarow, i) == true) || (Grid.isRoom(Ninjarow, i) == true))
+					{
+						ISeeSpyRight = false;
+						break;
+					}
+					else
+						ISeeSpyRight = true;
+				}
+				if (Ninjacol == (Spycol - 1))
+					ISeeSpyRight = true;
+			}
+			else if (Ninjacol == 0)
+				ISeeSpyLeft = false;
+			else if (Ninjacol > Spycol)
+			{
+				for (int i = Ninjacol - 1; i >= Spycol + 1; i--)
+				{
+					if ((Grid.isNinja(Ninjarow, i) == true) || (Grid.isRoom(Ninjarow, i) == true))
+					{
+						ISeeSpyLeft = false;
+						break;
+					}
+					else
+						ISeeSpyLeft = true;
+				}
+				if (Ninjacol == (Spycol + 1))
+					ISeeSpyLeft = true;
+			}
 		}
 		
-		if (rowA1 > 8)
-			iSeeSpyDown = false;
-		else if (rowA2 > 8)
+		if (Ninjacol == Spycol)
 		{
-			if (Grid.isSpy(rowA1, column) == true)
-				iSeeSpyDown = true;
-			else
-				iSeeSpyDown = false;
-		}
-		else
-		{
-			if ((Grid.isSpy(rowA2, column) == true) && (Grid.isRoom(rowA1, column) == false) && (Grid.isNinja(rowA1, column) == false))
-				iSeeSpyDown = true;
-			else
-				iSeeSpyDown = false;
+			if (Ninjarow == 9)
+				ISeeSpyDown = false;
+			else if (Ninjarow < Spyrow)
+			{
+				for (int i = Ninjarow + 1; i <= Spyrow - 1; i++)
+				{
+					if ((Grid.isNinja(i, Ninjacol) == true) || (Grid.isRoom(i, Ninjacol) == true))
+					{
+						ISeeSpyDown = false;
+						break;
+					}
+					else
+						ISeeSpyDown = true;
+				}
+				if (Ninjarow == (Spyrow - 1))
+					ISeeSpyDown = true;
+	
+			}
+			else if (Ninjarow == 0)
+				ISeeSpyUp = false;
+			else if (Ninjarow > Spyrow)
+				for (int i = Ninjarow - 1; i >= Spyrow + 1; i--)
+				{
+					if ((Grid.isNinja(i, Ninjacol) == true) || (Grid.isRoom(i, Ninjacol) == true))
+					{
+						ISeeSpyUp = false;
+						break;
+					}
+					else
+						ISeeSpyUp = true;
+				}
+			if (Ninjarow == (Spyrow + 1))
+				ISeeSpyUp = true;
 		}
 		
-		if ((iSeeSpyUp == true) || (iSeeSpyDown == true) || (iSeeSpyLeft == true) || (iSeeSpyRight == true))
+		if ((ISeeSpyUp == true) || (ISeeSpyDown == true) || (ISeeSpyLeft == true) || (ISeeSpyRight == true))
 			return true;
 		return false;
 	}
