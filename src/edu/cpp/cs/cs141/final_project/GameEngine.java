@@ -235,10 +235,7 @@ public class GameEngine{
 		
 	}
 	private void spyLook(){
-		int sX = spy.getRowCoord();
-		int sY = spy.getColCoord();
-		map.spyLooking();
-		map.image(sX, sY);
+		
 	}
 	private void setRooms()
 	{

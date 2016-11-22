@@ -24,7 +24,6 @@ package edu.cpp.cs.cs141.final_project;
 import java.lang.Math;
 public class Map{
 	public static boolean debugMode = false;
-	public boolean looking = false;
 	private Tile[][] tiles;
 	private int spyX, spyY;
 	
@@ -54,39 +53,20 @@ public class Map{
   	public GamePiece getAtLocation(int x, int y) {
   		return tiles[x][y].getGamePiece();
   	}
-  	public boolean spyLooking(){
-  		looking = true;
-  		return looking;
-  	}
-  		
+  	
   	public char image(int x, int y){
   		if(!debugMode)
   		{
   			if(tiles[x][y].isNinja() || tiles[x][y].isPowerUp())
   			{
-  				//creates default visibility square around spy
   				if((Math.abs(x-spyX)<=2 && y==spyY) || (x==spyX && Math.abs(y-spyY)<=2))
   					return tiles[x][y].image();
-  				//if activated allows spy to look up and down the column and row in which he stands
-  				if(looking == true){
-  					
-  						if((x==spyX && y>=0 && y<9) || (y==spyY && x>=0 && x<9)){
-  							looking = false;
-  							return tiles[x][y].image();	
-  						}
-  						else{
-  							return' ';
-  						}
-  				}
-  				else{
+  				else
   					return ' ';
-  				}
-  				
   			}
   		}
   		return tiles[x][y].image();
   	}
-  	
   	public boolean noActiveAgent(int x, int y){
   		return tiles[x][y].noActiveAgent();
   	}
