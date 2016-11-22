@@ -232,6 +232,66 @@ public class GameEngine{
 		return false;
 	}
 	private void spyShoot(){
+	    if (spy.getBullet() >= 1){
+	    	spy.useBullet();
+	    	
+	    	System.out.println("Choose the direction you want to shoot\n");
+			System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
+			int direction = ui.getCharInput();
+			boolean hit = false;
+			int i = spy.getRowCoord();
+			int j = spy.getColCoord();
+			boolean isValidLocation = map.checkValidLocation(i, j);
+			if (isValidLocation == true){
+				switch(direction)
+				{
+					case 'W':
+					case 'w':
+						while(!hit){
+							i -= 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'S':
+					case 's':
+						while(!hit){
+							i += 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'A':
+					case 'a':
+						while(!hit){
+							j -= 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'D':
+					case 'd':
+						while(!hit){
+							j += 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+						
+				}
+				map.set(i, j, new EmptyAA());
+				System.out.println("You killed one ninja");
+			}
+	    	
+	    }
+	    
+		
+		
+		
 		
 	}
 	private void spyLook(){

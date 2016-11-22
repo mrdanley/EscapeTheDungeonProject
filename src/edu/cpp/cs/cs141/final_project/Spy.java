@@ -92,4 +92,9 @@ public class Spy extends ActiveAgent{
 	{
 		bullet++;
 	}
+	public void useBullet(){
+		bullet--;
+	}
+	
+	
 }

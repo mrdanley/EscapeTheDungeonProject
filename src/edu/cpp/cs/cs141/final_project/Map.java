@@ -152,7 +152,7 @@ public class Map{
 	{
 		return tiles[spyX][spyY].getPowerUp();
 	}
-	private boolean checkValidLocation(int x, int y) {
+	public boolean checkValidLocation(int x, int y) {
 		boolean isValid = true;
 		
 		if (x > tiles.length-1 || x < 0 || y > tiles.length-1 || y < 0) {
