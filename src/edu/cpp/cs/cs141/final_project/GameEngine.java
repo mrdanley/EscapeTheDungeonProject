@@ -80,7 +80,12 @@ public class GameEngine{
 										for (int i = 0; i < ninjas.length; i++)
 										{
 											if(ninjas[i].isAlive())
-												ninjas[i].move(map);
+											{
+												if (ninjas[i].ISeeTheSpy(map, spy) == true)
+													ninjas[i].moveTowardsSpy(map);
+												else
+													ninjas[i].move(map);
+											}
 										}
 									}
 									checkForPowerUp(spy);
