@@ -16,12 +16,14 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class
  * @author
  */
 
-public class Room implements GamePiece{
+public class Room implements GamePiece, Serializable {
 	private boolean briefcase = false, radarBriefcase = false;
 	private int rowCoord,colCoord;
 	

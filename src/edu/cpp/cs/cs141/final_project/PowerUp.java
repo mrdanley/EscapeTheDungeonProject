@@ -16,6 +16,8 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class represents a PowerUp that can be spawned in the dungeon. PowerUps can occupy the same space as
  *   {@link Ninja}'s but not {@link Room}'s. If the {@link Spy} moves into the space of a PowerUp, the PowerUp
@@ -23,7 +25,7 @@ package edu.cpp.cs.cs141.final_project;
  * @author
  */
 
-public abstract class PowerUp implements GamePiece{
+public abstract class PowerUp implements GamePiece, Serializable {
 	private int rowCoord,colCoord;
 	
 	public void setLocation(int x, int y)

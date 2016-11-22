@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodrú„uez
  *
  * Final Project
  *
@@ -109,6 +109,7 @@ public class GameEngine{
 							}
 							case 'V':
 							case 'v':
+								saveData();
 								break;
 							default:
 								showDungeon = ui.invalidInput();
@@ -120,6 +121,14 @@ public class GameEngine{
 					break;
 				}
 				case 2://load game
+					
+					try {
+						loadData();
+						ui.displayDungeon(map);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 					break;
 				case 3:
 				{
@@ -133,6 +142,24 @@ public class GameEngine{
 		}while(!exitProgram);
 		ui.displayEndGameMessage(endGameType);
 	}
+	
+	private void loadData() throws Exception {
+		SaveData save = (SaveData) IO.load("test.dat");
+//		map = save.getMap();
+		ninjas = save.getNinjas();
+//		powerups = save.getPowerups();
+		spy = save.getSpy();
+		rooms = save.getRooms();
+		
+		
+		
+	}
+	
+	private void saveData() {
+		SaveData save = new SaveData(map);
+		IO.save(save, "test.dat");
+	}
+	
 	private void checkForPowerUp(Spy spy)
 	{
 		if(map.powerUpCheck())
@@ -193,7 +220,6 @@ public class GameEngine{
 		map.set(7,7,rooms[8]);
 	}
 	private boolean notNearSpyStart(int x, int y){
-		//TODO cleanup
 		if(!((x==6 && (y==0 || y==1)) || ((x==7 ||
 				x==8)&& y==2) || (x==7 && y==0) || (x==8 && y==1)))
 			return true;

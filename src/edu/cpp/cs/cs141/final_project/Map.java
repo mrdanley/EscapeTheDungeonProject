@@ -54,6 +54,14 @@ public class Map{
   		return tiles[x][y].getGamePiece();
   	}
   	
+  	public int getLength() {
+  		return tiles.length;
+  	}
+  	
+  	public int getWidth() {
+  		return tiles[0].length;
+  	}
+  	
   	public char image(int x, int y){
   		if(!debugMode)
   		{
@@ -172,5 +180,8 @@ public class Map{
 	public void removePowerUp()
 	{
 		tiles[spyX][spyY].set(new EmptyPU());
+	}
+	public Object getPowerUpAtLocation(int x, int y) {
+		return tiles[x][y].getPowerUp();
 	}
 }

@@ -16,12 +16,14 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class contains Active Agent attributes.
  * @author
  */
 
-public abstract class ActiveAgent implements GamePiece{
+public abstract class ActiveAgent implements GamePiece, Serializable {
 	/**
 	 * This field holds the number where {@link ActiveAgent} is currently set position in a grid as an multiarray.
 	 */

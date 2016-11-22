@@ -16,12 +16,14 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class
  * @author
  */
 
-public class EmptyAA implements GamePiece{
+public class EmptyAA implements GamePiece, Serializable {
   public char image(){
 	  return ' ';
   }
