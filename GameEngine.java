@@ -232,61 +232,13 @@ public class GameEngine{
 		return false;
 	}
 	private void spyShoot(){
-	    if (spy.getBullet() >= 1){
-	    	spy.useBullet();
-	    	
-			boolean hit = false;
-			int i = spy.getRowCoord();
-			int j = spy.getColCoord();
-			boolean isValidLocation = map.checkValidLocation(i, j);
-			if (isValidLocation == true){
-				switch(ui.displayShootMenu())
-				{
-					case 'W':
-					case 'w':
-						while(!hit){
-							i -= 1;
-							if(map.isNinja(i, j)){
-								hit = true;
-							}
-						}
-						break;
-					case 'S':
-					case 's':
-						while(!hit){
-							i += 1;
-							if(map.isNinja(i, j)){
-								hit = true;
-							}
-						}
-						break;
-					case 'A':
-					case 'a':
-						while(!hit){
-							j -= 1;
-							if(map.isNinja(i, j)){
-								hit = true;
-							}
-						}
-						break;
-					case 'D':
-					case 'd':
-						while(!hit){
-							j += 1;
-							if(map.isNinja(i, j)){
-								hit = true;
-							}
-						}
-						break;
-						
-				}
-				map.set(i, j, new EmptyAA());
-				ui.displayNinjaDeathMessage();
-			}
-	    }	
+		
 	}
 	private void spyLook(){
-		
+		int sX = spy.getRowCoord();
+		int sY = spy.getColCoord();
+		map.spyLooking();
+		map.image(sX, sY);
 	}
 	private void setRooms()
 	{
