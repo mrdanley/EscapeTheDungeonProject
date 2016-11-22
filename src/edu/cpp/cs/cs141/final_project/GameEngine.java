@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodr�guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -77,8 +77,11 @@ public class GameEngine{
 									{
 										if(spy.getInvincibility())
 											spy.invincibleLoss();
-										for (int i = 0; i < ninjas.length; i++) 
-											ninjas[i].move(map);
+										for (int i = 0; i < ninjas.length; i++)
+										{
+											if(ninjas[i].isAlive())
+												ninjas[i].move(map);
+										}
 									}
 									checkForPowerUp(spy);
 									if(!spy.getInvincibility() && isNinjaAdjacent()){
@@ -232,10 +235,137 @@ public class GameEngine{
 		return false;
 	}
 	private void spyShoot(){
-		
+	    if (spy.getBullet() >= 1)
+	    {
+	    	spy.useBullet();
+	    	
+			boolean hit = false;
+			int i = spy.getRowCoord();
+			int j = spy.getColCoord();
+			boolean isValidLocation = map.checkValidLocation(i, j);
+			if (isValidLocation == true){
+				switch(ui.displayShootMenu())
+				{
+					case 'W':
+					case 'w':
+						while(!hit){
+							i -= 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'S':
+					case 's':
+						while(!hit){
+							i += 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'A':
+					case 'a':
+						while(!hit){
+							j -= 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+					case 'D':
+					case 'd':
+						while(!hit){
+							j += 1;
+							if(map.isNinja(i, j)){
+								hit = true;
+							}
+						}
+						break;
+						
+				}
+				for(int k=0;k<ninjas.length;k++)
+				{
+					if(map.getAtLocation(i,j) == ninjas[k])
+						ninjas[k].kill();
+				}
+				
+				map.set(i, j, new EmptyAA());
+				ui.displayNinjaDeathMessage();
+			}
+	    }
+	    else
+	    	ui.displayNoBulletMessage();
 	}
 	private void spyLook(){
+		char direction = ui.displayLookMenu();
+		if(direction == 'W' || direction == 'w' || direction == 'A' || direction == 'a' ||
+			direction == 'S' || direction == 's' || direction == 'D' || direction == 'd')
+			spy.setLook(direction);
+		else
+			new Exception("Invalid directional input").printStackTrace();
 		
+		switch(spy.getLook())
+		{
+			case 'W':
+			case 'w':
+			{
+				for(int i=spy.getRowCoord();i>0;i--)
+				{
+					if(map.getAtLocation(spy.getRowCoord()-i,spy.getColCoord()) instanceof Ninja)
+					{
+						ui.pathAlertMessage('w');
+						return;
+					}
+				}
+				ui.pathClearMessage('w');
+				return;
+			}
+			case 'A':
+			case 'a':
+			{
+				for(int i=spy.getColCoord();i>0;i++)
+				{
+					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()-i) instanceof Ninja)
+					{
+						ui.pathAlertMessage('a');
+						return;
+					}
+				}
+				ui.pathClearMessage('a');
+				return;
+			}
+			case 'S':
+			case 's':
+			{
+				for(int i=0;i<9-spy.getRowCoord();i++)
+				{
+					if(map.getAtLocation(spy.getRowCoord()+i,spy.getColCoord()) instanceof Ninja)
+					{
+						ui.pathAlertMessage('s');
+						return;
+					}
+				}
+				ui.pathClearMessage('s');
+				return;
+			}
+			case 'D':
+			case 'd':
+			{
+				for(int i=0;i<9-spy.getColCoord();i++)
+				{
+					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()+i) instanceof Ninja)
+					{
+						ui.pathAlertMessage('d');
+						return;
+					}
+				}
+				ui.pathClearMessage('d');
+				return;
+			}
+			default:
+				new Exception("Invalid directional input").printStackTrace();
+		}
 	}
 	private void setRooms()
 	{

@@ -24,6 +24,7 @@ package edu.cpp.cs.cs141.final_project;
 import java.lang.Math;
 public class Map{
 	public static boolean debugMode = false;
+	public boolean looking = false;
 	private Tile[][] tiles;
 	private int spyX, spyY;
 	
@@ -54,7 +55,7 @@ public class Map{
   		return tiles[x][y].getGamePiece();
   	}
   	
-  	public char image(int x, int y){
+  	public char image(int x, int y, Spy spy){
   		if(!debugMode)
   		{
   			if(tiles[x][y].isNinja() || tiles[x][y].isPowerUp())
@@ -152,7 +153,7 @@ public class Map{
 	{
 		return tiles[spyX][spyY].getPowerUp();
 	}
-	private boolean checkValidLocation(int x, int y) {
+	public boolean checkValidLocation(int x, int y) {
 		boolean isValid = true;
 		
 		if (x > tiles.length-1 || x < 0 || y > tiles.length-1 || y < 0) {

@@ -61,7 +61,7 @@ public class UI{
 		for(int i=0;i<9;i++)
 		{
 			for(int j=0;j<9;j++)
-				System.out.print("[" + map.image(i,j) + "]");
+				System.out.print("[" + map.image(i,j,spy) + "]");
 			if(i>0 && i<IngameMenu.length)
 			{
 				if(i==3)
@@ -93,6 +93,7 @@ public class UI{
 			System.out.println();
 		}
 		displaySpyControls();
+		spy.setLook(' ');
 	}
 	public void displayMenu(){
 		System.out.print("1. New Game\n"+
@@ -151,12 +152,42 @@ public class UI{
 	}
 	public void displayNinjaDeathMessage()
 	{
-		System.out.println("You killed one ninja!\n");
+		System.out.println("You killed one ninja!");
+	}
+	public void displayNoBulletMessage()
+	{
+		System.out.println("No bullets to shoot.");
 	}
 	public char displayShootMenu()
 	{
 		System.out.println("Choose the direction you want to shoot\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
+	}
+	public char displayLookMenu()
+	{
+		System.out.println("Choose the direction you want to look\n");
+		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
+		return getCharInput();
+	}
+	public void pathAlertMessage(char direction)
+	{
+		switch(direction)
+		{
+			case 'w': System.out.println("ALERT! Ninja in NORTH direction!"); break;
+			case 'a': System.out.println("ALERT! Ninja in WEST direction!"); break;
+			case 's': System.out.println("ALERT! Ninja in SOUTH direction!"); break;
+			case 'd': System.out.println("ALERT! Ninja in EAST direction!"); break;		
+		}
+	}
+	public void pathClearMessage(char direction)
+	{
+		switch(direction)
+		{
+			case 'w': System.out.println("Path CLEAR in NORTH direction!"); break;
+			case 'a': System.out.println("Path CLEAR in WEST direction!"); break;
+			case 's': System.out.println("Path CLEAR in SOUTH direction!"); break;
+			case 'd': System.out.println("Path CLEAR in EAST direction!"); break;		
+		}
 	}
 }

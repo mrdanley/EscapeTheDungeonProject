@@ -26,7 +26,8 @@ public class Spy extends ActiveAgent{
 	private int lives = 3;
 	private int invincibleTurns = 5;
 	private boolean invincibility = false;
-	boolean moved = false;
+	private boolean moved = false;
+	private char lookDirection = ' ';
 	
 	public void setMove(boolean m)
 	{
@@ -78,11 +79,8 @@ public class Spy extends ActiveAgent{
 	{
 		return invincibility;
 	}
-	public boolean look(){
-		return true;
-	}
 	public char image(){
-		 return 'S'; 
+		return 'S';
 	}
 	public int getBullet()
 	{
@@ -95,6 +93,12 @@ public class Spy extends ActiveAgent{
 	public void useBullet(){
 		bullet--;
 	}
-	
-	
+	public char getLook()
+	{
+		return lookDirection;
+	}
+	public void setLook(char direction)
+	{
+		lookDirection = direction;
+	}
 }
