@@ -286,13 +286,7 @@ public class GameEngine{
 				map.set(i, j, new EmptyAA());
 				System.out.println("You killed one ninja");
 			}
-	    	
-	    }
-	    
-		
-		
-		
-		
+	    }	
 	}
 	private void spyLook(){
 		
