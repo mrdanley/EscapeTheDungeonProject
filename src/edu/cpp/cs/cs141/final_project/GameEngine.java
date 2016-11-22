@@ -121,6 +121,9 @@ public class GameEngine{
 					break;
 				}
 				case 2://load game
+					//TODO add ui.getFilename
+					//TODO somehow start game after loading file
+					
 					
 					try {
 						loadData();

@@ -24,6 +24,11 @@ public class SaveData implements Serializable {
 		init(m);
 	}
 	
+	/**
+	 * initializes variables, not load data yet
+	 * 
+	 * @param m
+	 */
 	private void init(Map m) {
 		map = m;
 		ninjas = new ArrayList<Ninja>();
@@ -39,6 +44,9 @@ public class SaveData implements Serializable {
 	
 	
 	
+	/**
+	 * populates serial* variables
+	 */
 	private void serializeData() {
 		for (int i = 0; i < map.getLength(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
@@ -48,6 +56,11 @@ public class SaveData implements Serializable {
 		}
 	}
 	
+	/**
+	 * populates map and data variables by iterating through each "tile" 
+	 * 
+	 * @throws Exception usually a casting Exception
+	 */
 	private void loadData() throws Exception {
 		map = new Map();
 		init(map);
@@ -96,6 +109,14 @@ public class SaveData implements Serializable {
 
 	
 	
+	/**
+	 * Unused? Returns a new array of objects
+	 * Example:
+	 * 	ninjas = (Ninja[]) findInMap(new Ninja());
+	 * 
+	 * @param o Type of Object
+	 * @return
+	 */
 	public GamePiece[] findInMap(Object o) {
 		ArrayList<GamePiece> items = new ArrayList<GamePiece>();
 		
@@ -116,26 +137,47 @@ public class SaveData implements Serializable {
 	}
 	
 
+	/**
+	 * Attempts to return the map 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public Map getMap() throws Exception {
 		if (map == null) loadData();
 		return map;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public Ninja[] getNinjas() throws Exception {
 		if (map == null) loadData();
 		return ninjas.toArray(new Ninja[ninjas.size()]);
 	}
+	
+	//I don't think the powerUps variable in GameEngine is ever used.
+	//So this is commented out.
 	
 //	public PowerUp[] getPowerups() {
 //		if (map == null) loadData();
 //		return 
 //	}
 
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public Spy getSpy() throws Exception {
 		if (map == null) loadData();
 		return spy;
 	}
 
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public Room[] getRooms() throws Exception {
 		if (map == null) loadData();
 		return rooms.toArray(new Room[rooms.size()]);
