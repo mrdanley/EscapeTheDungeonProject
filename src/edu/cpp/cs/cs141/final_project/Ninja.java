@@ -24,7 +24,8 @@ package edu.cpp.cs.cs141.final_project;
 import java.util.Random;
 
 public class Ninja extends ActiveAgent{
-	Random roll = new Random();
+	private Random roll = new Random();
+	private boolean alive = true;
 	
 	/**
 	 * This method changes the {@link Ninja}  position by moving it 1 column left/right or 1 row up/down.
@@ -146,5 +147,13 @@ public class Ninja extends ActiveAgent{
 	 */
 	public char image(){
 		return 'N'; 
+	}
+	public boolean isAlive()
+	{
+		return alive;
+	}
+	public void kill()
+	{
+		alive = false;
 	}
 }
