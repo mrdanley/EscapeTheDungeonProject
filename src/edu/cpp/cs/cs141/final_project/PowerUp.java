@@ -23,6 +23,12 @@ package edu.cpp.cs.cs141.final_project;
  * @author
  */
 
-public abstract class PowerUp{
-	public abstract char image();
+public abstract class PowerUp implements GamePiece{
+	private int rowCoord,colCoord;
+	
+	public void setLocation(int x, int y)
+	{
+		rowCoord = x;
+		colCoord = y;
+	}
 }

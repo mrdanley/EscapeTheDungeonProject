@@ -60,41 +60,8 @@ public class Map{
   		{
   			if(tiles[x][y].isNinja() || tiles[x][y].isPowerUp())
   			{
-  				//if room is between spy and ninja or powerup, spy cannot see
-  				if(Math.abs(x-spyX)<=2 && y==spyY)
-  				{
-  					if(x>spyX)
-  					{
-  						if(getAtLocation(spyX+1,spyY) instanceof Room)
-  							return ' ';
-  						else
-  							return tiles[x][y].image();
-  					}
-  					else
-  					{
-  						if(getAtLocation(x+1,spyY) instanceof Room)
-  							return ' ';
-  						else
-  							return tiles[x][y].image();
-  					}
-  				}
-  				else if(x==spyX && Math.abs(y-spyY)<=2)
-  				{
-  					if(y>spyY)
-  					{
-  						if(getAtLocation(spyX,spyY+1) instanceof Room)
-  							return ' ';
-  						else
-  							return tiles[x][y].image();
-  					}
-  					else
-  					{
-  						if(getAtLocation(spyX,y+1) instanceof Room)
-  							return ' ';
-  						else
-  							return tiles[x][y].image();
-  					}
-  				}
+  				if((Math.abs(x-spyX)<=2 && y==spyY) || (x==spyX && Math.abs(y-spyY)<=2))
+  					return tiles[x][y].image();
   				else
   					return ' ';
   			}

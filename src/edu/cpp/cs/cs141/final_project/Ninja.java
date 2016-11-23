@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -25,29 +25,7 @@ import java.util.Random;
 
 public class Ninja extends ActiveAgent{
 	private Random roll = new Random();
-	
-	/**
-	 * This field checks if the ninja is still alive. If the ninja dies by getting shot by spy, return false. Otherwise true.
-	 */
 	private boolean alive = true;
-	
-	/**
-	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
-	 */
-	private boolean ISeeSpyUp;
-	/**
-	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
-	 */
-	private boolean ISeeSpyDown;
-	/**
-	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
-	 */
-	private boolean ISeeSpyLeft;
-	/**
-	 * This field shares a boolean to see if the current position of the {@link Spy} is in range of the {@link Ninja}
-	 */
-	private boolean ISeeSpyRight;
-	
 	
 	/**
 	 * This method changes the {@link Ninja}  position by moving it 1 column left/right or 1 row up/down.
@@ -130,164 +108,6 @@ public class Ninja extends ActiveAgent{
 	}
 	
 	/**
- 	 * This move method will make the {@link Ninja} move towards {@link Spy} if he is in line of sight
- 	 * This uses the ISeeTheSpy method to decide if {@link Spy} is in LoS and {@link Ninja} act accordingly depending on the results.
- 	 * 
- 	 * HOW TO IMPLEMENT IN GAME ENGINE EXAMPLE :
- 	 * for (int i = 0; i < 6; i++) {
- 	 * 		if (ninjas[i].iSeeASpy(map) == true)
- 	 * 			ninjas[i].moveTowardsSpy(map);
- 	 * 		else
- 	 * 			ninjas[i].move(map);
- 	 * }
- 	 * 
- 	 * @param Grid takes {@link Map} parameter to set {@link Ninja} position in another spot of the {@link Map}
- 	 * 
- 	 */
-	public void moveTowardsSpy (Map Grid)
-	{
-		GamePiece emptyIt = new EmptyAA();
-		if (ISeeSpyUp == true)
-		{
-			if (Grid.isSpy(getRowCoord() - 1, getColCoord()) == true)
-				return;
-			else
-			{
-				Grid.set(getRowCoord(), getColCoord(), emptyIt);
-				Grid.set(getRowCoord() - 1, getColCoord(), this);
-			}
-		}
-		if (ISeeSpyDown == true)
-		{
-			if (Grid.isSpy(getRowCoord() + 1, getColCoord()) == true)
-				return;
-			else
-			{
-				Grid.set(getRowCoord(), getColCoord(), emptyIt);
-				Grid.set(getRowCoord() + 1, getColCoord(), this);
-			}
-		}
-		if (ISeeSpyLeft == true)
-		{
-			if (Grid.isSpy(getRowCoord(), getColCoord() - 1) == true)
-				return;
-			else
-			{
-				Grid.set(getRowCoord(), getColCoord(), emptyIt);
-				Grid.set(getRowCoord(), getColCoord() - 1, this);
-			}
-		}
-		if (ISeeSpyRight == true)
-		{
-			if (Grid.isSpy(getRowCoord(), getColCoord() + 1) == true)
-				return;
-			else
-			{
-				Grid.set(getRowCoord(), getColCoord(), emptyIt);
-				Grid.set(getRowCoord(), getColCoord() + 1, this);
-			}
-		}
-	}
-	
-	/**
-	 * This method checks if the {@link Spy} is in the {@link Ninja} line of sight.
-	 * @param Grid is to check the map if there are any objects (rooms, other ninjas) blocking {@link Ninja} line of sight from spy.
-	 * @param spy to track where {@link Spy} current coordinates.
-	 * @return true if {@link Ninja} sees Spy in his line of sight. Otherwise return false.
-	 */
-	public boolean ISeeTheSpy (Map Grid, Spy spy)
-	{
-		int Spyrow = spy.getRowCoord();
-		int Spycol = spy.getColCoord();
-		int Ninjarow = getRowCoord();
-		int Ninjacol = getColCoord();
-		ISeeSpyUp = false;
-		ISeeSpyDown = false;
-		ISeeSpyLeft = false;
-		ISeeSpyRight = false;
-		
-		if (Ninjarow == Spyrow)
-		{
-			if (Ninjacol == 9)
-				ISeeSpyRight = false;
-			else if (Ninjacol < Spycol)
-			{
-				for (int i = Ninjacol + 1; i <= Spycol - 1; i++) 
-				{
-					if ((Grid.isNinja(Ninjarow, i) == true) || (Grid.isRoom(Ninjarow, i) == true))
-					{
-						ISeeSpyRight = false;
-						break;
-					}
-					else
-						ISeeSpyRight = true;
-				}
-				if (Ninjacol == (Spycol - 1))
-					ISeeSpyRight = true;
-			}
-			else if (Ninjacol == 0)
-				ISeeSpyLeft = false;
-			else if (Ninjacol > Spycol)
-			{
-				for (int i = Ninjacol - 1; i >= Spycol + 1; i--)
-				{
-					if ((Grid.isNinja(Ninjarow, i) == true) || (Grid.isRoom(Ninjarow, i) == true))
-					{
-						ISeeSpyLeft = false;
-						break;
-					}
-					else
-						ISeeSpyLeft = true;
-				}
-				if (Ninjacol == (Spycol + 1))
-					ISeeSpyLeft = true;
-			}
-		}
-		
-		if (Ninjacol == Spycol)
-		{
-			if (Ninjarow == 9)
-				ISeeSpyDown = false;
-			else if (Ninjarow < Spyrow)
-			{
-				for (int i = Ninjarow + 1; i <= Spyrow - 1; i++)
-				{
-					if ((Grid.isNinja(i, Ninjacol) == true) || (Grid.isRoom(i, Ninjacol) == true))
-					{
-						ISeeSpyDown = false;
-						break;
-					}
-					else
-						ISeeSpyDown = true;
-				}
-				if (Ninjarow == (Spyrow - 1))
-					ISeeSpyDown = true;
-	
-			}
-			else if (Ninjarow == 0)
-				ISeeSpyUp = false;
-			else if (Ninjarow > Spyrow)
-				for (int i = Ninjarow - 1; i >= Spyrow + 1; i--)
-				{
-					if ((Grid.isNinja(i, Ninjacol) == true) || (Grid.isRoom(i, Ninjacol) == true))
-					{
-						ISeeSpyUp = false;
-						break;
-					}
-					else
-						ISeeSpyUp = true;
-				}
-			if (Ninjarow == (Spyrow + 1))
-				ISeeSpyUp = true;
-		}
-		
-		if ((ISeeSpyUp == true) || (ISeeSpyDown == true) || (ISeeSpyLeft == true) || (ISeeSpyRight == true))
-			return true;
-		return false;
-	}
-	
-	
-	/**
 	 * This private method checks if the next movement is out of bound. This is to prevent the {@link Ninja}  moving off the grid and possibly crashing the game.
 	 * @param decisionWhereToMove takes the decision based on the random roll from 1 to 4 
 	 * where 1 = left, 2 = up, 3 = right, 4 = down to see if this move is possible.
@@ -328,20 +148,10 @@ public class Ninja extends ActiveAgent{
 	public char image(){
 		return 'N'; 
 	}
-	
-	/**
-	 * This method checks if the ninja is still alive.
-	 * @return true if alive. Otherwise false.
-	 */
 	public boolean isAlive()
 	{
 		return alive;
 	}
-	
-	/**
-	 * This method changes ninja from alive to dead.
-	 * This should be used when the spy shoots the ninja.
-	 */
 	public void kill()
 	{
 		alive = false;
