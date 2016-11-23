@@ -376,12 +376,19 @@ public class GameEngine{
 	    	ui.displayNoBulletMessage();
 	}
 	private void spyLook(){
-		char direction = ui.displayLookMenu();
-		if(direction == 'W' || direction == 'w' || direction == 'A' || direction == 'a' ||
-			direction == 'S' || direction == 's' || direction == 'D' || direction == 'd')
-			spy.setLook(direction);
-		else
-			new Exception("Invalid directional input").printStackTrace();
+		char direction;
+		boolean correctInput = false;
+		do{
+			direction = ui.displayLookMenu();
+			if(direction == 'W' || direction == 'w' || direction == 'A' || direction == 'a' ||
+					direction == 'S' || direction == 's' || direction == 'D' || direction == 'd')
+			{
+				spy.setLook(direction);
+				correctInput = true;
+			}
+			else
+				new Exception("Invalid directional input").printStackTrace();
+		}while(!correctInput);
 		
 		switch(spy.getLook())
 		{
@@ -390,6 +397,11 @@ public class GameEngine{
 			{
 				for(int i=spy.getRowCoord();i>0;i--)
 				{
+					if(map.getAtLocation(spy.getRowCoord()-i,spy.getColCoord()) instanceof Room)
+					{
+						ui.pathClearMessage('w');
+						return;
+					}
 					if(map.getAtLocation(spy.getRowCoord()-i,spy.getColCoord()) instanceof Ninja)
 					{
 						ui.pathAlertMessage('w');
@@ -404,6 +416,11 @@ public class GameEngine{
 			{
 				for(int i=spy.getColCoord();i>0;i++)
 				{
+					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()-i) instanceof Room)
+					{
+						ui.pathClearMessage('a');
+						return;
+					}
 					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()-i) instanceof Ninja)
 					{
 						ui.pathAlertMessage('a');
@@ -418,6 +435,11 @@ public class GameEngine{
 			{
 				for(int i=0;i<tileMax-spy.getRowCoord();i++)
 				{
+					if(map.getAtLocation(spy.getRowCoord()+i,spy.getColCoord()) instanceof Room)
+					{
+						ui.pathClearMessage('s');
+						return;
+					}
 					if(map.getAtLocation(spy.getRowCoord()+i,spy.getColCoord()) instanceof Ninja)
 					{
 						ui.pathAlertMessage('s');
@@ -432,6 +454,11 @@ public class GameEngine{
 			{
 				for(int i=0;i<tileMax-spy.getColCoord();i++)
 				{
+					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()+i) instanceof Room)
+					{
+						ui.pathClearMessage('d');
+						return;
+					}
 					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()+i) instanceof Ninja)
 					{
 						ui.pathAlertMessage('d');
@@ -441,8 +468,6 @@ public class GameEngine{
 				ui.pathClearMessage('d');
 				return;
 			}
-			default:
-				new Exception("Invalid directional input").printStackTrace();
 		}
 	}
 	private void setRooms()
