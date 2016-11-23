@@ -141,7 +141,7 @@ public class UI{
 	}
 	public void displayInvalidMove()
 	{
-		System.out.println("Invalid move. Try Again.\n");
+		System.out.println("Invalid move. Try Again.");
 	}
 	public void displayInvalidRoomMove()
 	{
@@ -163,7 +163,7 @@ public class UI{
 	}
 	public char displayShootMenu()
 	{
-		System.out.println("Choose the direction you want to shoot\n");
+		System.out.println("Choose the direction you want to shoot");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}
@@ -174,7 +174,7 @@ public class UI{
 	}
 	public char displayLookMenu()
 	{
-		System.out.println("Choose the direction you want to look\n");
+		System.out.println("Choose the direction you want to look");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}
