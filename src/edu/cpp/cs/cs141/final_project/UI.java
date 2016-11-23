@@ -133,8 +133,7 @@ public class UI{
 	public void displaySpyDieMessage()
 	{
 		System.out.println("You were stabbed and lost a life!");
-		System.out.print("Enter any key to continue: ");
-		String input = kb.next();
+		displayEnterAnyKey();
 	}
 	public void displayExitProgramMessage()
 	{
@@ -144,11 +143,14 @@ public class UI{
 	{
 		System.out.println("Invalid move. Try Again.\n");
 	}
+	public void displayInvalidRoomMove()
+	{
+		System.out.println("Cannot enter room from this direction.");
+	}
 	public void displayEmptyRoomMessage()
 	{
 		System.out.println("Empty room...look elsewhere...");
-		System.out.print("Enter any key to continue: ");
-		String input = kb.next();
+		displayEnterAnyKey();
 	}
 	public void displayNinjaDeathMessage()
 	{
@@ -157,12 +159,18 @@ public class UI{
 	public void displayNoBulletMessage()
 	{
 		System.out.println("No bullets to shoot.");
+		displayEnterAnyKey();
 	}
 	public char displayShootMenu()
 	{
 		System.out.println("Choose the direction you want to shoot\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
+	}
+	private void displayEnterAnyKey()
+	{
+		System.out.print("Enter any key to continue: ");
+		String input = kb.next();
 	}
 	public char displayLookMenu()
 	{
