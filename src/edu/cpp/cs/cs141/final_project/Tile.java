@@ -43,7 +43,6 @@ public class Tile{
 	}
 	public void set(PowerUp p){
 		powerup = p;
-		powerup.setLocation(rowCoord,colCoord);
 	}
 	public boolean noActiveAgent(){
 		return gamepiece instanceof EmptyAA;

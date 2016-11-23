@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -33,6 +33,7 @@ public class GameEngine{
 	
 	private Random rand = new Random();
 	private int rowSpawn, colSpawn;
+	private final int tileMax = 9;
 	
 	public void gameStart(){
 		int startInput, endGameType = 0;
@@ -77,24 +78,32 @@ public class GameEngine{
 									{
 										if(spy.getInvincibility())
 											spy.invincibleLoss();
-										for (int i = 0; i < ninjas.length; i++)
+										if(!spy.getInvincibility() && isNinjaAdjacent()){
+											killSpy();
+											if(spy.getLives() == 0){
+												endGameType = 3;
+												endGame = true;
+												if(Map.isDebug())
+													map.toggleMode();
+											}
+										}
+										else
 										{
-											if(ninjas[i].isAlive())
-												ninjas[i].move(map);
+											for (int i = 0; i < ninjas.length; i++)
+											{
+												if(ninjas[i].isAlive())
+												{
+													if (ninjas[i].ISeeTheSpy(map, spy) == true)
+														ninjas[i].moveTowardsSpy(map);
+													else
+														ninjas[i].move(map);
+												}
+											}
+											checkForPowerUp(spy);									
 										}
+										if(spy.getInvincibleTurns() == 0)
+											spy.disableInvincibility();
 									}
-									checkForPowerUp(spy);
-									if(!spy.getInvincibility() && isNinjaAdjacent()){
-										killSpy();
-										if(spy.getLives() == 0){
-											endGameType = 3;
-											endGame = true;
-											if(Map.isDebug())
-												map.toggleMode();
-										}
-									}
-									if(spy.getInvincibleTurns() == 0)
-										spy.disableInvincibility();
 								}
 								break;
 							}
@@ -167,6 +176,30 @@ public class GameEngine{
 		ui.displayDungeon(map,spy);
 		ui.displaySpyDieMessage();
 		if(lives > 0){
+			//if a ninja is in spawn area, respawn the ninja elsewhere
+			for(int i=0;i<ninjas.length;i++)
+			{
+				if(!(notNearSpyStart(ninjas[i].getRowCoord(),ninjas[i].getColCoord())))
+				{
+					map.set(ninjas[i].getRowCoord(), ninjas[i].getColCoord(), new EmptyAA());
+					rowSpawn = rand.nextInt(tileMax);
+					colSpawn = rand.nextInt(tileMax);
+					boolean spawnNinja = true;
+					ninjas[i] = new Ninja();
+					do{
+						if(notNearSpyStart(rowSpawn,colSpawn) && map.noActiveAgent(rowSpawn,colSpawn))
+						{
+							map.set(rowSpawn, colSpawn, ninjas[i]);
+							spawnNinja = false;
+						}
+						else
+						{
+							rowSpawn = rand.nextInt(tileMax);
+							colSpawn = rand.nextInt(tileMax);
+						}
+					}while(spawnNinja);
+				}
+			}
 			//store spy's location in temp variables
 			int tempx = spy.getRowCoord();
 			int tempy = spy.getColCoord();
@@ -211,24 +244,69 @@ public class GameEngine{
 	}
 	private boolean spyMove(char charInput)
 	{
+		boolean moveAgainstRoom = false;
 		try {
-			for(int i=0;i<rooms.length;i++)
+			switch(charInput)
 			{
-				if(rooms[i].getRowCoord()==spy.getRowCoord()+1 &&
-					rooms[i].getColCoord()==spy.getColCoord() && (charInput=='s' || charInput=='S'))
+				case 's':
+				case 'S':
 				{
-					if(rooms[i].hasBriefcase())
-						return true;
-					else
+					if(map.getAtLocation(spy.getRowCoord()+1, spy.getColCoord()) instanceof Room)
 					{
-						spy.toggleMove();
-						ui.displayEmptyRoomMessage();
+						moveAgainstRoom = true;
+						for(int i=0;i<rooms.length;i++)
+						{
+							if(rooms[i].getRowCoord()==spy.getRowCoord()+1 &&
+								rooms[i].getColCoord()==spy.getColCoord())
+							{
+								if(rooms[i].hasBriefcase())
+									return true;
+								else
+									ui.displayEmptyRoomMessage();
+								break;
+							}
+						}
 					}
+					break;
+				}
+				//case w,a,d: spy tries to enter a room from wrong direction
+				case 'w':
+				case 'W':
+				{
+					if(map.getAtLocation(spy.getRowCoord()-1, spy.getColCoord()) instanceof Room)
+					{
+						moveAgainstRoom = true;
+						ui.displayInvalidRoomMove();
+					}
+					break;
+				}
+				case 'a':
+				case 'A':
+				{
+					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()-1) instanceof Room)
+					{
+						moveAgainstRoom = true;
+						ui.displayInvalidRoomMove();
+					}
+					break;
+				}
+				case 'd':
+				case 'D':
+				{
+					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()+1) instanceof Room)
+					{
+						moveAgainstRoom = true;
+						ui.displayInvalidRoomMove();
+					}
+					break;
 				}
 			}
-			map.moveSpy(Character.toLowerCase(charInput));
-			spy.toggleMove();
-			return false;
+			if(!moveAgainstRoom)
+			{
+				spy.toggleMove();
+				map.moveSpy(Character.toLowerCase(charInput));
+				return false;
+			}
 		} catch (Exception e) {
 			ui.displayInvalidMove();
 		}
@@ -338,7 +416,7 @@ public class GameEngine{
 			case 'S':
 			case 's':
 			{
-				for(int i=0;i<9-spy.getRowCoord();i++)
+				for(int i=0;i<tileMax-spy.getRowCoord();i++)
 				{
 					if(map.getAtLocation(spy.getRowCoord()+i,spy.getColCoord()) instanceof Ninja)
 					{
@@ -352,7 +430,7 @@ public class GameEngine{
 			case 'D':
 			case 'd':
 			{
-				for(int i=0;i<9-spy.getColCoord();i++)
+				for(int i=0;i<tileMax-spy.getColCoord();i++)
 				{
 					if(map.getAtLocation(spy.getRowCoord(),spy.getColCoord()+i) instanceof Ninja)
 					{
@@ -369,9 +447,9 @@ public class GameEngine{
 	}
 	private void setRooms()
 	{
-		for(int i=0;i<9;i++)
+		for(int i=0;i<rooms.length;i++)
 			rooms[i] = new Room();
-		rooms[rand.nextInt(9)].setBriefcase();
+		rooms[rand.nextInt(rooms.length)].setBriefcase();
 		  
 		map.set(1,1,rooms[0]);
 		map.set(1,4,rooms[1]);
@@ -385,18 +463,23 @@ public class GameEngine{
 	}
 	private boolean notNearSpyStart(int x, int y){
 		//TODO cleanup
-		if(!((x==6 && (y==0 || y==1)) || ((x==7 ||
-				x==8)&& y==2) || (x==7 && y==0) || (x==8 && y==1)))
-			return true;
-		else
-			return false;
+		int spyStartRange = 3;
+		for(int row=tileMax-spyStartRange;row<tileMax;row++)
+		{
+			for(int col=0;col<spyStartRange;col++)
+			{
+				if(x==row && y==col)
+					return false;
+			}
+		}
+		return true;
 	}
 	private void setNinjas()
 	{
-		rowSpawn = rand.nextInt(9);
-		colSpawn = rand.nextInt(9);
+		rowSpawn = rand.nextInt(tileMax);
+		colSpawn = rand.nextInt(tileMax);
 		boolean spawnNinja;
-		for(int i=0;i<6;i++)
+		for(int i=0;i<ninjas.length;i++)
 		{
 			spawnNinja = false;
 			ninjas[i] = new Ninja();
@@ -408,8 +491,8 @@ public class GameEngine{
 				}
 				else
 				{
-					rowSpawn = rand.nextInt(9);
-					colSpawn = rand.nextInt(9);
+					rowSpawn = rand.nextInt(tileMax);
+					colSpawn = rand.nextInt(tileMax);
 				}
 			}while(!spawnNinja);
 		}
@@ -421,8 +504,8 @@ public class GameEngine{
 		powerups[2] = new Radar();
 		int powerup_num = 0;
 		do{
-			rowSpawn = rand.nextInt(9);
-			colSpawn = rand.nextInt(9);
+			rowSpawn = rand.nextInt(tileMax);
+			colSpawn = rand.nextInt(tileMax);
 			if(map.noPowerUp(rowSpawn,colSpawn) && !map.isRoom(rowSpawn,colSpawn) && !(rowSpawn==8 && colSpawn==0))
 			{
 				map.set(rowSpawn, colSpawn, powerups[powerup_num]);
