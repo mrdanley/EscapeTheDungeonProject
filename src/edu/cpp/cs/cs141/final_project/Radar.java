@@ -17,11 +17,16 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
- * @author
+ * This class represents the Radar characteristics on the {@link Map}
+ * @author Daniel Le
  */
 
 public class Radar extends PowerUp{
+	
+	/**
+	 * This method returns the symbol used on the grid to represent {@link Radar} on the grid.
+	 * In this case, {@link Radar} will be labeled "R" on {@link Map}.
+	 */
 	public char image(){
 	  	return 'R';
   	}
