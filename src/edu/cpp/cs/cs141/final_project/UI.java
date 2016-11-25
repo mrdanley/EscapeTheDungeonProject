@@ -141,7 +141,7 @@ public class UI{
 	}
 	public void displayInvalidMove()
 	{
-		System.out.println("Invalid move. Try Again.");
+		System.out.println("Invalid move. Try Again.\n");
 	}
 	public void displayInvalidRoomMove()
 	{
@@ -156,6 +156,10 @@ public class UI{
 	{
 		System.out.println("You killed one ninja!");
 	}
+	public void displayShotAir()
+	{
+		System.out.println("You shot at nothing and wasted a bullet!");
+	}
 	public void displayNoBulletMessage()
 	{
 		System.out.println("No bullets to shoot.");
@@ -163,7 +167,7 @@ public class UI{
 	}
 	public char displayShootMenu()
 	{
-		System.out.println("Choose the direction you want to shoot");
+		System.out.println("Choose the direction you want to shoot\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}
@@ -174,7 +178,7 @@ public class UI{
 	}
 	public char displayLookMenu()
 	{
-		System.out.println("Choose the direction you want to look");
+		System.out.println("Choose the direction you want to look\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}

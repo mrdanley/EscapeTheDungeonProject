@@ -312,69 +312,95 @@ public class GameEngine{
 		}
 		return false;
 	}
+	
 	private void spyShoot(){
 	    if (spy.getBullet() >= 1)
-	    {
-	    	spy.useBullet();
-	    	
-			boolean hit = false;
+	    {	    	
+			boolean hit = false, shotTaken;
 			int i = spy.getRowCoord();
 			int j = spy.getColCoord();
-			boolean isValidLocation = map.checkValidLocation(i, j);
-			if (isValidLocation == true){
+			do{
 				switch(ui.displayShootMenu())
 				{
 					case 'W':
 					case 'w':
-						while(!hit){
+					{
+						while(!hit && i>=0){
 							i -= 1;
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
 						}
+						shotTaken = true;
 						break;
+					}
 					case 'S':
 					case 's':
-						while(!hit){
+					{
+						while(!hit && i<tileMax){
 							i += 1;
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
 						}
+						shotTaken = true;
 						break;
+					}
 					case 'A':
 					case 'a':
-						while(!hit){
+					{
+						while(!hit && j>=0){
 							j -= 1;
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
 						}
+						shotTaken = true;
 						break;
+					}
 					case 'D':
 					case 'd':
-						while(!hit){
+					{
+						while(!hit && j<tileMax){
 							j += 1;
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
 						}
+						shotTaken = true;
 						break;
-						
+					}
+					default:
+					{
+						ui.invalidInput();
+						shotTaken = false;
+						break;
+					}
 				}
+				System.out.println(shotTaken);
+			}while(!shotTaken);
+			
+			if(shotTaken)
+				spy.useBullet();
+			
+			if(hit)
+			{
 				for(int k=0;k<ninjas.length;k++)
 				{
 					if(map.getAtLocation(i,j) == ninjas[k])
 						ninjas[k].kill();
 				}
-				
+			
 				map.set(i, j, new EmptyAA());
 				ui.displayNinjaDeathMessage();
 			}
+			else
+				ui.displayShotAir();
 	    }
 	    else
 	    	ui.displayNoBulletMessage();
 	}
+	
 	private void spyLook(){
 		char direction;
 		boolean correctInput = false;
