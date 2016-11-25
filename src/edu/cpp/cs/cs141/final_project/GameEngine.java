@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -377,7 +377,6 @@ public class GameEngine{
 						break;
 					}
 				}
-				System.out.println(shotTaken);
 			}while(!shotTaken);
 			
 			if(shotTaken)
