@@ -17,8 +17,8 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
- * @author
+ * This class extends the PowerUp abstract class.
+ * It represents an 'invincible' powerup, which makes the spy invincible for 5 turns.
  */
 
 public class Invincibility extends PowerUp{

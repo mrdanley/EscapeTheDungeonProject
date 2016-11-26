@@ -17,14 +17,16 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
- * @author
+ * This class represents an empty powerup slot; it goes in any tile that doesn't have a powerup.
  */
 
 public class EmptyPU extends PowerUp{
 	public char image(){
 		return ' ';
 	}
+	/**
+	 * @return true, because it's an empty space.
+	 */
 	public boolean pickedUp(){
 		return true;
 	}
