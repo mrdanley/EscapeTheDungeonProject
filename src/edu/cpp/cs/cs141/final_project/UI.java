@@ -74,6 +74,9 @@ public class UI{
 				else
 					System.out.print(IngameMenu[i-1]);
 			}
+			//REMOVE BEFORE SUBMIT
+			if(i==5)
+				System.out.print("\tEnter [R] to respawn dungeon (Will Remove before submit)");
 			if(i==6)
 			{
 				System.out.print("\tLives: ");
