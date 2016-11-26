@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -24,6 +24,10 @@ import java.util.Random;
  * @author
  */
 public class GameEngine{
+	
+	/**
+	 * These fields represent all the creation of objects that the game will consist of.
+	 */
 	private Map map;
 	private Ninja[] ninjas = new Ninja[6];
 	private PowerUp[] powerups = new PowerUp[3];
@@ -31,10 +35,27 @@ public class GameEngine{
 	private Room[] rooms = new Room[9];
 	private UI ui = new UI();
 	
+	/**
+	 * This object represents an object that is used to generate random numbers.
+	 */
 	private Random rand = new Random();
+	/**
+	 * These fields represent row and column locations on the {@link Map} that are used
+	 * in multiple functions in this class.
+	 */
 	private int rowSpawn, colSpawn;
+	/**
+	 * This field represents the max row or column {@link Tile}'s on {@link Map}
+	 */
 	private final int tileMax = 9;
 	
+	/**
+	 * This function starts the game and contains the game loop, continuously taking input.
+	 * This includes displaying the program's start menu and showing the setting the game
+	 * objects at the start of the game.
+	 * The player has options of moving, looking, shooting, showing the dungeon legend,
+	 * saving the game, and exiting the game.
+	 */
 	public void gameStart(){
 		int startInput, endGameType = 0;
 		boolean exitProgram = false;
@@ -125,13 +146,6 @@ public class GameEngine{
 								map.toggleMode();
 								break;
 							}
-							//REMOVE BEFORE SUBMIT
-							case 'R':
-							case 'r':
-							{
-								gameSet();
-								break;
-							}
 							case 'X':
 							case 'x':
 							{
@@ -168,7 +182,9 @@ public class GameEngine{
 	}
 	
 	/**
-	 * Removes one life from the spy and moves it back to the starting position.
+	 * This occurs if it is the {@link Ninja} turn to move and the {@link Spy} is next to the {@link Ninja}.
+	 * Removes one life from the {@link Spy} and moves it back to the starting position.
+	 * The {@link Ninja}'s do not move when the {@link Spy} is killed.
 	 */
 	private void killSpy() {
 
@@ -211,8 +227,9 @@ public class GameEngine{
 	}
 
 	/**
-	 * Checks if there is a ninja next to the spy.
-	 * @return {@code true} if a ninja is adjacent to the spy (one square up, down, left, or right); {@code false} otherwise
+	 * Checks if there is a {@link Ninja} next to the {@link Spy}.
+	 * @return {@code true} if a {@link Ninja} is adjacent to the {@link Spy}
+	 * (one square up, down, left, or right); {@code false} otherwise
 	 */
 	private boolean isNinjaAdjacent() {
 		return map.isNinja(spy.getRowCoord() + 1, spy.getColCoord()) || 
@@ -221,6 +238,11 @@ public class GameEngine{
 			   map.isNinja(spy.getRowCoord(), spy.getColCoord() - 1);
 	}
 	
+	/**
+	 * This function checks for {@link PowerUp} in the same {@link Tile} that the spy is on.
+	 * If there is a {@link PowerUp}, applies {@link PowerUp} and removes {@link PowerUp} from tile.
+	 * @param spy is the spy object created for the game
+	 */
 	private void checkForPowerUp(Spy spy)
 	{
 		if(map.powerUpCheck())
@@ -234,6 +256,9 @@ public class GameEngine{
 			map.removePowerUp();
 		}
 	}
+	/**
+	 * This function causes the room with the briefcase to reveal itself on the dungeon display.
+	 */
 	private void showBriefcase()
 	{
 		for(int i=0;i<rooms.length;i++)
@@ -242,6 +267,11 @@ public class GameEngine{
 				rooms[i].radarActivate();
 		}
 	}
+	/**
+	 * This function moves the {@link Spy} around the dungeon to the next {@link Tile}
+	 * @param charInput is the input that determines the direction the {@link Spy} moves
+	 * @return true if moving down into a {@link Room}, otherwise returns false
+	 */
 	private boolean spyMove(char charInput)
 	{
 		boolean moveAgainstRoom = false;
@@ -313,6 +343,12 @@ public class GameEngine{
 		return false;
 	}
 	
+	/**
+	 * This function shoots a {@link Bullet} for the {@link Spy}
+	 * If there is a {@link Ninja} in the path of the {@link Bullet}, the {@link Ninja} dies.
+	 * If there is a {@link Room} in the path of the {@link Bullet} or if there is no {@link Ninja}
+	 * in the {@link Spy}'s path, the {@link Spy} shoots at nothing, but still uses a {@link Bullet}.
+	 */
 	private void spyShoot(){
 	    if (spy.getBullet() >= 1)
 	    {	    	
@@ -327,6 +363,10 @@ public class GameEngine{
 					{
 						while(!hit && i>=0){
 							i -= 1;
+							if(map.isRoom(i,  j)){
+								shotTaken = true;
+								break;
+							}
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
@@ -339,6 +379,10 @@ public class GameEngine{
 					{
 						while(!hit && i<tileMax){
 							i += 1;
+							if(map.isRoom(i,  j)){
+								shotTaken = true;
+								break;
+							}
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
@@ -351,6 +395,10 @@ public class GameEngine{
 					{
 						while(!hit && j>=0){
 							j -= 1;
+							if(map.isRoom(i,  j)){
+								shotTaken = true;
+								break;
+							}
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
@@ -363,6 +411,10 @@ public class GameEngine{
 					{
 						while(!hit && j<tileMax){
 							j += 1;
+							if(map.isRoom(i,  j)){
+								shotTaken = true;
+								break;
+							}
 							if(map.isNinja(i, j)){
 								hit = true;
 							}
@@ -400,6 +452,11 @@ public class GameEngine{
 	    	ui.displayNoBulletMessage();
 	}
 	
+	/**
+	 * This function lets the {@link Spy} look in a direction.
+	 * Gives a clear signal if no {@link Ninja} between {@link Spy} and {@link Room}/edge of dungeon.
+	 * Otherwise, gives a {@link Ninja} is certain direction signal.
+	 */
 	private void spyLook(){
 		char direction;
 		boolean correctInput = false;
@@ -495,6 +552,10 @@ public class GameEngine{
 			}
 		}
 	}
+	/**
+	 * This function sets {@link Room}'s to predetermined {@link Tile}'s.
+	 * Also sets a briefcase into a random {@link Room}
+	 */
 	private void setRooms()
 	{
 		for(int i=0;i<rooms.length;i++)
@@ -511,6 +572,12 @@ public class GameEngine{
 		map.set(7,4,rooms[7]);
 		map.set(7,7,rooms[8]);
 	}
+	/**
+	 * This function checks if a location is not near {@link Spy}'s location.
+	 * @param x is the row location
+	 * @param y is the column location
+	 * @return true is not within bottom left 3x3 corner where {@link Spy} spawns
+	 */
 	private boolean notNearSpyStart(int x, int y){
 		//TODO cleanup
 		int spyStartRange = 3;
@@ -524,6 +591,10 @@ public class GameEngine{
 		}
 		return true;
 	}
+	/**
+	 * This function sets 6 {@link Ninja}'s randomly on {@link Map} {@link Tile}'s except within
+	 * bottom left 3x3 corner.
+	 */
 	private void setNinjas()
 	{
 		rowSpawn = rand.nextInt(tileMax);
@@ -547,6 +618,10 @@ public class GameEngine{
 			}while(!spawnNinja);
 		}
 	}
+	/**
+	 * This function sets 3 {@link PowerUp}'s randomly on {@link Map} {@link Tile}'s except within
+	 * bottom left 3x3 corner.
+	 */
 	private void setPowerUps()
 	{
 		powerups[0] = new Bullet();
@@ -563,10 +638,17 @@ public class GameEngine{
 			}
 		}while(powerup_num<powerups.length);
 	}
+	/**
+	 * This function sets {@link Spy} to bottom left {@link Tile} on {@link Map}
+	 */
 	private void setSpy()
 	{
 		map.set(8,0,spy);
 	}
+	/**
+	 * This function instantiates a {@link Map} and calls functions which set {@link Room}'s
+	 * {@link Ninja}'s, {@link PowerUp}'s, and the {@link Spy}
+	 */
 	private void gameSet(){
 		map = new Map();
 		setRooms();
