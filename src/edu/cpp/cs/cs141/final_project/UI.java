@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -19,13 +19,19 @@ package edu.cpp.cs.cs141.final_project;
 import java.util.Scanner;
 
 /**
- * This class
- * @author
+ * This class is the user interface. It shows the text messages from the game and also takes user input.
  */
 
 public class UI{
 	private String[] IngameMenu = new String[5];
 	private Scanner kb = new Scanner(System.in);
+	
+	/**
+	 * This method shows the texts on the right of the grid. When the user presses "u", 
+	 * the screen shows the letter symbols of the grid. WHen the user presses "v",
+	 * the game will be saved. The user can press "M" to change mode between normal mode 
+	 * and the debug mode. 
+	 */
 	
 	public UI(){
 		IngameMenu[0] = "\tD[u]ngeon Legend";
@@ -34,7 +40,11 @@ public class UI{
 		IngameMenu[3] = "\tE[x]it Game";
 		IngameMenu[4] = "\tNormal [M]ode";
 	}
-	public int getIntInput(){
+	/**
+	 * This function gets input for the start menu
+	 * @return an integer
+	 */
+	public int getStartIntInput(){
 		String input;
 		boolean correctInput;
 		do{
@@ -50,11 +60,23 @@ public class UI{
 		}while(!correctInput);
 		return Integer.parseInt(input);
 	}
+	
+	
+	/**
+	 * This method gets a character input
+	 * @return returns a character
+	 */
 	public char getCharInput(){
 		System.out.print("Input: ");
 		char input = kb.next().charAt(0);
 		return input;
 	}
+	
+	/**
+	 * This method draws the dungeon
+	 * @param map is the {@link Map} object
+	 * @param spy is the {@link Spy} object
+	 */
 	public void displayDungeon(Map map, Spy spy)
 	{
 		System.out.println("\n-DUNGEON-");
@@ -95,25 +117,46 @@ public class UI{
 		displaySpyControls();
 		spy.setLook(' ');
 	}
+	/**
+	 * This methods shows the choices of starting a new game, loading a game and exiting the game.
+	 */
 	public void displayMenu(){
 		System.out.print("1. New Game\n"+
 						"2. Load Game\n"+
 						"3. Exit Game\n");
 	}
+	/**
+	 * This method prints the message when the user has entered the dungeon.
+	 */
 	public void displayEnterDungeonMessage(){
 		System.out.println("You have entered the dungeon!!!\n");
 	}
+	/**
+	 * This method shows the control of the spy movements.
+	 */
 	private void displaySpyControls(){
 		System.out.println("[W]Up [S]Down [A]Left [D]Right [Q]Shoot [E]Look\n");
 	}
+	
+	/**
+	 * This method displays the letter symbols on the grid after the user enters "u".
+	 */
 	public void displayGameLegend(){
 		System.out.println("S = Spy\nN = Ninja\nX = Room\nI = Invincibility\n"
 							+"R = Radar\nB = Bullet\nC = Briefcase\n");
 	}
-	public boolean invalidInput(){
+	
+	/**
+	 * This method shows up when the user enters an invalid input.
+	 */
+	public void invalidInput(){
 		System.out.println("Invalid input. Enter again: ");
-		return false;
 	}
+	
+	/**
+	 * This method is a message which shows up when the game is ended. 
+	 * @param endGameType is an integer which decides which endgame message to display
+	 */
 	public void displayEndGameMessage(int endGameType)
 	{
 		switch(endGameType)
@@ -130,58 +173,101 @@ public class UI{
 				break;
 		}
 	}
+	
+	/**
+	 * This method is a message of spy losing a life.
+	 */
 	public void displaySpyDieMessage()
 	{
 		System.out.println("You were stabbed and lost a life!");
 		displayEnterAnyKey();
 	}
+	
+	/**
+	 * This method is a message of exiting the program.
+	 */
 	public void displayExitProgramMessage()
 	{
 		System.out.println("You have exited the program...Goodbye!\n");
 	}
+	/**
+	 * This method is for telling the user that he/she has entered the invalid move.
+	 */
 	public void displayInvalidMove()
 	{
 		System.out.println("Invalid move. Try Again.\n");
 	}
+	/**
+	 * This method shows the message of entering the room from a wrong direction. The user can only enter 
+	 * the room from the north direction.
+	 */
 	public void displayInvalidRoomMove()
 	{
 		System.out.println("Cannot enter room from this direction.");
 	}
+	/**
+	 * This method shows the message of the empty room.
+	 */
 	public void displayEmptyRoomMessage()
 	{
 		System.out.println("Empty room...look elsewhere...");
 		displayEnterAnyKey();
 	}
+	
+	/**
+	 * The method shows the message that notices the user a ninja is being killed.
+	 */
 	public void displayNinjaDeathMessage()
 	{
 		System.out.println("You killed one ninja!");
 	}
+	/**
+	 * The method shows that the bullet does not kill the ninja.
+	 */
 	public void displayShotAir()
 	{
 		System.out.println("You shot at nothing and wasted a bullet!");
 	}
+	/**
+	 * The method shows up when the user tries to shoot with no bullets.
+	 */
 	public void displayNoBulletMessage()
 	{
 		System.out.println("No bullets to shoot.");
 		displayEnterAnyKey();
 	}
+	/**
+	 * This method shows the shooting direction that the user can choose.
+	 * @return a character deciding direction
+	 */
 	public char displayShootMenu()
 	{
 		System.out.println("Choose the direction you want to shoot\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}
+	/**
+	 * This method shows the message of entering any keys to continue.
+	 */
 	private void displayEnterAnyKey()
 	{
 		System.out.print("Enter any key to continue: ");
 		String input = kb.next();
 	}
+	/**
+	 * This method displays the look menu.
+	 * @return a character deciding direction
+	 */
 	public char displayLookMenu()
 	{
 		System.out.println("Choose the direction you want to look\n");
 		System.out.println("[W]Up [S]Down [A]Left [D]Right\n");
 		return getCharInput();
 	}
+	/**
+	 * This method shows the direction that a {@link Ninja} is in.
+	 * @param direction is the character that determines which direction the {@link Ninja} is in
+	 */
 	public void pathAlertMessage(char direction)
 	{
 		switch(direction)
@@ -192,6 +278,10 @@ public class UI{
 			case 'd': System.out.println("ALERT! Ninja in EAST direction!"); break;		
 		}
 	}
+	/**
+	 * This method shows the message of path clear in a direction
+	 * @param direction is the character that determines which direction is clear
+	 */
 	public void pathClearMessage(char direction)
 	{
 		switch(direction)
