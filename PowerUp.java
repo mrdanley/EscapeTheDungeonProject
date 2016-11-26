@@ -20,9 +20,14 @@ package edu.cpp.cs.cs141.final_project;
  * This class represents a PowerUp that can be spawned in the dungeon. PowerUps can occupy the same space as
  *   {@link Ninja}'s but not {@link Room}'s. If the {@link Spy} moves into the space of a PowerUp, the PowerUp
  *   is "picked up" by the {@link Spy}.
- * @author
+ * Power ups that will extend this class are Radar, Bullet and Invincibility. 
  */
 
 public abstract class PowerUp{
+	
+	/**
+	 * This method will be altered in the subclasses to return a specific character, 
+	 * unique to each power up, to mark the map. 
+	 */
 	public abstract char image();
 }

@@ -18,11 +18,18 @@ package edu.cpp.cs.cs141.final_project;
 
 /**
  * This interface represents a GamePiece in the dungeon which can be a {@link Spy}, {@link Ninja}, or {@link Room}.
- *   GamePiece's cannot occupy the same space.
- * @author
+ *   GamePieces cannot occupy the same space as one another but can share a space with PowerUps.
+ * GamePiece will be implemented by the classes ActiveAgent and Room.
  */
 
 public interface GamePiece{
+	/**
+	 * This method will be altered in the classes implementing this interface to return a specific character, 
+	 * unique to each power up, to mark the map.
+	 */
 	char image();
+	/**
+	 * This method will be altered to set the location on the map of whichever object is implementing it. 
+	 */
 	void setLocation(int x, int y);
 }
