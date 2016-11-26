@@ -41,7 +41,7 @@ public class GameEngine{
 		do{
 			gameSet();
 			ui.displayMenu();
-			startInput = ui.getIntInput();
+			startInput = ui.getStartIntInput();
 			switch(startInput){
 				case 1:
 				{
