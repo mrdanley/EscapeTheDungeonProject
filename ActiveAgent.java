@@ -17,8 +17,8 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class contains Active Agent attributes.
- * @author
+ * This is an abstract class that contains Active Agent attributes.
+ * ActiveAgents' subclasses include Spy and Ninja.
  */
 
 public abstract class ActiveAgent implements GamePiece{
