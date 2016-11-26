@@ -16,11 +16,15 @@ public class SaveData implements Serializable {
 	private transient Spy spy = null;
 	private transient ArrayList<Room> rooms = null;
 	
-	private GamePiece[][] serialGamePieces;
-	private Object[][] serialPowerups;
+	private boolean loaded = false;
+	
+	private GamePiece[][] serialGamePieces = null;
+	private Object[][] serialPowerups = null;
 	
 	
 	public SaveData(Map m) {
+		
+		
 		init(m);
 	}
 	
@@ -33,12 +37,16 @@ public class SaveData implements Serializable {
 		map = m;
 		ninjas = new ArrayList<Ninja>();
 		rooms = new ArrayList<Room>();
-		spy = null;
+//		spy = null;
 		
-		serialGamePieces = new GamePiece[map.getLength()][map.getWidth()];
-		serialPowerups = new Object[map.getLength()][map.getWidth()];
 		
-		serializeData();
+		if (serialGamePieces == null) {
+//			System.err.println("GameData is null; re-init");
+			serialGamePieces = new GamePiece[map.getLength()][map.getWidth()];
+			serialPowerups = new Object[map.getLength()][map.getWidth()];
+			
+			serializeData();
+		}
 	}
 			
 	
@@ -74,11 +82,12 @@ public class SaveData implements Serializable {
 				cursorPiece = (GamePiece)serialGamePieces[i][j];
 				cursorPowerup = (PowerUp)serialPowerups[i][j];
 				
-				System.out.println(i+":"+j+"; and "+cursorPiece.getClass().getSimpleName());
+//				System.err.println(i+":"+j+"; and "+cursorPiece.getClass().getSimpleName());
 				
 				
 				map.set(i, j, cursorPiece);
 				map.set(i, j, cursorPowerup);
+				
 				
 				switch (cursorPiece.getClass().getSimpleName()) {
 				case("Ninja"):
@@ -100,6 +109,10 @@ public class SaveData implements Serializable {
 				
 			}
 		}
+		
+		
+//		System.err.println("laoded");
+		loaded = true;
 		
 	}
 	
@@ -144,7 +157,7 @@ public class SaveData implements Serializable {
 	 * @throws Exception
 	 */
 	public Map getMap() throws Exception {
-		if (map == null) loadData();
+		if (!loaded) loadData();
 		return map;
 	}
 	
@@ -153,7 +166,7 @@ public class SaveData implements Serializable {
 	 * @throws Exception
 	 */
 	public Ninja[] getNinjas() throws Exception {
-		if (map == null) loadData();
+		if (!loaded) loadData();
 		return ninjas.toArray(new Ninja[ninjas.size()]);
 	}
 	
@@ -170,7 +183,7 @@ public class SaveData implements Serializable {
 	 * @throws Exception
 	 */
 	public Spy getSpy() throws Exception {
-		if (map == null) loadData();
+		if (!loaded) loadData();
 		return spy;
 	}
 
@@ -179,7 +192,7 @@ public class SaveData implements Serializable {
 	 * @throws Exception
 	 */
 	public Room[] getRooms() throws Exception {
-		if (map == null) loadData();
+		if (!loaded) loadData();
 		return rooms.toArray(new Room[rooms.size()]);
 	}
 }

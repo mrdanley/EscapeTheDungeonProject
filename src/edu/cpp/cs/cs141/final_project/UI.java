@@ -82,9 +82,9 @@ public class UI{
 		displaySpyControls();
 	}
 	public void displayMenu(){
-		System.out.print("1. New Game\n"+
-						"2. Load Game\n"+
-						"3. Exit Game\n");
+		System.out.print("1. Start Game\n"+
+						"2.  Load Game\n"+
+						"3.  Exit Game\n");
 	}
 	public void displayEnterDungeonMessage(){
 		System.out.println("You have entered the dungeon!!!\n");

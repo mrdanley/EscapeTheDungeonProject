@@ -105,6 +105,7 @@ public class GameEngine{
 							{
 								endGameType = 1;
 								endGame = true;
+								gameSet();
 								break;
 							}
 							case 'V':
@@ -122,12 +123,14 @@ public class GameEngine{
 				}
 				case 2://load game
 					//TODO add ui.getFilename
-					//TODO somehow start game after loading file
-					
-					
+
 					try {
 						loadData();
-						ui.displayDungeon(map);
+//						ui.displayDungeon(map); //DEBUG
+						
+						System.err.println("Game Data Loaded...\n"
+								+ "Press Start Game to begin!");
+						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -148,15 +151,26 @@ public class GameEngine{
 	
 	private void loadData() throws Exception {
 		SaveData save = (SaveData) IO.load("test.dat");
-//		map = save.getMap();
+		map = save.getMap();
 		ninjas = save.getNinjas();
 //		powerups = save.getPowerups();
 		spy = save.getSpy();
 		rooms = save.getRooms();
 		
+		testData();
+	}
+	
+	
+	private void testData() {
+		
+		
+		
 		
 		
 	}
+	
+	
+	
 	
 	private void saveData() {
 		SaveData save = new SaveData(map);
