@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -17,14 +17,15 @@
 package edu.cpp.cs.cs141.final_project;
 
 /**
- * This class
- * @author
+ * This class represents the bullet which allows the {@link Spy} to shoot.
  */
 
 public class Bullet extends PowerUp{
+	/**
+	 * This function calls the image of the bullet {@link PowerUp} to shows on dungeon display
+	 * @return 'B'
+	 */
 	public char image(){
 		return 'B';
-	}
-	
-	
+	}	
 }

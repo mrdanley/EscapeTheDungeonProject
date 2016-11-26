@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -41,7 +41,7 @@ public class GameEngine{
 		do{
 			gameSet();
 			ui.displayMenu();
-			startInput = ui.getIntInput();
+			startInput = ui.getStartIntInput();
 			switch(startInput){
 				case 1:
 				{
@@ -145,8 +145,11 @@ public class GameEngine{
 							case 'v':
 								break;
 							default:
-								showDungeon = ui.invalidInput();
+							{
+								showDungeon = false;
+								ui.invalidInput();
 								break;
+							}
 						}
 					}while(!endGame);
 					if(endGameType>0 && endGameType<4)
