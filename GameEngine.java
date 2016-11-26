@@ -145,11 +145,8 @@ public class GameEngine{
 							case 'v':
 								break;
 							default:
-							{
-								showDungeon = false
-								ui.invalidInput();
+								showDungeon = ui.invalidInput();
 								break;
-							}
 						}
 					}while(!endGame);
 					if(endGameType>0 && endGameType<4)
