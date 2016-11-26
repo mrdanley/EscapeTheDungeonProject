@@ -19,9 +19,22 @@ package edu.cpp.cs.cs141.final_project;
 import java.util.Scanner;
 
 /**
- * This class is the user interface. It shows the text messages from the game and also takes user input.
+ * This class is the user interface. It shows the text messages from the game.
+ * @author
  */
 
+/**
+ * @author shiyi
+ *
+ */
+/**
+ * @author shiyi
+ *
+ */
+/**
+ * @author shiyi
+ *
+ */
 public class UI{
 	private String[] IngameMenu = new String[5];
 	private Scanner kb = new Scanner(System.in);
@@ -40,11 +53,12 @@ public class UI{
 		IngameMenu[3] = "\tE[x]it Game";
 		IngameMenu[4] = "\tNormal [M]ode";
 	}
+	
+	
 	/**
-	 * This function gets input for the start menu
-	 * @return an integer
+	 * @return This method validates the input
 	 */
-	public int getStartIntInput(){
+	public int getIntInput(){
 		String input;
 		boolean correctInput;
 		do{
@@ -63,8 +77,7 @@ public class UI{
 	
 	
 	/**
-	 * This method gets a character input
-	 * @return returns a character
+	 * @return This method return the input
 	 */
 	public char getCharInput(){
 		System.out.print("Input: ");
@@ -74,8 +87,8 @@ public class UI{
 	
 	/**
 	 * This method draws the dungeon
-	 * @param map is the {@link Map} object
-	 * @param spy is the {@link Spy} object
+	 * @param map 
+	 * @param spy
 	 */
 	public void displayDungeon(Map map, Spy spy)
 	{
@@ -148,14 +161,16 @@ public class UI{
 	
 	/**
 	 * This method shows up when the user enters an invalid input.
+	 * @return
 	 */
-	public void invalidInput(){
+	public boolean invalidInput(){
 		System.out.println("Invalid input. Enter again: ");
+		return false;
 	}
 	
 	/**
 	 * This method is a message which shows up when the game is ended. 
-	 * @param endGameType is an integer which decides which endgame message to display
+	 * @param endGameType
 	 */
 	public void displayEndGameMessage(int endGameType)
 	{
@@ -238,7 +253,7 @@ public class UI{
 	}
 	/**
 	 * This method shows the shooting direction that the user can choose.
-	 * @return a character deciding direction
+	 * @return
 	 */
 	public char displayShootMenu()
 	{
@@ -255,8 +270,8 @@ public class UI{
 		String input = kb.next();
 	}
 	/**
-	 * This method displays the look menu.
-	 * @return a character deciding direction
+	 * This method returns the look menu.
+	 * @return
 	 */
 	public char displayLookMenu()
 	{
@@ -265,8 +280,8 @@ public class UI{
 		return getCharInput();
 	}
 	/**
-	 * This method shows the direction that a {@link Ninja} is in.
-	 * @param direction is the character that determines which direction the {@link Ninja} is in
+	 * This method shows the alert message of a ninja is straight direction.
+	 * @param direction
 	 */
 	public void pathAlertMessage(char direction)
 	{
@@ -279,8 +294,8 @@ public class UI{
 		}
 	}
 	/**
-	 * This method shows the message of path clear in a direction
-	 * @param direction is the character that determines which direction is clear
+	 * This method shows the message of path clear.
+	 * @param direction
 	 */
 	public void pathClearMessage(char direction)
 	{
