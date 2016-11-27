@@ -16,14 +16,13 @@
 
 package edu.cpp.cs.cs141.final_project;
 
-import java.io.Serializable;
-
 /**
  * This class implements the Game Piece Interface. It is responsible for setting the nine rooms on the map. 
  * It also keeps track of which room contains the briefcase.  
  */
 
-public class Room implements GamePiece, Serializable {
+public class Room implements GamePiece, java.io.Serializable {
+	private static final long serialVersionUID = 7720232975188205845L;
 	/**
 	 * These fields signify whether or not there is a briefcase in a room and whether or not the 
 	 * radar has been activated, as well as the coordinates of the room in the map array. 

@@ -16,14 +16,13 @@
 
 package edu.cpp.cs.cs141.final_project;
 
-import java.io.Serializable;
-
 /**
  * This is an abstract class that contains Active Agent attributes.
  * ActiveAgents' subclasses include Spy and Ninja.
  */
 
-public abstract class ActiveAgent implements GamePiece, Serializable {
+public abstract class ActiveAgent implements GamePiece, java.io.Serializable {
+	private static final long serialVersionUID = 1092999919870015896L;
 	/**
 	 * This field holds the number where {@link ActiveAgent} is currently set position in a grid as an multiarray.
 	 */

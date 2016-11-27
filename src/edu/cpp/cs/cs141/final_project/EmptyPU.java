@@ -21,6 +21,8 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class EmptyPU extends PowerUp{
+	private static final long serialVersionUID = -5592855068769226346L;
+
 	/**
 	 * This function calls the character that the {@link PowerUp} returns for the dungeon display.
 	 * @return ' '

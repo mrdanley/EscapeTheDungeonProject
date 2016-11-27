@@ -16,14 +16,13 @@
 
 package edu.cpp.cs.cs141.final_project;
 
-import java.io.Serializable;
-
 /**
  * This class represents an empty actor; it goes in any tile that doesn't have a ninja or spy on it.
  * @author
  */
 
-public class EmptyAA implements GamePiece, Serializable {
+public class EmptyAA implements GamePiece, java.io.Serializable {
+	private static final long serialVersionUID = 7395984123311607633L;
 	/**
 	 * This function shows an image of an empty space.
 	 * @return ' '

@@ -275,7 +275,8 @@ public class UI{
 	private void displayEnterAnyKey()
 	{
 		System.out.print("Enter any key to continue: ");
-		String input = kb.next();
+		if (kb.hasNextLine()) kb.nextLine();
+		kb.nextLine();
 	}
 	/**
 	 * This method displays the look menu.

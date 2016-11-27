@@ -1,9 +1,8 @@
 package edu.cpp.cs.cs141.final_project;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SaveData implements Serializable {
+public class SaveData implements java.io.Serializable {
 
 	/**
 	 * Serial version identifier; confirms content is valid
@@ -91,33 +90,6 @@ public class SaveData implements Serializable {
 		}
 		loaded = true;
 	}
-	
-	/**
-	 * Unused? Returns a new array of objects
-	 * Example:
-	 * 	ninjas = (Ninja[]) findInMap(new Ninja());
-	 * 
-	 * @param o Type of Object
-	 * @return
-	 */
-	public GamePiece[] findInMap(Object o) {
-		ArrayList<GamePiece> items = new ArrayList<GamePiece>();
-		
-		GamePiece cursor;
-		
-		for (int i = 0; i < map.getLength(); i++) {
-			for (int j = 0; j < map.getWidth(); j++) {
-				
-				cursor = map.getAtLocation(i, j);
-				if (cursor.getClass().equals(o.getClass())) {
-					items.add(cursor); //extremely dangerous; but do it anyway
-				}
-			}
-		}
-		
-		return (ActiveAgent[]) items.toArray();
-	}
-	
 
 	/**
 	 * Attempts to return the map 

@@ -22,7 +22,8 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Radar extends PowerUp{
-	
+	private static final long serialVersionUID = -6881542830681378690L;
+
 	/**
 	 * This method returns the symbol used on the grid to represent {@link Radar} on the grid.
 	 * In this case, {@link Radar} will be labeled "R" on {@link Map}.

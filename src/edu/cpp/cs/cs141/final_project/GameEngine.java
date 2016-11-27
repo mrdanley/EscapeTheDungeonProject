@@ -174,6 +174,7 @@ public class GameEngine{
 								ui.invalidInput();
 								break;
 						}
+						rand.nextBoolean();
 					}while(!endGame);
 					newGame= true;
 					if(endGameType>0 && endGameType<4)

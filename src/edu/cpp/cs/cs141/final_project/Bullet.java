@@ -21,6 +21,8 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Bullet extends PowerUp{
+	private static final long serialVersionUID = 4431261806985021172L;
+
 	/**
 	 * This function calls the image of the bullet {@link PowerUp} to shows on dungeon display
 	 * @return 'B'

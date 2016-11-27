@@ -24,6 +24,8 @@ package edu.cpp.cs.cs141.final_project;
 import java.util.Random;
 
 public class Ninja extends ActiveAgent{
+	private static final long serialVersionUID = 7210201950614667135L;
+
 	private Random roll = new Random();
 	
 	/**

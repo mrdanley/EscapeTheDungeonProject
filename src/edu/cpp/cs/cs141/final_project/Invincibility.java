@@ -22,6 +22,8 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Invincibility extends PowerUp{
+	private static final long serialVersionUID = 8802250707459548768L;
+
 	/**
 	 * This function calls the character that the {@link Invincibility} returns for the dungeon display.
 	 * @return 'I'

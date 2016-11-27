@@ -22,6 +22,7 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Spy extends ActiveAgent{
+	private static final long serialVersionUID = 1158821922633293763L;
 	/**
 	 * These fields describe how much ammo and how many lives the Spy has at the beginning of the game. 
 	 * The invincibility is set to last 5 turns and is inactive when the spy is spawned. 
