@@ -25,7 +25,7 @@ public class EmptyAA implements GamePiece{
   public char image(){
 	  return ' ';
   }
-public void setLocation(int x, int y){
+  public void setLocation(int x, int y){
 	  
   }
 }
