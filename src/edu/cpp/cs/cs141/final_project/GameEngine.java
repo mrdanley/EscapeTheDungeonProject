@@ -122,15 +122,10 @@ public class GameEngine{
 					break;
 				}
 				case 2://load game
-					//TODO add ui.getFilename
-
 					try {
 						loadData();
-//						ui.displayDungeon(map); //DEBUG
-						
 						System.err.println("Game Data Loaded...\n"
 								+ "Press Start Game to begin!");
-						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -150,31 +145,24 @@ public class GameEngine{
 	}
 	
 	private void loadData() throws Exception {
-		SaveData save = (SaveData) IO.load("test.dat");
+		String filename = ui.getFilename(IO.listFiles());
+		if (filename.isEmpty()) filename = "save.dat";
+		
+		SaveData save = (SaveData) IO.load(filename);
+		//TODO 404 error
+		
 		map = save.getMap();
 		ninjas = save.getNinjas();
-//		powerups = save.getPowerups();
 		spy = save.getSpy();
 		rooms = save.getRooms();
-		
-		testData();
 	}
-	
-	
-	private void testData() {
-		
-		
-		
-		
-		
-	}
-	
-	
-	
 	
 	private void saveData() {
+		String filename = ui.getFilename(IO.listFiles());
+		if (filename.isEmpty()) filename = "save.dat";
+		
 		SaveData save = new SaveData(map);
-		IO.save(save, "test.dat");
+		IO.save(save, filename);
 	}
 	
 	private void checkForPowerUp(Spy spy)

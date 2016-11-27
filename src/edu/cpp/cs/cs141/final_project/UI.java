@@ -16,6 +16,7 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -119,5 +120,20 @@ public class UI{
 	public void displayInvalidMove()
 	{
 		System.out.println("Invalid move. Try Again.\n");
+	}
+
+	public String getFilename(String[] listFiles) {
+		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
+			System.out.println("\nExisting saves:\n");
+			for (String file : listFiles) {
+				System.out.println(file);
+			}
+		}
+		
+		System.out.println("\nPlease Enter a Filename:  \n");
+		kb.nextLine();
+		
+		
+		return kb.nextLine();
 	}
 }

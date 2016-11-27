@@ -10,8 +10,6 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
 public class IO {
-	
-	
 	/**
 	 * Loads a file from the filesystem
 	 * 
@@ -20,10 +18,7 @@ public class IO {
 	 */
 	public synchronized static Object load(String fileName){
 		ObjectInputStream inp = null;
-		
 		final String loadFile= fileName.matches(".*\\.dat$") ? fileName : fileName+".dat";
-		
-		
 		
 		Object returns = null;
 		try {
@@ -62,8 +57,6 @@ public class IO {
 	public synchronized static boolean save(Object saveData, String fileName) {
 		final String saveFile= fileName.matches(".*\\.dat$") ? fileName : fileName+".dat";
 		
-		
-		
 		ObjectOutput out = null;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(saveFile));
@@ -87,4 +80,18 @@ public class IO {
 		return true;
 	}
 	
+	/**
+	 * Lists all files in current directory and returns those that end with ".dat"
+	 * @return array of file names
+	 */
+	public synchronized static String[] listFiles() {
+		File[] list = new File(".").listFiles();
+		String names = "";
+		for (File file : list) {
+			if (file.getName().matches(".*dat$")) {
+				names+=file.getName()+" ";
+			}
+		}
+		return names.trim().split(" ");
+	}
 }
