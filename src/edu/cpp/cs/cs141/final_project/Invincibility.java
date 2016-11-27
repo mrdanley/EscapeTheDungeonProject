@@ -22,6 +22,10 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class Invincibility extends PowerUp{
+	/**
+	 * This function calls the character that the {@link Invincibility} returns for the dungeon display.
+	 * @return 'I'
+	 */
 	public char image(){
 		  return 'I';
 	}

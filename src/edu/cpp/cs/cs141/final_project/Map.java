@@ -19,12 +19,19 @@ package edu.cpp.cs.cs141.final_project;
 import java.lang.Math;
 /**
  * This class represents the game map, which holds the grid of tiles.
- *
  */
 public class Map{
+	/**
+	 * This field shows the mode of the game.
+	 */
 	public static boolean debugMode = false;
-	public boolean looking = false;
+	/**
+	 * This field creates the {@link Tile} array of objects that {@link Map} will consist of
+	 */
 	private Tile[][] tiles;
+	/**
+	 * These fields represent the row and column location of {@link Spy}
+	 */
 	private int spyX, spyY;
 	
 	/**
@@ -39,16 +46,17 @@ public class Map{
 		}
 	}
 	/**
-	 * @return true if debug mode is turned on, false if otherwise.
+	 * This function tells whether the game is in debug mode or not.
+	 * @return value of {@link #debugMode}
 	 */
 	public static boolean isDebug(){
 		return debugMode;
 	}
   	/**
-  	 * Puts a GamePiece on the grid, at the location specified by the x and y parameters.
-  	 * @param x the desired x position
-  	 * @param y the desired y position
-  	 * @param g the gamepiece you want to set
+  	 * Puts a {@link GamePiece} on the grid, at the location specified by the x and y parameters.
+  	 * @param x the desired row position
+  	 * @param y the desired column position
+  	 * @param g the {@link GamePiece} you want to set
   	 */
   	public void set(int x, int y, GamePiece g){
   		if(g instanceof Spy)
@@ -60,9 +68,9 @@ public class Map{
   	}
   	/**
   	 * Puts a PowerUp on the grid, at the location specified by the x and y parameters.
-  	 * @param x the desired x position
-  	 * @param y the desired y position
-  	 * @param p the powerup you want to set
+  	 * @param x the desired row position
+  	 * @param y the desired column position
+  	 * @param p the {@link PowerUp} you want to set
   	 */
   	public void set(int x, int y, PowerUp p){
   		tiles[x][y].set(p);
@@ -70,19 +78,19 @@ public class Map{
   	
   	/**
   	 * Checks what gamepiece is at a specified location.
-  	 * @param x the x position to check
-  	 * @param y the y position to check
-  	 * @return the GamePiece at the position you specify
+  	 * @param x the row position of the grid
+  	 * @param y the column position of the grid
+  	 * @return the {@link GamePiece} at the position you specify
   	 */
   	public GamePiece getAtLocation(int x, int y) {
   		return tiles[x][y].getGamePiece();
   	}
   	
   	/**
-  	 * Returns the image (character) of the entity on a particular grid position.
-  	 * @param x the x position of the grid
-  	 * @param y the y position of the grid
-  	 * @param spy
+  	 * This function returns the image (character) of the entity on a particular grid position.
+  	 * @param x the row position of the grid
+  	 * @param y the column position of the grid
+  	 * @param spy is the {@link Spy} object
   	 * @return the image of the entity at the desired grid position.
   	 */
   	public char image(int x, int y, Spy spy){
@@ -132,42 +140,46 @@ public class Map{
   		return tiles[x][y].image();
   	}
   	/**
-  	 * @param x
-  	 * @param y
-  	 * @return true if the specified tile holds no active agent, false otherwise
+  	 * This function tells whether there is an {@link ActiveAgent} in the location
+  	 * @param x is the row location
+  	 * @param y is the column location
+  	 * @return true if the specified tile holds no {@link ActiveAgent}, false otherwise
   	 */
   	public boolean noActiveAgent(int x, int y){
   		return tiles[x][y].noActiveAgent();
   	}
   	/**
-  	 * @param x
-  	 * @param y
-  	 * @return true if the specified tile holds no powerup, false otherwise
+  	 * This function tells whether there is an {@link PowerUp} in the location
+  	 * @param x is the row location
+  	 * @param y is the column location
+  	 * @return true if the specified {@link Tile} holds no {@link PowerUp}, false otherwise
   	 */
   	public boolean noPowerUp(int x, int y){
   		return tiles[x][y].noPowerUp();
   	}
   	/**
-  	 * @param x
-  	 * @param y
-  	 * @return true if there is a room at the specified tile, false otherwise
+  	 * This function tells whether there is an {@link Room} in the location
+  	 * @param x is the row location
+  	 * @param y is the column location
+  	 * @return true if there is a {@link Room} at the specified {@link Tile}, false otherwise
   	 */
   	public boolean isRoom(int x, int y){
   		return tiles[x][y].isRoom();
   	}
   	/**
-  	 * @param x
-  	 * @param y
-  	 * @return true if the spy is at the specified tile, false otherwise
+  	 * This function tells whether there is an {@link Spy} in the location
+  	 * @param x is the row location
+  	 * @param y is the column location
+  	 * @return true if the {@link Spy} is at the specified {@link Tile}, false otherwise
   	 */
   	public boolean isSpy(int x, int y){
   		return tiles[x][y].isSpy();
   	}
   	/**
-  	 * 
-  	 * @param x
-  	 * @param y
-  	 * @return true if there is a ninja at the specified tile, false otherwise
+  	 * This function tells whether there is an {@link Ninja} in the location
+  	 * @param x is the row location
+  	 * @param y is the column location
+  	 * @return true if there is a {@link Ninja} at the specified {@link Tile}, false otherwise
   	 */
   	public boolean isNinja(int x, int y){
   		//Make sure the location is in the grid
@@ -179,7 +191,7 @@ public class Map{
   		}
   	}
   	/**
-  	 * Clears the grid, replacing it with a new grid of tiles
+  	 * Clears the grid, replacing it with a new grid of {@link Tile}'s
   	 */
   	public void clear(){
   		tiles = new Tile[9][9];
@@ -193,7 +205,7 @@ public class Map{
 	
 	/**
 	 * Moves the spy in the specified direction
-	 * @param direction Single character gamer directions (wasd)
+	 * @param direction is the Single character game directions (wasd)
 	 */
 	public void moveSpy(char direction) {
 		movePiece(spyX, spyY, direction);
@@ -202,10 +214,9 @@ public class Map{
 	/**
 	 * Will move an {@link ActiveAgent} in a valid direction by swapping
 	 * the two {@link Tile}'s agents
-	 * 
-	 * @param x Current location x
-	 * @param y Current location y
-	 * @param direction target destination in gamer directions (wasd)
+	 * @param x Current location row
+	 * @param y Current location column
+	 * @param direction is the target destination in gamer directions (wasd)
 	 */
 	public void movePiece(int x, int y, char direction) {
 		GamePiece piece1 = getAtLocation(x, y);
@@ -239,7 +250,8 @@ public class Map{
 		set(x, y, piece2);
 	}
 	/**
-	 * @return true if there is a powerup at the spy's position, false otherwise
+	 * This function will tell whether there is a {@link PowerUp}
+	 * @return true if there is a {@link PowerUp} at the {@link Spy}'s position, false otherwise
 	 */
 	public boolean powerUpCheck()
 	{
@@ -249,7 +261,8 @@ public class Map{
 			return false;
 	}
 	/**
-	 * @return a reference to the powerup at the spy's location
+	 * This function returns a {@link PowerUp}
+	 * @return the {@link PowerUp} at the location
 	 */
 	public PowerUp getPowerUp()
 	{
@@ -257,11 +270,12 @@ public class Map{
 	}
 	/**
 	 * Checks whether the desired location is on the grid
-	 * @param x
-	 * @param y
+	 * Function is specifically for spyMove() function
+	 * @param x is the row location
+	 * @param y is the column location
 	 * @return true if the desired location is valid, false otherwise
 	 */
-	public boolean checkValidLocation(int x, int y) {
+	private boolean checkValidLocation(int x, int y) {
 		boolean isValid = true;
 		
 		if (x > tiles.length-1 || x < 0 || y > tiles.length-1 || y < 0) {
@@ -275,7 +289,7 @@ public class Map{
 		return isValid;
 	}
 	/**
-	 * Removes the powerup that the spy is standing on
+	 * Removes the {@link PowerUp} at {@link Spy}'s location
 	 */
 	public void removePowerUp()
 	{

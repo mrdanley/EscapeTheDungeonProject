@@ -21,13 +21,11 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class EmptyPU extends PowerUp{
+	/**
+	 * This function calls the character that the {@link PowerUp} returns for the dungeon display.
+	 * @return ' '
+	 */
 	public char image(){
 		return ' ';
-	}
-	/**
-	 * @return true, because it's an empty space.
-	 */
-	public boolean pickedUp(){
-		return true;
 	}
 }
