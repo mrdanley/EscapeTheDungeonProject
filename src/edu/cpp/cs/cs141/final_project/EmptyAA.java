@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin RodrÃ­guez
+ * Professor: Edwin Rodríguez
  *
  * Final Project
  *
@@ -22,10 +22,16 @@ package edu.cpp.cs.cs141.final_project;
  */
 
 public class EmptyAA implements GamePiece{
-  public char image(){
-	  return ' ';
-  }
-  public void setLocation(int x, int y){
-	  
-  }
+	/**
+	 * This function shows an image of an empty space.
+	 * @return ' '
+	 */
+	public char image(){
+		return ' ';
+	}
+	/**
+	 * This function is a dummy function just to allow {@link EmptyAA} to be a {@link GamePiece}
+	 */
+	public void setLocation(int x, int y){
+	}
 }
