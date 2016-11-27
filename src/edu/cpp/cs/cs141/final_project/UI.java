@@ -121,7 +121,7 @@ public class UI{
 	 * This methods shows the choices of starting a new game, loading a game and exiting the game.
 	 */
 	public void displayMenu(){
-		System.out.print("1. New Game\n"+
+		System.out.print("1. Start Game\n"+
 						"2. Load Game\n"+
 						"3. Exit Game\n");
 	}
@@ -197,6 +197,29 @@ public class UI{
 	{
 		System.out.println("Invalid move. Try Again.\n");
 	}
+	
+	public String getFilename(String[] listFiles) {
+		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
+			System.out.println("\nExisting saves:\n");
+			for (String file : listFiles) {
+				System.out.println(file);
+			}
+		}
+		
+		System.out.println("\nPlease Enter a Filename:  \n");
+		kb.nextLine();
+		
+		return kb.nextLine();
+	}
+	public void displayFileLoad() {
+		System.out.println("\n\nGame Data Loaded...\n"
+				+ "Select 'Start Game' to begin!\n");
+	}
+	public void displayFileError() {
+		System.out.println("Filename provided does not contain a valid save.\n"
+				+ "Try again.");
+	}
+
 	/**
 	 * This method shows the message of entering the room from a wrong direction. The user can only enter 
 	 * the room from the north direction.

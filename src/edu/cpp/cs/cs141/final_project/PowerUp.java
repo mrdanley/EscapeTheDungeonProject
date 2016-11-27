@@ -16,6 +16,8 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class represents a PowerUp that can be spawned in the dungeon. PowerUps can occupy the same space as
  *   {@link Ninja}'s but not {@link Room}'s. If the {@link Spy} moves into the space of a PowerUp, the PowerUp
@@ -23,7 +25,7 @@ package edu.cpp.cs.cs141.final_project;
  * Power ups that will extend this class are Radar, Bullet and Invincibility. 
  */
 
-public abstract class PowerUp{
+public abstract class PowerUp implements Serializable {
 	
 	/**
 	 * This method will be altered in the subclasses to return a specific character, 

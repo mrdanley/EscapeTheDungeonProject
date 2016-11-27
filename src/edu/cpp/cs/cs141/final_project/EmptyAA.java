@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodrú„uez
  *
  * Final Project
  *
@@ -16,12 +16,14 @@
 
 package edu.cpp.cs.cs141.final_project;
 
+import java.io.Serializable;
+
 /**
  * This class represents an empty actor; it goes in any tile that doesn't have a ninja or spy on it.
  * @author
  */
 
-public class EmptyAA implements GamePiece{
+public class EmptyAA implements GamePiece, Serializable {
 	/**
 	 * This function shows an image of an empty space.
 	 * @return ' '

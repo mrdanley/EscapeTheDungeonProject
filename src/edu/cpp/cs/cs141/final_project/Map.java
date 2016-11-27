@@ -86,6 +86,14 @@ public class Map{
   		return tiles[x][y].getGamePiece();
   	}
   	
+	public int getLength() {
+  		return tiles.length;
+  	}
+  	
+  	public int getWidth() {
+  		return tiles[0].length;
+  	}
+	
   	/**
   	 * This function returns the image (character) of the entity on a particular grid position.
   	 * @param x the row position of the grid
@@ -294,5 +302,9 @@ public class Map{
 	public void removePowerUp()
 	{
 		tiles[spyX][spyY].set(new EmptyPU());
+	}
+	
+	public Object getPowerUpAtLocation(int x, int y) {
+		return tiles[x][y].getPowerUp();
 	}
 }

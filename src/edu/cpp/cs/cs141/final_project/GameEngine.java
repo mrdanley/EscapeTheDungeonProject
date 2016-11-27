@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin Rodrú„uez
  *
  * Final Project
  *
@@ -58,14 +58,17 @@ public class GameEngine{
 	 */
 	public void gameStart(){
 		int startInput, endGameType = 0;
+		boolean newGame = true;
 		boolean exitProgram = false;
 		do{
-			gameSet();
 			ui.displayMenu();
 			startInput = ui.getStartIntInput();
 			switch(startInput){
 				case 1:
 				{
+					if (newGame) {
+						gameSet();
+					}
 					int charInput;
 					boolean showDungeon = true, endGame = false;
 					do{
@@ -164,20 +167,31 @@ public class GameEngine{
 							}
 							case 'V':
 							case 'v':
+								saveData();
 								break;
 							default:
-							{
 								showDungeon = false;
 								ui.invalidInput();
 								break;
-							}
 						}
 					}while(!endGame);
+					newGame= true;
 					if(endGameType>0 && endGameType<4)
 						ui.displayEndGameMessage(endGameType);
 					break;
 				}
-				case 2://load game
+				case 2:
+					boolean loading = true;
+					while (loading) {
+						try {
+							loadData();
+							ui.displayFileLoad();
+							loading = false;
+							newGame = false;
+						} catch (Exception e) {
+							ui.displayFileError();
+						}
+					}
 					break;
 				case 3:
 				{
@@ -246,6 +260,25 @@ public class GameEngine{
 			   map.isNinja(spy.getRowCoord() - 1, spy.getColCoord()) || 
 			   map.isNinja(spy.getRowCoord(), spy.getColCoord() + 1) || 
 			   map.isNinja(spy.getRowCoord(), spy.getColCoord() - 1);
+	}
+	
+	private void loadData() throws Exception {
+		String filename = ui.getFilename(IO.listFiles());
+		if (filename.isEmpty()) filename = "save.dat";
+		
+		SaveData save = (SaveData) IO.load(filename);
+		map = save.getMap();
+		ninjas = save.getNinjas();
+		spy = save.getSpy();
+		rooms = save.getRooms();
+	}
+	
+	private void saveData() {
+		String filename = ui.getFilename(IO.listFiles());
+		if (filename.isEmpty()) filename = "save.dat";
+		
+		SaveData save = new SaveData(map);
+		IO.save(save, filename);
 	}
 	
 	/**
