@@ -12,7 +12,6 @@ public class SaveData implements Serializable {
 	
 	private transient Map map = null;
 	private transient ArrayList<Ninja> ninjas = null;
-//	private transient ArrayList<PowerUp> powerups;
 	private transient Spy spy = null;
 	private transient ArrayList<Room> rooms = null;
 	
@@ -21,10 +20,7 @@ public class SaveData implements Serializable {
 	private GamePiece[][] serialGamePieces = null;
 	private Object[][] serialPowerups = null;
 	
-	
 	public SaveData(Map m) {
-		
-		
 		init(m);
 	}
 	
@@ -37,20 +33,14 @@ public class SaveData implements Serializable {
 		map = m;
 		ninjas = new ArrayList<Ninja>();
 		rooms = new ArrayList<Room>();
-//		spy = null;
-		
 		
 		if (serialGamePieces == null) {
-//			System.err.println("GameData is null; re-init");
 			serialGamePieces = new GamePiece[map.getLength()][map.getWidth()];
 			serialPowerups = new Object[map.getLength()][map.getWidth()];
 			
 			serializeData();
 		}
 	}
-			
-	
-	
 	
 	/**
 	 * populates serial* variables
@@ -78,16 +68,11 @@ public class SaveData implements Serializable {
 		
 		for (int i = 0; i < map.getLength(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
-				
 				cursorPiece = (GamePiece)serialGamePieces[i][j];
 				cursorPowerup = (PowerUp)serialPowerups[i][j];
 				
-//				System.err.println(i+":"+j+"; and "+cursorPiece.getClass().getSimpleName());
-				
-				
 				map.set(i, j, cursorPiece);
 				map.set(i, j, cursorPowerup);
-				
 				
 				switch (cursorPiece.getClass().getSimpleName()) {
 				case("Ninja"):
@@ -102,25 +87,10 @@ public class SaveData implements Serializable {
 				default:
 					break;
 				}
-				
-//				switch (cursorPowerup.getClass().getSimpleName()) {
-//				case:
-//				}
-				
 			}
 		}
-		
-		
-//		System.err.println("laoded");
 		loaded = true;
-		
 	}
-	
-	
-	
-	
-
-	
 	
 	/**
 	 * Unused? Returns a new array of objects
@@ -139,7 +109,6 @@ public class SaveData implements Serializable {
 			for (int j = 0; j < map.getWidth(); j++) {
 				
 				cursor = map.getAtLocation(i, j);
-				
 				if (cursor.getClass().equals(o.getClass())) {
 					items.add(cursor); //extremely dangerous; but do it anyway
 				}
@@ -169,14 +138,6 @@ public class SaveData implements Serializable {
 		if (!loaded) loadData();
 		return ninjas.toArray(new Ninja[ninjas.size()]);
 	}
-	
-	//I don't think the powerUps variable in GameEngine is ever used.
-	//So this is commented out.
-	
-//	public PowerUp[] getPowerups() {
-//		if (map == null) loadData();
-//		return 
-//	}
 
 	/**
 	 * @return

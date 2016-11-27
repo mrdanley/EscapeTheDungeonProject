@@ -133,7 +133,14 @@ public class UI{
 		System.out.println("\nPlease Enter a Filename:  \n");
 		kb.nextLine();
 		
-		
 		return kb.nextLine();
+	}
+	public void displayFileLoad() {
+		System.out.println("\n\nGame Data Loaded...\n"
+				+ "Select 'Start Game' to begin!\n");
+	}
+	public void displayFileError() {
+		System.out.println("Filename provided does not contain a valid save.\n"
+				+ "Try again.");
 	}
 }

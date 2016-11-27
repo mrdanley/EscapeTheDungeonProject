@@ -121,15 +121,17 @@ public class GameEngine{
 						ui.displayEndGameMessage(endGameType);
 					break;
 				}
-				case 2://load game
-					try {
-						loadData();
-						System.err.println("Game Data Loaded...\n"
-								+ "Press Start Game to begin!");
-					} catch (Exception e) {
-						e.printStackTrace();
+				case 2:
+					boolean loading = true;
+					while (loading) {
+						try {
+							loadData();
+							ui.displayFileLoad();
+							loading = false;
+						} catch (Exception e) {
+							ui.displayFileError();
+						}
 					}
-					
 					break;
 				case 3:
 				{
@@ -149,8 +151,6 @@ public class GameEngine{
 		if (filename.isEmpty()) filename = "save.dat";
 		
 		SaveData save = (SaveData) IO.load(filename);
-		//TODO 404 error
-		
 		map = save.getMap();
 		ninjas = save.getNinjas();
 		spy = save.getSpy();

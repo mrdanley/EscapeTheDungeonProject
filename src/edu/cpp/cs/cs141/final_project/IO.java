@@ -15,26 +15,27 @@ public class IO {
 	 * 
 	 * @param fileName url of the file
 	 * @return serialized file {@link Object}
+	 * @throws Exception Unable to properly load file
 	 */
-	public synchronized static Object load(String fileName){
+	public synchronized static Object load(String fileName) throws Exception{
 		ObjectInputStream inp = null;
 		final String loadFile= fileName.matches(".*\\.dat$") ? fileName : fileName+".dat";
 		
 		Object returns = null;
+		
+		String error = ""; 
 		try {
 			final File file = new File(loadFile);
 		    inp = new ObjectInputStream(new FileInputStream(file));
 		    returns = inp.readObject();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println(">File not found ("+ loadFile +")");
+			error = "404 File Not Found";
 		} catch (IOException e) {
-			e.printStackTrace();
 			returns = null;
-			System.err.println(">Data corrupt ("+ loadFile +")");
+			error = "Corrupt Data";
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			returns = null;
+			error = "Something went wrong...";
 		} finally {
 			if(inp != null) {
 				try {
@@ -43,6 +44,10 @@ public class IO {
 					e1.printStackTrace();
 				}
 			}
+		}
+		
+		if (returns == null || !error.isEmpty()) {
+			throw new Exception(error);
 		}
 		return returns;
 	}
