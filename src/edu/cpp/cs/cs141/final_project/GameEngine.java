@@ -48,10 +48,6 @@ public class GameEngine{
 	 * This field represents the max row or column {@link Tile}'s on {@link Map}
 	 */
 	private final int tileMax = 9;
-	/**
-	 * This field is used to control the buffer when inputting a filename to load or save.
-	 */
-	private int filenameTry;
 	
 	/**
 	 * This function starts the game and contains the game loop, continuously taking input.
@@ -172,7 +168,6 @@ public class GameEngine{
 							case 'V':
 							case 'v':
 							{
-								filenameTry = 0;
 								saveData();
 								break;
 							}
@@ -189,19 +184,13 @@ public class GameEngine{
 					break;
 				}
 				case 2:
-					boolean loading = true, cancel;
-					filenameTry = 0;
+					boolean loading = true;
 					while (loading) {
 						try {
-							cancel = loadData();
-							if(cancel)
-							{
-								ui.displayFileLoad();
-								loading = false;
-								newGame = false;
-							}
-							else
-								break;
+							if (!loadData()) break;
+							ui.displayFileLoad();
+							loading = false;
+							newGame = false;
 						} catch (Exception e) {
 							ui.displayFileError();
 						}
@@ -277,27 +266,21 @@ public class GameEngine{
 	}
 	
 	private boolean loadData() throws Exception {
-		String filename = ui.getFilename(IO.listFiles(), filenameTry);
-		filenameTry++;
-
-		if (!(filename.equals("C") || filename.equals("c")))
-		{
-			if (filename.isEmpty()) filename = "save.dat";
-			
-			SaveData save = (SaveData) IO.load(filename);
-			map = save.getMap();
-			ninjas = save.getNinjas();
-			spy = save.getSpy();
-			rooms = save.getRooms();
-			
-			return true;
-		}	
-		else
-			return false;
+		String filename = ui.getFilename(IO.listFiles());
+		
+		if (filename.equalsIgnoreCase("C")) return false;
+		if (filename.isEmpty()) filename = "save.dat";
+		
+		SaveData save = (SaveData) IO.load(filename);
+		map = save.getMap();
+		ninjas = save.getNinjas();
+		spy = save.getSpy();
+		rooms = save.getRooms();
+		return true;
 	}
 	
 	private void saveData() {
-		String filename = ui.getFilename(IO.listFiles(), 0);//second parameter is a dummy parameter
+		String filename = ui.getFilename(IO.listFiles());
 		if (filename.isEmpty()) filename = "save.dat";
 		
 		SaveData save = new SaveData(map);

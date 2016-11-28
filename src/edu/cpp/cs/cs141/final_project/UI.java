@@ -198,18 +198,15 @@ public class UI{
 		System.out.println("Invalid move. Try Again.\n");
 	}
 	
-	public String getFilename(String[] listFiles, int filenameTry) {
+	public String getFilename(String[] listFiles) {
 		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
 			System.out.println("\nExisting saves:\n");
 			for (String file : listFiles) {
 				System.out.println(file);
 			}
 		}
-		
 		System.out.println("\nPlease Enter a Filename or Enter 'C' to Cancel:  ");
-		if(filenameTry == 0) kb.nextLine();
-		
-		return kb.nextLine();
+		return kb.next();
 	}
 	public void displayFileLoad() {
 		System.out.println("\n\nGame Data Loaded...\n"
