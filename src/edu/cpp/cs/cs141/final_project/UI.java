@@ -198,7 +198,7 @@ public class UI{
 		System.out.println("Invalid move. Try Again.\n");
 	}
 	
-	public String getFilename(String[] listFiles) {
+	public String getFilename(String[] listFiles, int filenameTry) {
 		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
 			System.out.println("\nExisting saves:\n");
 			for (String file : listFiles) {
@@ -206,8 +206,8 @@ public class UI{
 			}
 		}
 		
-		System.out.println("\nPlease Enter a Filename:  \n");
-		if(kb.hasNextLine()) kb.nextLine();
+		System.out.println("\nPlease Enter a Filename or Enter 'C' to Cancel:  ");
+		if(filenameTry == 0) kb.nextLine();
 		
 		return kb.nextLine();
 	}
