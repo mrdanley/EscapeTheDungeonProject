@@ -207,7 +207,7 @@ public class UI{
 		}
 		
 		System.out.println("\nPlease Enter a Filename:  \n");
-		kb.nextLine();
+		if(kb.hasNextLine()) kb.nextLine();
 		
 		return kb.nextLine();
 	}
