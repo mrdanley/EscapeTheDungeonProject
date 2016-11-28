@@ -48,6 +48,10 @@ public class GameEngine{
 	 * This field represents the max row or column {@link Tile}'s on {@link Map}
 	 */
 	private final int tileMax = 9;
+	/**
+	 * This field is used to control the buffer when inputting a filename to load or save.
+	 */
+	private int filenameTry;
 	
 	/**
 	 * This function starts the game and contains the game loop, continuously taking input.
@@ -102,6 +106,7 @@ public class GameEngine{
 									{
 										if(spy.getInvincibility())
 											spy.invincibleLoss();
+										checkForPowerUp(spy);
 										if(!spy.getInvincibility() && isNinjaAdjacent()){
 											killSpy();
 											if(spy.getLives() == 0){
@@ -122,8 +127,7 @@ public class GameEngine{
 													else
 														ninjas[i].move(map);
 												}
-											}
-											checkForPowerUp(spy);									
+											}								
 										}
 										if(spy.getInvincibleTurns() == 0)
 											spy.disableInvincibility();
@@ -167,8 +171,11 @@ public class GameEngine{
 							}
 							case 'V':
 							case 'v':
+							{
+								filenameTry = 0;
 								saveData();
 								break;
+							}
 							default:
 								showDungeon = false;
 								ui.invalidInput();
@@ -182,13 +189,19 @@ public class GameEngine{
 					break;
 				}
 				case 2:
-					boolean loading = true;
+					boolean loading = true, cancel;
+					filenameTry = 0;
 					while (loading) {
 						try {
-							loadData();
-							ui.displayFileLoad();
-							loading = false;
-							newGame = false;
+							cancel = loadData();
+							if(cancel)
+							{
+								ui.displayFileLoad();
+								loading = false;
+								newGame = false;
+							}
+							else
+								break;
 						} catch (Exception e) {
 							ui.displayFileError();
 						}
@@ -263,19 +276,28 @@ public class GameEngine{
 			   map.isNinja(spy.getRowCoord(), spy.getColCoord() - 1);
 	}
 	
-	private void loadData() throws Exception {
-		String filename = ui.getFilename(IO.listFiles());
-		if (filename.isEmpty()) filename = "save.dat";
-		
-		SaveData save = (SaveData) IO.load(filename);
-		map = save.getMap();
-		ninjas = save.getNinjas();
-		spy = save.getSpy();
-		rooms = save.getRooms();
+	private boolean loadData() throws Exception {
+		String filename = ui.getFilename(IO.listFiles(), filenameTry);
+		filenameTry++;
+
+		if (!(filename.equals("C") || filename.equals("c")))
+		{
+			if (filename.isEmpty()) filename = "save.dat";
+			
+			SaveData save = (SaveData) IO.load(filename);
+			map = save.getMap();
+			ninjas = save.getNinjas();
+			spy = save.getSpy();
+			rooms = save.getRooms();
+			
+			return true;
+		}	
+		else
+			return false;
 	}
 	
 	private void saveData() {
-		String filename = ui.getFilename(IO.listFiles());
+		String filename = ui.getFilename(IO.listFiles(), 0);//second parameter is a dummy parameter
 		if (filename.isEmpty()) filename = "save.dat";
 		
 		SaveData save = new SaveData(map);
@@ -457,6 +479,7 @@ public class GameEngine{
 					default:
 					{
 						ui.invalidInput();
+						ui.displayDungeon(map, spy);
 						shotTaken = false;
 						break;
 					}
@@ -492,7 +515,7 @@ public class GameEngine{
 	 */
 	private void spyLook(){
 		char direction;
-		boolean correctInput = false;
+		boolean correctInput;
 		do{
 			direction = ui.displayLookMenu();
 			if(direction == 'W' || direction == 'w' || direction == 'A' || direction == 'a' ||
@@ -502,7 +525,11 @@ public class GameEngine{
 				correctInput = true;
 			}
 			else
-				new Exception("Invalid directional input").printStackTrace();
+			{
+				ui.invalidInput();
+				ui.displayDungeon(map, spy);
+				correctInput = false;
+			}
 		}while(!correctInput);
 		
 		switch(spy.getLook())
