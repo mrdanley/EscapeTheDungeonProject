@@ -198,6 +198,13 @@ public class UI{
 		System.out.println("Invalid move. Try Again.\n");
 	}
 	
+	/**
+	 * This method requests a filename from the user, after displaying a list
+	 * of possible files in the current directory.
+	 * 
+	 * @param listFiles
+	 * @return
+	 */
 	public String getFilename(String[] listFiles) {
 		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
 			System.out.println("\nExisting saves:\n");
@@ -208,10 +215,20 @@ public class UI{
 		System.out.println("\nPlease Enter a Filename or Enter 'C' to Cancel:  ");
 		return kb.next();
 	}
+	
+	/**
+	 * This method shows the file loaded successfully and requests the user
+	 * to start the game. 
+	 */
 	public void displayFileLoad() {
 		System.out.println("\n\nGame Data Loaded...\n"
 				+ "Select 'Start Game' to begin!\n");
 	}
+	
+	/**
+	 * This method informs the user that the filename provided does
+	 * not point to a valid game save file.
+	 */
 	public void displayFileError() {
 		System.out.println("Filename provided does not contain a valid save.\n"
 				+ "Try again.");

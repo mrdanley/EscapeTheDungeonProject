@@ -11,13 +11,13 @@ import java.io.ObjectOutputStream;
 
 public class IO {
 	/**
-	 * Loads a file from the filesystem
+	 * Loads a file from the filesystem ending in {@code .dat}
 	 * 
-	 * @param fileName url of the file
+	 * @param fileName pathname of the file
 	 * @return serialized file {@link Object}
 	 * @throws Exception Unable to properly load file
 	 */
-	public synchronized static Object load(String fileName) throws Exception{
+	public synchronized static Object load(String fileName) throws Exception {
 		ObjectInputStream inp = null;
 		final String loadFile= fileName.matches(".*\\.dat$") ? fileName : fileName+".dat";
 		
@@ -53,7 +53,8 @@ public class IO {
 	}
 	
 	/**
-	 * Saves an {@link Object} to the filesystem
+	 * Saves an {@link Object} to the filesystem. Creates new file if one
+	 * does not already exist.
 	 * 
 	 * @param saveData data to save
 	 * @param fileName destination filename
@@ -86,7 +87,7 @@ public class IO {
 	}
 	
 	/**
-	 * Lists all files in current directory and returns those that end with ".dat"
+	 * Lists all files in current directory and returns those that end with {@code .dat}
 	 * @return array of file names
 	 */
 	public synchronized static String[] listFiles() {

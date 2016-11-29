@@ -10,44 +10,56 @@ public class SaveData implements java.io.Serializable {
 	private transient Spy spy = null;
 	private transient ArrayList<Room> rooms = null;
 	
+	/**
+	 * Initializes {@code map} variable only. All variables are transient and
+	 * should only be used after the object is de-serialized (which populates them).
+	 * 
+	 * @param m Active game map contains all relevant game data.
+	 */
 	public SaveData(Map m) {
 		map = m;
 	}
 
 	/**
-	 * Attempts to return the map 
-	 * 
-	 * @return
-	 * @throws Exception
+	 * Returns the map with all positions and content
+	 * @return saved map data
 	 */
-	public Map getMap() throws Exception {
+	public Map getMap() {
 		return map;
 	}
 	
 	/**
-	 * @return
-	 * @throws Exception
+	 * Returns an array of {@link Ninja}s loaded from the {@code map}.
+	 * @return array of living {@link Ninja}s.
 	 */
-	public Ninja[] getNinjas() throws Exception {
+	public Ninja[] getNinjas() {
 		return ninjas.toArray(new Ninja[ninjas.size()]);
 	}
 
 	/**
-	 * @return
-	 * @throws Exception
+	 * Returns the spy player and relevant data.
+	 * @return current player
 	 */
-	public Spy getSpy() throws Exception {
+	public Spy getSpy() {
 		return spy;
 	}
 
 	/**
-	 * @return
-	 * @throws Exception
+	 * Returns an array containing all the rooms loaded into the game.
+	 * One of the rooms has a suitcase in it usually.
+	 * @return array of {@link Room}s with data.
 	 */
-	public Room[] getRooms() throws Exception {
+	public Room[] getRooms() {
 		return rooms.toArray(new Room[rooms.size()]);
 	}
 	
+	/**
+	 * Custom serialization code. Creates a 2d array of {@link GamePiece}s and {@link PowerUp}s
+	 * to write to file.
+	 * 
+	 * @param oos Stream to write datastream to. Usually a file.
+	 * @throws java.io.IOException Problem while writing data
+	 */
 	private void writeObject(java.io.ObjectOutputStream oos) throws java.io.IOException {
 		oos.defaultWriteObject();
 		
@@ -64,6 +76,14 @@ public class SaveData implements java.io.Serializable {
 		oos.writeObject(serialPowerups);
 	}
 	
+	/**
+	 * Custom serialization code. Iterates through each position in the {@link map} and
+	 * populates it with saved {@link ActiveAgent}s and/or {@link PowerUp}s.
+	 * 
+	 * @param ois Stream to load byte data from. Usually a file.
+	 * @throws ClassNotFoundException Unknown or invalid class found
+	 * @throws java.io.IOException Problem while reading data
+	 */
 	private void readObject(java.io.ObjectInputStream ois) throws ClassNotFoundException, java.io.IOException {
 		ois.defaultReadObject();
 		

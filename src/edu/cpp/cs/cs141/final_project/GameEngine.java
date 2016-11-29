@@ -265,7 +265,15 @@ public class GameEngine{
 			   map.isNinja(spy.getRowCoord(), spy.getColCoord() - 1);
 	}
 	
-	private boolean loadData() throws Exception {
+	/**
+	 * Populates the current game data variables with information
+	 * loaded from a file provided by the user. If the user specifies,
+	 * the loading is cancelled and is noted by a {@code false} return.
+	 * 
+	 * @return {@code true} if data was loaded. {@code false} if cancelled.
+	 * @throws Exception problem reading or de-serializing data file
+	 */
+	private boolean loadData() throws Exception  {
 		String filename = ui.getFilename(IO.listFiles());
 		
 		if (filename.equalsIgnoreCase("C")) return false;
@@ -279,6 +287,10 @@ public class GameEngine{
 		return true;
 	}
 	
+	/**
+	 * Uses the {@link IO#save(Object, String)} method to write the current game state to
+	 * a file provided by the user.
+	 */
 	private void saveData() {
 		String filename = ui.getFilename(IO.listFiles());
 		if (filename.isEmpty()) filename = "save.dat";
