@@ -129,7 +129,7 @@ public class UI{
 	 * This method prints the message when the user has entered the dungeon.
 	 */
 	public void displayEnterDungeonMessage(){
-		System.out.println("You have entered the dungeon!!!\n");
+		System.out.println("You have entered the dungeon!!!");
 	}
 	/**
 	 * This method shows the control of the spy movements.
