@@ -66,6 +66,7 @@ public class GameEngine{
 			switch(startInput){
 				case 1:
 				{
+					ui.displayEnterDungeonMessage();
 					if (newGame) {
 						gameSet();
 					}
