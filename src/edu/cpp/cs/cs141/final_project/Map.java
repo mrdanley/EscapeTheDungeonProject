@@ -29,10 +29,6 @@ public class Map{
 	 * This field creates the {@link Tile} array of objects that {@link Map} will consist of
 	 */
 	private Tile[][] tiles;
-	/**
-	 * These fields represent the row and column location of {@link Spy}
-	 */
-	private int spyX, spyY;
 	
 	/**
 	 * Instantiates the 9x9 grid of tiles.
@@ -59,11 +55,6 @@ public class Map{
   	 * @param g the {@link GamePiece} you want to set
   	 */
   	public void set(int x, int y, GamePiece g){
-  		if(g instanceof Spy)
-  		{
-  			spyX = x;
-  			spyY = y;
-  		}
   		tiles[x][y].set(g);
   	}
   	/**
@@ -107,35 +98,35 @@ public class Map{
   			if(tiles[x][y].isNinja() || tiles[x][y].isPowerUp())
   			{
   				//if room is between spy and ninja or powerup, spy cannot see
-  				if(Math.abs(x-spyX)<=2 && y==spyY)
+  				if(Math.abs(x-spy.getRowCoord())<=2 && y==spy.getColCoord())
   				{
-  					if(x>spyX)
+  					if(x>spy.getRowCoord())
   					{
-  						if(getAtLocation(spyX+1,spyY) instanceof Room)
+  						if(getAtLocation(spy.getRowCoord()+1,spy.getColCoord()) instanceof Room)
   							return ' ';
   						else
   							return tiles[x][y].image();
   					}
   					else
   					{
-  						if(getAtLocation(x+1,spyY) instanceof Room)
+  						if(getAtLocation(x+1,spy.getColCoord()) instanceof Room)
   							return ' ';
   						else
   							return tiles[x][y].image();
   					}
   				}
-  				else if(x==spyX && Math.abs(y-spyY)<=2)
+  				else if(x==spy.getRowCoord() && Math.abs(y-spy.getColCoord())<=2)
   				{
-  					if(y>spyY)
+  					if(y>spy.getColCoord())
   					{
-  						if(getAtLocation(spyX,spyY+1) instanceof Room)
+  						if(getAtLocation(spy.getRowCoord(),spy.getColCoord()+1) instanceof Room)
   							return ' ';
   						else
   							return tiles[x][y].image();
   					}
   					else
   					{
-  						if(getAtLocation(spyX,y+1) instanceof Room)
+  						if(getAtLocation(spy.getRowCoord(),y+1) instanceof Room)
   							return ' ';
   						else
   							return tiles[x][y].image();
@@ -213,10 +204,11 @@ public class Map{
 	
 	/**
 	 * Moves the spy in the specified direction
+	 * @param spy is the {@link Spy}
 	 * @param direction is the Single character game directions (wasd)
 	 */
-	public void moveSpy(char direction) {
-		movePiece(spyX, spyY, direction);
+	public void moveSpy(Spy spy, char direction) {
+		movePiece(spy.getRowCoord(), spy.getColCoord(), direction);
 	}	
 	
 	/**
@@ -259,22 +251,24 @@ public class Map{
 	}
 	/**
 	 * This function will tell whether there is a {@link PowerUp}
+	 * @param spy is the {@link Spy}
 	 * @return true if there is a {@link PowerUp} at the {@link Spy}'s position, false otherwise
 	 */
-	public boolean powerUpCheck()
+	public boolean powerUpCheck(Spy spy)
 	{
-		if(!tiles[spyX][spyY].noPowerUp())
+		if(!tiles[spy.getRowCoord()][spy.getColCoord()].noPowerUp())
 			return true;
 		else
 			return false;
 	}
 	/**
 	 * This function returns a {@link PowerUp}
+	 * @param spy is the {@link Spy}
 	 * @return the {@link PowerUp} at the location
 	 */
-	public PowerUp getPowerUp()
+	public PowerUp getPowerUp(Spy spy)
 	{
-		return tiles[spyX][spyY].getPowerUp();
+		return tiles[spy.getRowCoord()][spy.getColCoord()].getPowerUp();
 	}
 	/**
 	 * Checks whether the desired location is on the grid
@@ -298,10 +292,11 @@ public class Map{
 	}
 	/**
 	 * Removes the {@link PowerUp} at {@link Spy}'s location
+	 * @param spy is the {@link Spy}
 	 */
-	public void removePowerUp()
+	public void removePowerUp(Spy spy)
 	{
-		tiles[spyX][spyY].set(new EmptyPU());
+		tiles[spy.getRowCoord()][spy.getColCoord()].set(new EmptyPU());
 	}
 	
 	public Object getPowerUpAtLocation(int x, int y) {
