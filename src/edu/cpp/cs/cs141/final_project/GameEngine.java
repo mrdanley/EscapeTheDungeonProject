@@ -102,7 +102,7 @@ public class GameEngine{
 									{
 										if(spy.getInvincibility())
 											spy.invincibleLoss();
-										checkForPowerUp(spy);
+										checkForPowerUp();
 										if(!spy.getInvincibility() && isNinjaAdjacent()){
 											killSpy();
 											if(spy.getLives() == 0){
@@ -246,10 +246,10 @@ public class GameEngine{
 			//store spy's location in temp variables
 			int tempx = spy.getRowCoord();
 			int tempy = spy.getColCoord();
-			//reset spy's position
-			setSpy();
 			//delete the old spy (replace with EmptyAA)
 			map.set(tempx, tempy, new EmptyAA());
+			//reset spy's position
+			setSpy();
 		}
 	}
 
@@ -304,17 +304,17 @@ public class GameEngine{
 	 * If there is a {@link PowerUp}, applies {@link PowerUp} and removes {@link PowerUp} from tile.
 	 * @param spy is the spy object created for the game
 	 */
-	private void checkForPowerUp(Spy spy)
+	private void checkForPowerUp()
 	{
-		if(map.powerUpCheck())
+		if(map.powerUpCheck(spy))
 		{
-			if(map.getPowerUp() instanceof Bullet)
+			if(map.getPowerUp(spy) instanceof Bullet)
 				spy.addBullet();
-			else if(map.getPowerUp() instanceof Invincibility)
+			else if(map.getPowerUp(spy) instanceof Invincibility)
 				spy.activateInvincibility();
 			else//radar
 				showBriefcase();
-			map.removePowerUp();
+			map.removePowerUp(spy);
 		}
 	}
 	/**
@@ -395,7 +395,7 @@ public class GameEngine{
 			if(!moveAgainstRoom)
 			{
 				spy.toggleMove();
-				map.moveSpy(Character.toLowerCase(charInput));
+				map.moveSpy(spy, Character.toLowerCase(charInput));
 				return false;
 			}
 		} catch (Exception e) {
