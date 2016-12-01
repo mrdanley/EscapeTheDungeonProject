@@ -96,9 +96,6 @@ public class UI{
 				else
 					System.out.print(IngameMenu[i-1]);
 			}
-			//REMOVE BEFORE SUBMIT
-			if(i==5)
-				System.out.print("\tEnter [R] to respawn dungeon (Will Remove before submit)");
 			if(i==6)
 			{
 				System.out.print("\tLives: ");
@@ -110,7 +107,7 @@ public class UI{
 			if(spy.getInvincibility())
 			{
 				if(i==8)
-					System.out.print("\tInvincible for "+spy.getInvincibleTurns()+" turns");
+					System.out.print("\tInvincible for "+spy.getInvincibleTurns()+" turn(s)");
 			}
 			System.out.println();
 		}

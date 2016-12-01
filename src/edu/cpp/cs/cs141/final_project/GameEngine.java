@@ -150,13 +150,6 @@ public class GameEngine{
 								map.toggleMode();
 								break;
 							}
-							//REMOVE BEFORE SUBMIT
-							case 'R':
-							case 'r':
-							{
-								gameSet();
-								break;
-							}
 							case 'X':
 							case 'x':
 							{
