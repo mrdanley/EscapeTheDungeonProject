@@ -317,6 +317,7 @@ public class GameEngine{
 				rooms[i].radarActivate();
 		}
 	}
+	
 	/**
 	 * This function moves the {@link Spy} around the dungeon to the next {@link Tile}
 	 * @param charInput is the input that determines the direction the {@link Spy} moves
@@ -325,67 +326,33 @@ public class GameEngine{
 	private boolean spyMove(char charInput)
 	{
 		boolean moveAgainstRoom = false;
-		try {
-			switch(Character.toLowerCase(charInput))
-			{
-				case 's':
-				{
-					if(map.getAtLocation(spy.getRowCoord()+1, spy.getColCoord()) instanceof Room)
-					{
-						moveAgainstRoom = true;
-						for(int i=0;i<rooms.length;i++)
-						{
-							if(rooms[i].getRowCoord()==spy.getRowCoord()+1 &&
-								rooms[i].getColCoord()==spy.getColCoord())
-							{
-								if(rooms[i].hasBriefcase())
-									return true;
-								else
-									ui.displayEmptyRoomMessage();
-								break;
-							}
-						}
-					}
-					break;
+		int[] delta = Map.intentDirection(charInput);
+		
+		int targetX = spy.getRowCoord() + delta[0];
+		int targetY = spy.getColCoord() + delta[1];
+		
+		//Checks if target location is in bounds and a room
+		if (map.isValidLocation(targetX, targetY, false) && map.getAtLocation(targetX, targetY) instanceof Room) {
+			moveAgainstRoom = true;
+			
+			//Check if moving down, then if the room has a briefcase, etc. Otherwise, prevent room entry
+			if (charInput == 'S' || charInput == 's') {
+				if (((Room) map.getAtLocation(targetX, targetY)).hasBriefcase()) {
+					return true;
+				} else {
+					ui.displayEmptyRoomMessage();
 				}
-				//case w,a,d: spy tries to enter a room from wrong direction
-				case 'w':
-				{
-					if(map.getAtLocation(spy.getRowCoord()-1, spy.getColCoord()) instanceof Room)
-					{
-						moveAgainstRoom = true;
-						ui.displayInvalidRoomMove();
-					}
-					break;
-				}
-				case 'a':
-				{
-					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()-1) instanceof Room)
-					{
-						moveAgainstRoom = true;
-						ui.displayInvalidRoomMove();
-					}
-					break;
-				}
-				case 'd':
-				{
-					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()+1) instanceof Room)
-					{
-						moveAgainstRoom = true;
-						ui.displayInvalidRoomMove();
-					}
-					break;
-				}
+			} else {
+				ui.displayInvalidRoomMove();
 			}
-			if(!moveAgainstRoom)
-			{
-				spy.toggleMove();
-				map.moveSpy(spy, Character.toLowerCase(charInput));
-				return false;
-			}
-		} catch (Exception e) {
-			ui.displayInvalidMove();
 		}
+		
+		if(!moveAgainstRoom) {
+			spy.toggleMove();
+			map.moveSpy(spy, Character.toLowerCase(charInput));
+			return false;
+		}
+		
 		return false;
 	}
 	

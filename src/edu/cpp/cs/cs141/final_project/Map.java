@@ -220,26 +220,10 @@ public class Map{
 	 */
 	public void movePiece(int x, int y, char direction) {
 		GamePiece piece1 = getAtLocation(x, y);
-		int targetX = x;
-		int targetY = y;
-
-		switch (direction) {
-		case 'w':
-			targetX--; //right
-			break;
-		case 'a':
-			targetY--; //up
-			break;
-		case 's':
-			targetX++; //down
-			break;
-		case 'd':
-			targetY++; //left
-			break;
-		default:
-			new Exception("Invalid directional input").printStackTrace();
-			return;
-		}
+		
+		int[] delta = Map.intentDirection(direction);
+		int targetX = x + delta[0];
+		int targetY = y + delta[1];
 		
 		if (!isValidLocation(targetX, targetY, true)) {
 			return;
@@ -278,7 +262,7 @@ public class Map{
 	 * @param agents If we are checking for agents
 	 * @return true if the desired location is valid, false otherwise
 	 */
-	private boolean isValidLocation(int x, int y, boolean agents) {
+	public boolean isValidLocation(int x, int y, boolean agents) {
 		boolean isValid = true;
 		
 		//Out of bounds, then if tile is occupied
@@ -301,5 +285,39 @@ public class Map{
 	
 	public Object getPowerUpAtLocation(int x, int y) {
 		return tiles[x][y].getPowerUp();
+	}
+	
+	
+	/**
+	 * Generates a delta x,y coordinate given a direction. Think of it
+	 * like a vector pointing in a direction
+	 * Use:
+	 * Assuming {@code x, y} are the original coords, get the coords in
+	 * direction 'w'
+	 * 
+	 * {@code int[] delta = intentDirection('w');}
+	 * {@code int targetX = x + delta[0];}
+	 * {@code int targetY = y + delta[1];}
+	 * 
+	 * @param wasd Direction using traditional gamer cardinal directions
+	 * @return an array containing an x delta and a y delta.
+	 */
+	public static int[] intentDirection(char wasd) {
+		int[] delta = {0 , 0};
+		switch (Character.toLowerCase(wasd)) {
+		case 'w':
+			delta[0]--;
+			break;
+		case 'a':
+			delta[1]--;
+			break;
+		case 's':
+			delta[0]++;
+			break;
+		case 'd':
+			delta[1]++;
+			break;
+		}
+		return delta;
 	}
 }
