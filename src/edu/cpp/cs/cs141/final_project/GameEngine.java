@@ -77,14 +77,10 @@ public class GameEngine{
 							ui.displayDungeon(map,spy);
 						showDungeon = true;
 						charInput = ui.getCharInput();
-						switch(charInput){
-							case 'W':
+						switch(Character.toLowerCase(charInput)) {
 							case 'w':
-							case 'S':
 							case 's':
-							case 'A':
 							case 'a':
-							case 'D':
 							case 'd':
 							{
 								spy.setMove(false);
@@ -132,25 +128,20 @@ public class GameEngine{
 								}
 								break;
 							}
-							case 'E':
 							case 'e':
 								spyLook();
 								break;
-							case 'Q':
 							case 'q':
 								spyShoot();
 								break;
-							case 'U':
 							case 'u':
 								ui.displayGameLegend();									
 								break;
-							case 'M':
 							case 'm':
 							{
 								map.toggleMode();
 								break;
 							}
-							case 'X':
 							case 'x':
 							{
 								endGameType = 1;
@@ -159,7 +150,6 @@ public class GameEngine{
 									map.toggleMode();
 								break;
 							}
-							case 'V':
 							case 'v':
 							{
 								saveData();
@@ -336,10 +326,9 @@ public class GameEngine{
 	{
 		boolean moveAgainstRoom = false;
 		try {
-			switch(charInput)
+			switch(Character.toLowerCase(charInput))
 			{
 				case 's':
-				case 'S':
 				{
 					if(map.getAtLocation(spy.getRowCoord()+1, spy.getColCoord()) instanceof Room)
 					{
@@ -361,7 +350,6 @@ public class GameEngine{
 				}
 				//case w,a,d: spy tries to enter a room from wrong direction
 				case 'w':
-				case 'W':
 				{
 					if(map.getAtLocation(spy.getRowCoord()-1, spy.getColCoord()) instanceof Room)
 					{
@@ -371,7 +359,6 @@ public class GameEngine{
 					break;
 				}
 				case 'a':
-				case 'A':
 				{
 					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()-1) instanceof Room)
 					{
@@ -381,7 +368,6 @@ public class GameEngine{
 					break;
 				}
 				case 'd':
-				case 'D':
 				{
 					if(map.getAtLocation(spy.getRowCoord(), spy.getColCoord()+1) instanceof Room)
 					{
@@ -416,9 +402,8 @@ public class GameEngine{
 			int i = spy.getRowCoord();
 			int j = spy.getColCoord();
 			do{
-				switch(ui.displayShootMenu())
+				switch(Character.toLowerCase(ui.displayShootMenu()))
 				{
-					case 'W':
 					case 'w':
 					{
 						while(!hit && i>0){
@@ -431,7 +416,6 @@ public class GameEngine{
 						shotTaken = true;
 						break;
 					}
-					case 'S':
 					case 's':
 					{
 						while(!hit && i<tileMax-1){
@@ -444,7 +428,6 @@ public class GameEngine{
 						shotTaken = true;
 						break;
 					}
-					case 'A':
 					case 'a':
 					{
 						while(!hit && j>0){
@@ -457,7 +440,6 @@ public class GameEngine{
 						shotTaken = true;
 						break;
 					}
-					case 'D':
 					case 'd':
 					{
 						while(!hit && j<tileMax-1){
@@ -526,9 +508,8 @@ public class GameEngine{
 			}
 		}while(!correctInput);
 		
-		switch(spy.getLook())
+		switch(Character.toLowerCase(spy.getLook()))
 		{
-			case 'W':
 			case 'w':
 			{
 				for(int i=spy.getRowCoord();i>0;i--)
@@ -547,7 +528,6 @@ public class GameEngine{
 				ui.pathClearMessage('w');
 				return;
 			}
-			case 'A':
 			case 'a':
 			{
 				for(int i=spy.getColCoord();i>0;i++)
@@ -566,7 +546,6 @@ public class GameEngine{
 				ui.pathClearMessage('a');
 				return;
 			}
-			case 'S':
 			case 's':
 			{
 				for(int i=0;i<tileMax-spy.getRowCoord();i++)
@@ -585,7 +564,6 @@ public class GameEngine{
 				ui.pathClearMessage('s');
 				return;
 			}
-			case 'D':
 			case 'd':
 			{
 				for(int i=0;i<tileMax-spy.getColCoord();i++)
