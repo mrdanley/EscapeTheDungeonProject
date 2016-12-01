@@ -205,11 +205,11 @@ public class UI{
 	public String getFilename(String[] listFiles) {
 		if (listFiles.length > 1 || !listFiles[0].isEmpty()){
 			System.out.println("\nExisting saves:\n");
-			for (String file : listFiles) {
-				System.out.println(file);
+			for (int i = 0; i < listFiles.length; i++) {
+				System.out.println((i+1)+". "+listFiles[i]);
 			}
 		}
-		System.out.println("\nPlease Enter a Filename or Enter 'C' to Cancel:  ");
+		System.out.println("\nPlease Enter a Filename, Number or 'C' to Cancel:  ");
 		return kb.next();
 	}
 	

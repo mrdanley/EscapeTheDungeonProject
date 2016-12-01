@@ -268,9 +268,14 @@ public class GameEngine{
 	 * @throws Exception problem reading or de-serializing data file
 	 */
 	private boolean loadData() throws Exception  {
-		String filename = ui.getFilename(IO.listFiles());
+		String[] fileList = IO.listFiles();
+		String filename = ui.getFilename(fileList);
 		
 		if (filename.equalsIgnoreCase("C")) return false;
+		
+		//If the filename is a digit, set {filename} to the corresponding String in fileList. (May throw Exception)
+		if (filename.matches("\\d*")) filename = fileList[Integer.parseInt(filename)-1];
+		
 		if (filename.isEmpty()) filename = "save.dat";
 		
 		SaveData save = (SaveData) IO.load(filename);
