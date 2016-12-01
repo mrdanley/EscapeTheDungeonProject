@@ -182,7 +182,7 @@ public class Map{
   	 */
   	public boolean isNinja(int x, int y){
   		//Make sure the location is in the grid
-  		if(x < 0 || x >= tiles.length || y < 0 || y >= tiles[0].length){
+  		if(!isValidLocation(x, y, false)){
   			return false;
   		}
   		else{
@@ -241,7 +241,7 @@ public class Map{
 			return;
 		}
 		
-		if (checkValidLocation(targetX, targetY)) {
+		if (!isValidLocation(targetX, targetY, true)) {
 			return;
 		}
 		
@@ -270,21 +270,21 @@ public class Map{
 	{
 		return tiles[spy.getRowCoord()][spy.getColCoord()].getPowerUp();
 	}
+	
 	/**
-	 * Checks whether the desired location is on the grid
-	 * Function is specifically for spyMove() function
+	 * Checks whether the desired location is on the grid. Also checks if space is occupied.
 	 * @param x is the row location
 	 * @param y is the column location
+	 * @param agents If we are checking for agents
 	 * @return true if the desired location is valid, false otherwise
 	 */
-	private boolean checkValidLocation(int x, int y) {
+	private boolean isValidLocation(int x, int y, boolean agents) {
 		boolean isValid = true;
 		
+		//Out of bounds, then if tile is occupied
 		if (x > tiles.length-1 || x < 0 || y > tiles.length-1 || y < 0) {
 			isValid = false;
-		}
-		
-		if (noActiveAgent(x, y)) {
+		} else if (agents && !noActiveAgent(x, y)) {
 			isValid = false;
 		}
 		
