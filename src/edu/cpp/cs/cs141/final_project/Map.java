@@ -206,9 +206,17 @@ public class Map{
 	 * Moves the spy in the specified direction
 	 * @param spy is the {@link Spy}
 	 * @param direction is the Single character game directions (wasd)
+	 * @return true if {@link Spy} has not moved, else return false
 	 */
-	public void moveSpy(Spy spy, char direction) {
-		movePiece(spy.getRowCoord(), spy.getColCoord(), direction);
+	public boolean moveSpy(Spy spy, char direction) {
+		boolean invalidMove = movePiece(spy.getRowCoord(), spy.getColCoord(), direction);
+		if(invalidMove)
+			return true;
+		else
+		{
+			spy.setMove(true);
+			return false;
+		}
 	}	
 	
 	/**
@@ -217,8 +225,9 @@ public class Map{
 	 * @param x Current location row
 	 * @param y Current location column
 	 * @param direction is the target destination in gamer directions (wasd)
+	 * @return true if direction chosen is not valid, else return false
 	 */
-	public void movePiece(int x, int y, char direction) {
+	public boolean movePiece(int x, int y, char direction) {
 		GamePiece piece1 = getAtLocation(x, y);
 		
 		int[] delta = Map.intentDirection(direction);
@@ -226,12 +235,13 @@ public class Map{
 		int targetY = y + delta[1];
 		
 		if (!isValidLocation(targetX, targetY, true)) {
-			return;
+			return true;
 		}
 		
 		GamePiece piece2 = getAtLocation(targetX, targetY);
 		set(targetX, targetY, piece1);
 		set(x, y, piece2);
+		return false;
 	}
 	/**
 	 * This function will tell whether there is a {@link PowerUp}
