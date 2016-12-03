@@ -321,7 +321,7 @@ public class GameEngine{
 	/**
 	 * This function moves the {@link Spy} around the dungeon to the next {@link Tile}
 	 * @param charInput is the input that determines the direction the {@link Spy} moves
-	 * @return true if moving down into a {@link Room}, otherwise returns false
+	 * @return true if Briefcase is found in a {@link Room}, otherwise returns false
 	 */
 	private boolean spyMove(char charInput)
 	{
@@ -347,10 +347,11 @@ public class GameEngine{
 			}
 		}
 		
+		//spy moving anywhere but against a room
 		if(!moveAgainstRoom) {
-			spy.toggleMove();
-			map.moveSpy(spy, Character.toLowerCase(charInput));
-			return false;
+			boolean spyHasMoved = map.moveSpy(spy, Character.toLowerCase(charInput));
+			if(!spyHasMoved)
+				ui.displayInvalidMove();
 		}
 		
 		return false;

@@ -56,16 +56,6 @@ public class Spy extends ActiveAgent{
 		return moved;
 	}
 	/**
-	 * This method changes the value of boolean 'moved' between true and false. 
-	 */
-	public void toggleMove()
-	{
-		if(moved)
-			moved = false;
-		else
-			moved = true;
-	}
-	/**
 	 * This method is called when the invincibility power up is activated and it adds 5 invincible turns.
 	 */
 	public int getInvincibleTurns()
