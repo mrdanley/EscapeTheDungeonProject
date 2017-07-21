@@ -1,6 +1,6 @@
 /**
  * CS 141: Intro to Programming and Problem Solving
- * Professor: Edwin Rodríguez
+ * Professor: Edwin RodrÃ­guez
  *
  * Final Project
  *
@@ -211,11 +211,11 @@ public class Map{
 	public boolean moveSpy(Spy spy, char direction) {
 		boolean invalidMove = movePiece(spy.getRowCoord(), spy.getColCoord(), direction);
 		if(invalidMove)
-			return true;
+			return false;
 		else
 		{
 			spy.setMove(true);
-			return false;
+			return true;
 		}
 	}	
 	
