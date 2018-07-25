@@ -1,24 +1,20 @@
-# cs141_final
 Final Game Project
 
+Story background...
+You are a Spy sent into a facility to find a Briefcase of secret documents. However, the facility is guarded by 6 Ninjas who will hunt and kill you on sight. Good luck.
 
-Coodinate plane:
-Origin is top-left, x and y are switched
-   x-   
-y- o y+
-   x+
-   
-DONE - anna - spy look <br />
-DONE - austin - ninja kill spy, spy lose a life, restart point <br />
-DONE - shiyin - spy shooting, subtract bullet <br />
-DONE - brandon - spy move <br />
-DONE - johnson - ninja move (working on XC) <br />
-DONE - daniel - spy pick up powerup, powerup dissapear, apply powerup <br />
-DONE - daniel - spy go into room and find briefcase, end game <br />
-DONE - display Messages
+Spy
+- sight limited to 2 squares horizontally and vertically
+- begin with 1 Ammo in your Gun which can fire horizontally and vertically all the way to a room or wall
+- begin with 3 lives, each death will reset your position to the left bottom corner
+Ninja
+- sight limited to 2 squares horizontally and vertically
+- will chase the spy if in sight and stab to death once the spy is in the next tile
+Facility
+- 9x9 size with 9 rooms
+- items are scattered across the floor: invincibility, ammo, extra life, radar
+Briefcase
+- hidden in one of 9 rooms
+- can immediately escape and win once found
 
-NEED TO CHECK WITH PROF: <br />
-if ninja is in start location when spy dies, what happens? <br />
-^CONFIRMED: ninja gets moved randomly somewhere else in dungeon. <br />
-if ninja/item is 2 spaces away from spy but there is room between them, can spy see the ninja/item? <br />
-^CONFIRMED: spy CANNOT see ninja/item
+Project utilizes abstract classes and interfaces for an object-oriented design.
